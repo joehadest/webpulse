@@ -5,7 +5,7 @@ const Home: React.FC = () => {
         <div className="min-h-screen bg-gray-900 overflow-x-hidden animate-fade-in">
             {/* Hero Section */}
             <section
-                className="relative w-full h-[500px] bg-black text-white flex items-center justify-center"
+                className="relative w-full h-[160px] sm:h-[220px] md:h-[400px] lg:h-[500px] bg-black text-white flex items-center justify-center px-1 sm:px-4"
                 style={{
                     backgroundImage: "url('/banner.png')",
                     backgroundSize: 'cover',
@@ -16,11 +16,11 @@ const Home: React.FC = () => {
                     marginRight: 'calc(-50vw + 50%)'
                 }}
             >
-                {/* Botão no canto inferior direito */}
+                {/* Botão responsivo no canto inferior direito */}
                 <a
                     href="/contact"
-                    className="absolute right-8 bottom-8 px-8 py-3 rounded-md bg-red-600 text-white text-base font-medium shadow-lg hover:bg-red-700 transition-all duration-300 z-20"
-                    style={{ minWidth: 250, textAlign: 'center' }}
+                    className="absolute left-1/2 -translate-x-1/2 bottom-2 sm:right-8 sm:left-auto sm:translate-x-0 sm:bottom-8 px-2 sm:px-6 py-1.5 sm:py-3 rounded-md bg-red-600 text-white text-[11px] sm:text-base font-medium shadow-lg hover:bg-red-700 transition-all duration-300 z-20 whitespace-normal text-center"
+                    style={{ minWidth: 90, maxWidth: '90vw', wordBreak: 'break-word' }}
                 >
                     Fale com um especialista
                 </a>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Home: React.FC = () => {
     return (
-        <div className="min-h-screen bg-gray-900 overflow-x-hidden">
+        <div className="min-h-screen bg-gray-900 overflow-x-hidden animate-fade-in">
             {/* Hero Section */}
             <section
                 className="relative w-full h-[500px] bg-black text-white flex items-center justify-center"

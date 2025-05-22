@@ -5,7 +5,7 @@ const Home: React.FC = () => {
         <div className="min-h-screen bg-gray-900 overflow-x-hidden">
             {/* Hero Section */}
             <section
-                className="relative w-full h-[500px] bg-black text-white flex items-center justify-center"
+            className="relative w-full h-screen bg-black text-white flex items-center justify-center"
                 style={{
                     backgroundImage: "url('/banner.png')",
                     backgroundSize: 'cover',
@@ -39,19 +39,19 @@ const Home: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in">
-                            <h3 className="text-2xl font-bold text-red-500">Design Moderno</h3>
+                            <h3 className="text-2xl text-center font-bold text-red-500">Design Moderno</h3>
                             <p className="mt-4 text-gray-300">
                                 Criamos interfaces exclusivas e profissionais que transmitem credibilidade e valor à sua marca
                             </p>
                         </div>
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-200">
-                            <h3 className="text-2xl font-bold text-red-500">Responsivo</h3>
+                            <h3 className="text-2xl text-center font-bold text-red-500">Responsivo</h3>
                             <p className="mt-4 text-gray-300">
                                 Garantimos uma experiência perfeita em todos os dispositivos, mantendo a qualidade e performance
                             </p>
                         </div>
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-400">
-                            <h3 className="text-2xl font-bold text-red-500">Performance</h3>
+                            <h3 className="text-2xl text-center font-bold text-red-500">Performance</h3>
                             <p className="mt-4 text-gray-300">
                                 Otimizamos cada detalhe para garantir velocidade, segurança e a melhor experiência para seus clientes
                             </p>
@@ -73,13 +73,13 @@ const Home: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                         <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in">
-                            <h3 className="text-xl font-bold text-red-500 mb-4">Suporte Contínuo</h3>
+                            <h3 className="text-xl text-center font-bold text-red-500 mb-4">Suporte Contínuo</h3>
                             <p className="text-gray-300">
                                 Oferecemos suporte técnico especializado e manutenção preventiva para garantir o funcionamento perfeito do seu site
                             </p>
                         </div>
                         <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-200">
-                            <h3 className="text-xl font-bold text-red-500 mb-4">Satisfação Garantida</h3>
+                            <h3 className="text-xl text-center font-bold text-red-500 mb-4">Satisfação Garantida</h3>
                             <p className="text-gray-300">
                                 Trabalhamos com transparência e compromisso, garantindo que cada projeto atenda às suas expectativas
                             </p>

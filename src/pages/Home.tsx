@@ -87,7 +87,6 @@ const Home: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                
                 {/* Maps da empresa:: Criado por Nicolas ROck*/}
                 <div className="mt-12 animate-fade-in animation-delay-500">
                     <h3 className="text-3xl font-bold text-red-500 text-center mb-4">

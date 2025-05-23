@@ -36,7 +36,7 @@ const Home: React.FC = () => {
             <div className="py-16 bg-gray-800/50 animate-fade-in animation-delay-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12 animate-slide-up animation-delay-400">
-                        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">
+                        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4 sm:text-4xl">
                             Nossos Serviços em Destaque
                         </h2>
                         <p className="text-gray-300">
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
                 {/* Carrossel:: Criado por Nicolas Rock*/}
                 <div className="py-16 bg-gray-800/50 animate-fade-in animation-delay-500">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-8">
+                        <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-8 sm:text-4xl">
                             Projetos Recentes
                         </h2>
                         <Swiper
@@ -139,7 +139,7 @@ const Home: React.FC = () => {
 
                 {/* Maps da empresa:: Criado por Nicolas ROck*/}
                 <div className="mt-12 animate-fade-in animation-delay-500">
-                    <h3 className="text-3xl font-bold text-red-500 text-center mb-4">
+                    <h3 className="text-3xl font-bold text-red-500 text-center mb-4 sm:text-4xl">
                         Encontre-nos Aqui
                     </h3>
                     <div className="flex justify-center">

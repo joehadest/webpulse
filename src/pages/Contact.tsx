@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import emailjs from 'emailjs-com';
 
 const Contact: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -7,11 +8,32 @@ const Contact: React.FC = () => {
         phone: '',
         message: ''
     });
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Aqui você pode adicionar a lógica para enviar o formulário
-        console.log('Form data:', formData);
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+        if (!formRef.current) return;
+        emailjs.sendForm(
+            'service_xd9l4cm',
+            'template_gtozmle',
+            formRef.current,
+            'SUA_PUBLIC_KEY_AQUI' // Substitua pela sua Public Key do EmailJS
+        )
+            .then(() => {
+                setSuccess(true);
+                setFormData({ name: '', email: '', phone: '', message: '' });
+                formRef.current?.reset();
+            })
+            .catch((err) => {
+                setError('Erro ao enviar: ' + (err.text || 'Tente novamente.'));
+            })
+            .finally(() => setLoading(false));
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,7 +59,7 @@ const Contact: React.FC = () => {
 
                     <div className="mt-12 bg-gray-800 shadow-lg rounded-lg overflow-hidden border border-gray-700 animate-fade-in animation-delay-400">
                         <div className="px-6 py-8">
-                            <form onSubmit={handleSubmit} className="space-y-6">
+                            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-200">
                                         Nome Completo
@@ -101,12 +123,20 @@ const Contact: React.FC = () => {
                                     />
                                 </div>
 
+                                {success && (
+                                    <div className="text-green-400 text-center font-medium">Mensagem enviada com sucesso!</div>
+                                )}
+                                {error && (
+                                    <div className="text-red-400 text-center font-medium">{error}</div>
+                                )}
+
                                 <div>
                                     <button
                                         type="submit"
-                                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
+                                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 disabled:opacity-60"
+                                        disabled={loading}
                                     >
-                                        Enviar Mensagem
+                                        {loading ? 'Enviando...' : 'Enviar Mensagem'}
                                     </button>
                                 </div>
                             </form>

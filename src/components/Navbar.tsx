@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center space-x-3">
                             <img
-                                src="/logo.png"
+                                src="Imgs/logo.png"
                                 alt="WebPulse Logo"
                                 className="h-16 w-auto"
                             />

@@ -152,19 +152,12 @@ const Services = () => {
     };
 
     return (
-<<<<<<< HEAD
         <div className="min-h-screen bg-white py-12 ">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center animate-fade-in">
                     <h2 className="text-3xl font-extrabold text-red-600 sm:text-4xl animate-slide-up">
-=======
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-2 sm:px-4 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12 animate-fade-in">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">
->>>>>>> 2ed0440f2887f964b3d2cceac2e22f2572e361ba
                         Nossos Serviços
-                    </h1>
+                    </h2>
                     <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
                         Soluções digitais personalizadas para impulsionar seu negócio
                     </p>

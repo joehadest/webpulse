@@ -8,7 +8,7 @@ const Home: React.FC = () => {
             <section
                 className="relative w-full h-[500px] bg-black text-white flex items-center justify-center"
                 style={{
-                    backgroundImage: "url('/banner.png')",
+                    backgroundImage: "url('Imgs/banner.png')",
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
@@ -40,19 +40,19 @@ const Home: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in">
-                            <h3 className="text-2xl font-bold text-red-500">Design Moderno</h3>
+                            <h3 className="text-2xl font-bold text-center text-red-500">Design Moderno</h3>
                             <p className="mt-4 text-gray-300">
                                 Criamos interfaces exclusivas e profissionais que transmitem credibilidade e valor à sua marca
                             </p>
                         </div>
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-200">
-                            <h3 className="text-2xl font-bold text-red-500">Responsivo</h3>
+                            <h3 className="text-2xl font-bold text-center text-red-500">Responsivo</h3>
                             <p className="mt-4 text-gray-300">
                                 Garantimos uma experiência perfeita em todos os dispositivos, mantendo a qualidade e performance
                             </p>
                         </div>
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-400">
-                            <h3 className="text-2xl font-bold text-red-500">Performance</h3>
+                            <h3 className="text-2xl font-bold text-center text-red-500">Performance</h3>
                             <p className="mt-4 text-gray-300">
                                 Otimizamos cada detalhe para garantir velocidade, segurança e a melhor experiência para seus clientes
                             </p>
@@ -74,17 +74,34 @@ const Home: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                         <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in">
-                            <h3 className="text-xl font-bold text-red-500 mb-4">Suporte Contínuo</h3>
+                            <h3 className="text-xl font-bold text-center text-red-500 mb-4">Suporte Contínuo</h3>
                             <p className="text-gray-300">
                                 Oferecemos suporte técnico especializado e manutenção preventiva para garantir o funcionamento perfeito do seu site
                             </p>
                         </div>
                         <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden border border-gray-700 p-6 transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-200">
-                            <h3 className="text-xl font-bold text-red-500 mb-4">Satisfação Garantida</h3>
+                            <h3 className="text-xl font-bold text-center text-red-500 mb-4">Satisfação Garantida</h3>
                             <p className="text-gray-300">
                                 Trabalhamos com transparência e compromisso, garantindo que cada projeto atenda às suas expectativas
                             </p>
                         </div>
+                    </div>
+                </div>
+                
+                {/* Maps da empresa:: Criado por Nicolas ROck*/}
+                <div className="mt-12 animate-fade-in animation-delay-500">
+                    <h3 className="text-3xl font-bold text-red-500 text-center mb-4">
+                        Encontre-nos Aqui
+                    </h3>
+                    <div className="flex justify-center">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.738897085373!2d-36.76962402623292!3d-5.30337965320908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7b0dac4c891df03%3A0xb915f137c42c9b7a!2sR.%20Pedro%20Martins%20de%20Oliveira%2C%20Alto%20do%20Rodrigues%20-%20RN%2C%2059507-000!5e0!3m2!1spt-BR!2sbr!4v1748017741385!5m2!1spt-BR!2sbr"                        width="100%"
+                            height="400"
+                            className="rounded-lg border border-gray-700 w-full max-w-3xl"
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        ></iframe>
                     </div>
                 </div>
             </div>

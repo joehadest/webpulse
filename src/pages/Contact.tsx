@@ -20,20 +20,20 @@ const Contact: React.FC = () => {
         setSuccess(false);
         if (!formRef.current) return;
         emailjs.sendForm(
-            'service_xd9l4cm',
-            'template_gtozmle',
-            formRef.current,
+            'service_xd9l4cm', // ID do serviço configurado no EmailJS
+            'template_gtozmle', // ID do template de e-mail
+            formRef.current, // Referência ao formulário com os dados preenchidos
             'SUA_PUBLIC_KEY_AQUI' // Substitua pela sua Public Key do EmailJS
         )
             .then(() => {
                 setSuccess(true);
-                setFormData({ name: '', email: '', phone: '', message: '' });
+                setFormData({ name: '', email: '', phone: '', message: '' });  // Limpa os campos
                 formRef.current?.reset();
             })
             .catch((err) => {
-                setError('Erro ao enviar: ' + (err.text || 'Tente novamente.'));
+                setError('Erro ao enviar: ' + (err.text || 'Tente novamente.')); // Captura erros
             })
-            .finally(() => setLoading(false));
+            .finally(() => setLoading(false)); 
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

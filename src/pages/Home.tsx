@@ -1,5 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 const Home: React.FC = () => {
     return (
@@ -87,6 +92,51 @@ const Home: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Carrossel:: Criado por Nicolas Rock*/}
+                <div className="py-16 bg-gray-800/50 animate-fade-in animation-delay-500">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-8">
+                            Projetos Recentes
+                        </h2>
+                        <Swiper
+                            modules={[Navigation, Pagination, Autoplay]}
+                            spaceBetween={30}
+                            slidesPerView={1}
+                            navigation
+                            pagination={{ clickable: true }}
+                            autoplay={{ delay: 4000 }}
+                            breakpoints={{
+                                640: { slidesPerView: 1 },
+                                768: { slidesPerView: 2 },
+                                1024: { slidesPerView: 3 },
+                            }}
+                        >
+                            <SwiperSlide>
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col justify-between">
+                                    <img src="./Projetos/Cripto.png" alt="Projeto 1" className="text-xl font-bold text-center text-red-500 mb-4" />
+                                    <h3 className="text-xl text-red-500 font-bold mb-2">Landing Page de Restaurante</h3>
+                                    <p className="text-gray-300">Site institucional feito com React e Tailwind.</p>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col justify-between">
+                                    <img src="./Projetos/Cripto.png" alt="Projeto 2" className="text-xl font-bold text-center text-red-500 mb-4" />
+                                    <h3 className="text-xl text-red-500 font-bold mb-2">Dashboard Administrativo</h3>
+                                    <p className="text-gray-300">Sistema completo com autenticação e gráficos.</p>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col justify-between">
+                                    <img src="./Projetos/Cripto.png" alt="Projeto 3" className="text-xl font-bold text-center text-red-500 mb-4" />
+                                    <h3 className="text-xl text-red-500 font-bold mb-2">Loja Virtual</h3>
+                                    <p className="text-gray-300">E-commerce responsivo com sistema de pagamento integrado.</p>
+                                </div>
+                            </SwiperSlide>
+                        </Swiper>
+                    </div>
+                </div>
+
                 {/* Maps da empresa:: Criado por Nicolas ROck*/}
                 <div className="mt-12 animate-fade-in animation-delay-500">
                     <h3 className="text-3xl font-bold text-red-500 text-center mb-4">

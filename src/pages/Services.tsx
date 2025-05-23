@@ -155,14 +155,13 @@ const Services = () => {
         <div className="min-h-screen bg-gray-700 py-12 ">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center animate-fade-in mt-0 -translate-y-4 transform">
-  <h2 className="text-3xl font-extrabold text-red-600 sm:text-4xl animate-slide-up">
-    Nossos Serviços
-  </h2>
-  <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
-    Soluções digitais personalizadas para impulsionar seu negócio
-  </p>
-</div> 
-
+                    <h2 className="text-3xl font-extrabold text-red-600 sm:text-4xl animate-slide-up">
+                        Nossos Serviços
+                    </h2>
+                    <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
+                        Soluções digitais personalizadas para impulsionar seu negócio
+                    </p>
+                </div> 
 
                 <div className="grid grid-cols-1 gap-8 sm:gap-12">
                     {Object.entries(services).map(([key, service]) => (

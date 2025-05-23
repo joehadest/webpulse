@@ -3,8 +3,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import Footer from './components/Footer';
 import Budget from './pages/Budget';
-import  Footer from './components/Footer';
 
 function App() {
     return (

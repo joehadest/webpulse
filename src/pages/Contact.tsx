@@ -17,12 +17,16 @@ const Contact: React.FC = () => {
         e.preventDefault();
         setLoading(true);
         const msg =
-            `Olá! Gostaria de entrar em contato.\n\n` +
-            `Nome: ${formData.name}\n` +
-            `Email: ${formData.email}\n` +
-            `Telefone: ${formData.phone}\n\n` +
+            `Prezados,\n\n` +
+            `Gostaria de estabelecer contato para discutir uma possível parceria.\n\n` +
+            `Dados do Cliente:\n` +
+            `Nome/Razão Social: ${formData.name}\n` +
+            `Email Corporativo: ${formData.email}\n` +
+            `Telefone para Contato: ${formData.phone}\n\n` +
             `Mensagem:\n${formData.message}\n\n` +
-            `Agradeço desde já pela atenção!`;
+            `Agradeço a atenção e aguardo o retorno.\n` +
+            `Atenciosamente,\n` +
+            `${formData.name}`;
         const url = `https://wa.me/558498699449?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
         setLoading(false);

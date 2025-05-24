@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ProjectModal from '../components/ProjectModal';
 
 const Services = () => {
     const [selectedService, setSelectedService] = useState<string | null>(null);
+    const [isFlashshipModalOpen, setFlashshipModalOpen] = useState(false);
 
     const services = {
         institutional: {
@@ -152,7 +154,7 @@ const Services = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-700 py-12 ">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 ">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center animate-fade-in mt-0 -translate-y-4 transform">
                     <h2 className="text-3xl font-extrabold text-red-600 sm:text-4xl animate-slide-up">
@@ -161,9 +163,10 @@ const Services = () => {
                     <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
                         Soluções digitais personalizadas para impulsionar seu negócio
                     </p>
-                </div> 
+                </div>
 
                 <div className="grid grid-cols-1 gap-8 sm:gap-12">
+                    {/* Demais serviços */}
                     {Object.entries(services).map(([key, service]) => (
                         <div
                             key={key}
@@ -215,6 +218,38 @@ const Services = () => {
                     ))}
                 </div>
             </div>
+            <ProjectModal
+                isOpen={isFlashshipModalOpen}
+                onClose={() => setFlashshipModalOpen(false)}
+                title="Shippin - Loja de Dropshipping"
+                image="/Projetos/flashship.png"
+                description="Shippin é uma loja de e-commerce com modelo de dropshipping, desenvolvida com React. O site é totalmente responsivo, adaptando-se a diferentes tamanhos de tela, desde smartphones até monitores de desktop."
+                features={[
+                    'Design Responsivo: Interface adaptável para dispositivos móveis, tablets e desktops',
+                    'Carrinho de Compras: Gestão completa de produtos com persistência local',
+                    'Notificações: Feedback visual ao adicionar/remover produtos',
+                    'Checkout: Processo completo de finalização de compra',
+                ]}
+                responsivity={[
+                    'Layout Fluido: Uso de unidades relativas (%, rem) e CSS Grid/Flexbox',
+                    'Media Queries: Adaptações específicas para diferentes breakpoints',
+                    'Imagens Responsivas: Otimizadas para carregamento rápido em conexões móveis',
+                    'Touch-friendly: Elementos interativos dimensionados para facilitar o toque em dispositivos móveis',
+                ]}
+                structure={[
+                    '/src - Código fonte do React',
+                    '/public - Arquivos estáticos',
+                    '/src/components - Componentes reutilizáveis',
+                    '/src/pages - Páginas principais da aplicação',
+                    '/src/context - Gerenciamento de estado global',
+                ]}
+                technologies={[
+                    'React.js',
+                    'React Router',
+                    'Styled Components',
+                    'React Toastify',
+                ]}
+            />
         </div>
     );
 };

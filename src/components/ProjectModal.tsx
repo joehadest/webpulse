@@ -1,0 +1,115 @@
+import React, { useEffect } from 'react';
+//joe fez issoo//
+interface ProjectModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title: string;
+    image: string;
+    description: string;
+    // alterações por joe: remover detalhes para modal compacto
+    // features: string[];
+    // responsivity: string[];
+    // structure: string[];
+    // technologies: string[];
+}
+
+const ProjectModal: React.FC<ProjectModalProps> = ({
+    isOpen,
+    onClose,
+    title,
+    image,
+    description,
+    // features,
+    // responsivity,
+    // structure,
+    // technologies,
+}) => {
+    // alterações por joe: impedir scroll da página principal ao abrir o modal e esconder iframes
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.style.overflow = '';
+            document.body.classList.remove('modal-open');
+        }
+        return () => {
+            document.body.style.overflow = '';
+            document.body.classList.remove('modal-open');
+        };
+    }, [isOpen]);
+
+    return (
+        <>
+            {/* alterações por joe: estilo global para esconder iframes e forçar z-index baixo em todos os elementos da página quando modal está aberto, inclusive position fixed/absolute */}
+            <style>{`
+                body.modal-open iframe {
+                    visibility: hidden !important;
+                }
+                body.modal-open > *:not(.modal-root) {
+                    z-index: 0 !important;
+                    position: relative !important;
+                }
+                body.modal-open *:not(.modal-root) {
+                    z-index: 0 !important;
+                }
+            `}</style>
+            <div
+                className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 modal-root ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                // alterações por joe: z-index altíssimo para garantir que fique acima de tudo
+                style={{ transition: 'opacity 0.3s', zIndex: 2147483647, position: 'fixed' }}
+            >
+                {/* alterações por joe: backdrop com z-index altíssimo */}
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-80"
+                    style={{ zIndex: 2147483646, position: 'fixed' }}
+                ></div>
+                <div
+                    className={`relative w-full max-w-xs sm:max-w-md md:max-w-lg p-0 animate-modal-in ${isOpen ? 'scale-100' : 'scale-95'} transition-transform duration-300`}
+                    style={{
+                        maxWidth: '95vw',
+                        maxHeight: '80vh',
+                        overflowY: 'auto',
+                        transition: 'transform 0.3s',
+                        scrollbarColor: '#111 #222',
+                        scrollbarWidth: 'thin',
+                        zIndex: 2147483648,
+                        position: 'relative',
+                    }}
+                >
+                    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-2 border-red-600 shadow-2xl rounded-2xl p-3 sm:p-6 relative custom-scrollbar flex flex-col items-center pt-20">
+                        <button
+                            className="absolute top-4 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full w-12 h-12 flex items-center justify-center text-3xl font-bold shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 cursor-pointer z-10"
+                            onClick={onClose}
+                            aria-label="Fechar"
+                        >
+                            &times;
+                        </button>
+                        <img
+                            src={image}
+                            alt={title}
+                            className="w-full max-w-xs sm:max-w-sm md:max-w-md max-h-72 sm:max-h-96 md:max-h-[32rem] object-contain mx-auto mb-5 rounded-xl shadow-lg border-2 border-red-500"
+                        />
+                        <h2 className="text-lg sm:text-xl font-extrabold mb-2 text-center text-red-500 tracking-wide animate-fade-in">{title}</h2>
+                        <p className="mb-2 text-center text-gray-200 animate-fade-in animation-delay-200 text-sm sm:text-base">{description}</p>
+                    </div>
+                </div>
+                <style>{`
+                    .custom-scrollbar::-webkit-scrollbar {
+                        width: 8px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-thumb {
+                        background: #111;
+                        border-radius: 8px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-track {
+                        background: #222;
+                    }
+                `}</style>
+            </div>
+        </>
+    );
+};
+
+export default ProjectModal;
+// alterações por joe: modal compacto, visual aprimorado, cores do site, responsividade, animações, scrollbar preta, z-index altíssimo, backdrop, bloqueio de scroll da página, ocultação de iframes e forçar z-index baixo nos outros elementos, inclusive position fixed/absolute 

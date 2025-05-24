@@ -16,24 +16,16 @@ const Contact: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
-        setSuccess(false);
-        if (!formRef.current) return;
-        emailjs.sendForm(
-            'service_xd9l4cm', // ID do serviço configurado no EmailJS
-            'template_gtozmle', // ID do template de e-mail
-            formRef.current, // Referência ao formulário com os dados preenchidos
-            'SUA_PUBLIC_KEY_AQUI' // Substitua pela sua Public Key do EmailJS
-        )
-            .then(() => {
-                setSuccess(true);
-                setFormData({ name: '', email: '', phone: '', message: '' });  // Limpa os campos
-                formRef.current?.reset();
-            })
-            .catch((err) => {
-                setError('Erro ao enviar: ' + (err.text || 'Tente novamente.')); // Captura erros
-            })
-            .finally(() => setLoading(false)); 
+        const msg =
+            `Olá! Gostaria de entrar em contato.\n\n` +
+            `Nome: ${formData.name}\n` +
+            `Email: ${formData.email}\n` +
+            `Telefone: ${formData.phone}\n\n` +
+            `Mensagem:\n${formData.message}\n\n` +
+            `Agradeço desde já pela atenção!`;
+        const url = `https://wa.me/558498699449?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        setLoading(false);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

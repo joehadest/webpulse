@@ -148,14 +148,16 @@ const Budget = () => {
         }
         setLoading(true);
         const msg =
-            `Olá! Gostaria de solicitar um orçamento.\n` +
+            `Olá! Gostaria de solicitar um orçamento.\n\n` +
             `Nome: ${formData.name}\n` +
             `Email: ${formData.email}\n` +
             `Telefone: ${formData.phone}\n` +
-            `CPF/CNPJ: ${cpfCnpj}\n` +
+            `CPF/CNPJ: ${cpfCnpj}\n\n` +
             `Categoria: ${formData.category}\n` +
-            `Serviço: ${formData.service}\n` +
-            `Descrição: ${formData.description}`;
+            `Serviço: ${formData.service}\n\n` +
+            `Descrição do Projeto:\n${formData.description}\n\n` +
+            `Estou ciente de que manutenções a longo prazo não estão inclusas no valor do orçamento.\n\n` +
+            `Agradeço desde já pela atenção!`;
         const url = `https://wa.me/558498699449?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
         setLoading(false);

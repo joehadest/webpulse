@@ -121,10 +121,10 @@ const Home: React.FC = () => {
                         >
                             <SwiperSlide>
                                 <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col w-full max-w-sm mx-auto">
-                                    <img src="./Projetos/barachos.png" alt="Barachos" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                    <img src="./Projetos/barachos.png" alt="Baracho" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-xl text-red-500 font-bold mb-2">Barachos</h3>
-                                        <p className="text-gray-300 flex-1">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Barachos.</p>
+                                        <h3 className="text-xl text-red-500 font-bold mb-2">Baracho Soluções e Serviços</h3>
+                                        <p className="text-gray-300 flex-1">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços.</p>
                                     </div>
                                     <div className="mt-3">
                                         <button onClick={() => setBarachosModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
@@ -166,9 +166,9 @@ const Home: React.FC = () => {
                         <ProjectModal
                             isOpen={isBarachosModalOpen}
                             onClose={() => setBarachosModalOpen(false)}
-                            title="Barachos"
+                            title="Baracho Soluções e Serviços"
                             image="/Projetos/barachos.png"
-                            description="Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Barachos."
+                            description="Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços."
                         />
                         <ProjectModal
                             isOpen={isDocheffModalOpen}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from "react-router-dom";
 
 const Budget = () => {
     const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Budget = () => {
     const [acceptedTerm, setAcceptedTerm] = useState(false);
     const [cpfCnpj, setCpfCnpj] = useState('');
     const [cpfCnpjError, setCpfCnpjError] = useState('');
+    const location = useLocation();
 
     const categories = {
         institutional: {
@@ -178,7 +180,10 @@ const Budget = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+        <section
+            key={location.pathname}
+            className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 animate-fade-in animation-delay-200"
+        >
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12 animate-fade-in">
                     <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">
@@ -368,7 +373,7 @@ const Budget = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

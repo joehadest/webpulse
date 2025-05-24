@@ -127,7 +127,7 @@ const Home: React.FC = () => {
                                         <p className="text-gray-300 flex-1">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Barachos.</p>
                                     </div>
                                     <div className="mt-3">
-                                        <Link to="/services" className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</Link>
+                                        <button onClick={() => setBarachosModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
                             </SwiperSlide>
@@ -139,7 +139,7 @@ const Home: React.FC = () => {
                                         <p className="text-gray-300 flex-1">Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos.</p>
                                     </div>
                                     <div className="mt-3">
-                                        <Link to="/services" className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</Link>
+                                        <button onClick={() => setDocheffModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
                             </SwiperSlide>
@@ -151,7 +151,7 @@ const Home: React.FC = () => {
                                         <p className="text-gray-300 flex-1">Loja virtual responsiva com carrinho e checkout.</p>
                                     </div>
                                     <div className="mt-3">
-                                        <Link to="/services" className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</Link>
+                                        <button onClick={() => setFlashshipModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
                             </SwiperSlide>

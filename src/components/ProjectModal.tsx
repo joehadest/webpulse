@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react';
-//joe fez issoo//
+
 interface ProjectModalProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
     image: string;
     description: string;
-    // alterações por joe: remover detalhes para modal compacto
-    // features: string[];
-    // responsivity: string[];
-    // structure: string[];
-    // technologies: string[];
+    siteLink?: string;
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({
@@ -19,12 +15,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     title,
     image,
     description,
-    // features,
-    // responsivity,
-    // structure,
-    // technologies,
+    siteLink,
 }) => {
-    // alterações por joe: impedir scroll da página principal ao abrir o modal e esconder iframes
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -41,7 +33,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
     return (
         <>
-            {/* alterações por joe: estilo global para esconder iframes e forçar z-index baixo em todos os elementos da página quando modal está aberto, inclusive position fixed/absolute */}
             <style>{`
                 body.modal-open iframe {
                     visibility: hidden !important;
@@ -56,10 +47,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             `}</style>
             <div
                 className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 modal-root ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-                // alterações por joe: z-index altíssimo para garantir que fique acima de tudo
                 style={{ transition: 'opacity 0.3s', zIndex: 2147483647, position: 'fixed' }}
             >
-                {/* alterações por joe: backdrop com z-index altíssimo */}
                 <div
                     className="fixed inset-0 bg-black bg-opacity-80"
                     style={{ zIndex: 2147483646, position: 'fixed' }}
@@ -91,7 +80,19 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                             className="w-full max-w-xs sm:max-w-sm md:max-w-md max-h-72 sm:max-h-96 md:max-h-[32rem] object-contain mx-auto mb-5 rounded-xl shadow-lg border-2 border-red-500"
                         />
                         <h2 className="text-lg sm:text-xl font-extrabold mb-2 text-center text-red-500 tracking-wide animate-fade-in">{title}</h2>
-                        <p className="mb-2 text-center text-gray-200 animate-fade-in animation-delay-200 text-sm sm:text-base">{description}</p>
+                        <p className="mb-4 text-center text-gray-200 animate-fade-in animation-delay-200 text-sm sm:text-base">{description}</p>
+
+                        {/* Botão "Acessar site" criado::Nicolas Rock*/}
+                        {siteLink && (
+                            <a
+                                href={siteLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-2 px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300"
+                            >
+                                🔗 Acessar site
+                            </a>
+                        )}
                     </div>
                 </div>
                 <style>{`
@@ -112,4 +113,3 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 };
 
 export default ProjectModal;
-// alterações por joe: modal compacto, visual aprimorado, cores do site, responsividade, animações, scrollbar preta, z-index altíssimo, backdrop, bloqueio de scroll da página, ocultação de iframes e forçar z-index baixo nos outros elementos, inclusive position fixed/absolute 

@@ -116,7 +116,7 @@ const Home: React.FC = () => {
                             breakpoints={{
                                 640: { slidesPerView: 1 },
                                 768: { slidesPerView: 2 },
-                                1024: { slidesPerView: 3 },
+                                1024: { slidesPerView: 3 }, 
                             }}
                         >
                             <SwiperSlide>
@@ -162,6 +162,7 @@ const Home: React.FC = () => {
                             title="Shippin - Loja de Dropshipping"
                             image="/Projetos/flashship.png"
                             description="Loja virtual responsiva com carrinho e checkout."
+                             siteLink=""
                         />
                         <ProjectModal
                             isOpen={isBarachosModalOpen}
@@ -169,6 +170,7 @@ const Home: React.FC = () => {
                             title="Baracho Soluções e Serviços"
                             image="/Projetos/barachos.png"
                             description="Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços."
+                             siteLink="http://barachosolucoes.com/"
                         />
                         <ProjectModal
                             isOpen={isDocheffModalOpen}
@@ -176,6 +178,7 @@ const Home: React.FC = () => {
                             title="Docheff"
                             image="/Projetos/docheff.png"
                             description="Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos."
+                            siteLink="https://www.do-cheff-rn.com.br/"
                         />
                     </div>
                 </div>

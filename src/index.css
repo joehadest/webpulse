@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html, body {
+        @apply bg-gray-900 text-white;
+    }
+}
+
 @layer utilities {
     .animate-fade-in {
         animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) both;
@@ -9,6 +15,14 @@
 
     .animate-slide-up {
         animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    .animate-modal-fade-in {
+        animation: modalFadeIn 0.3s ease-out both;
+    }
+
+    .animate-modal-scale-in {
+        animation: modalScaleIn 0.4s ease-out both;
     }
 
     .animation-delay-200 {
@@ -43,6 +57,26 @@
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
     }
 }
 

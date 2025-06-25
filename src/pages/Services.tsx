@@ -1,256 +1,153 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ProjectModal from '../components/ProjectModal';
+import { plans } from '../data/plans';
+import PaymentModal from '../components/PaymentModal';
 
 const Services = () => {
-    const [selectedService, setSelectedService] = useState<string | null>(null);
-    const [isFlashshipModalOpen, setFlashshipModalOpen] = useState(false);
+    const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const plan = plans[0]; // Pegando o único plano
 
-    const services = {
-        institutional: {
-            name: 'Site Institucional',
-            description: 'Sites profissionais para empresas, apresentando sua marca, serviços e história.',
-            priceRange: 'R$ 3.500 - R$ 25.000',
-            icon: '🏢',
-            features: [
-                'Design moderno e responsivo',
-                'Otimização para SEO',
-                'Integração com redes sociais',
-                'Painel administrativo',
-                'Formulários de contato',
-                'Blog integrado'
-            ],
-            services: [
-                {
-                    name: 'Landing Page',
-                    price: 'R$ 3.500 - R$ 8.000',
-                    description: 'Página única focada em conversão, ideal para campanhas específicas, lançamentos ou serviços principais. Inclui formulário de contato, seções otimizadas e design responsivo.'
-                },
-                {
-                    name: 'Site Institucional Completo',
-                    price: 'R$ 8.000 - R$ 25.000',
-                    description: 'Site completo com múltiplas páginas, incluindo: página inicial, sobre, serviços, portfólio, blog e contato. Ideal para empresas que precisam de uma presença digital robusta.'
-                },
-                {
-                    name: 'Site Corporativo',
-                    price: 'R$ 12.000 - R$ 25.000',
-                    description: 'Solução completa para grandes empresas, com área administrativa, gestão de conteúdo, múltiplos idiomas, integração com CRM e sistemas internos.'
-                },
-                {
-                    name: 'Site One Page',
-                    price: 'R$ 5.000 - R$ 10.000',
-                    description: 'Site em página única com rolagem suave, ideal para pequenas empresas ou profissionais liberais. Inclui todas as seções essenciais em uma única página.'
-                }
-            ]
-        },
-        restaurant: {
-            name: 'Site para Restaurantes',
-            description: 'Sites especializados para restaurantes, com cardápio digital, reservas e delivery.',
-            priceRange: 'R$ 2.500 - R$ 10.000',
-            icon: '🍽️',
-            features: [
-                'Cardápio digital interativo',
-                'Sistema de reservas online',
-                'Integração com delivery',
-                'Gestão de mesas',
-                'Área administrativa',
-                'Relatórios de vendas'
-            ],
-            services: [
-                {
-                    name: 'Cardápio Digital',
-                    price: 'R$ 2.500 - R$ 5.000',
-                    description: 'Sistema de cardápio digital com categorias, fotos dos pratos, preços e descrições. Inclui painel administrativo para atualizações rápidas.'
-                },
-                {
-                    name: 'Sistema de Reservas',
-                    price: 'R$ 3.500 - R$ 7.000',
-                    description: 'Sistema completo de reservas online com confirmação por email/SMS, gestão de mesas, horários e capacidade do restaurante.'
-                },
-                {
-                    name: 'Integração com Delivery',
-                    price: 'R$ 3.000 - R$ 6.000',
-                    description: 'Integração com principais apps de delivery (iFood, Uber Eats, etc.) e sistema próprio de pedidos online com gestão de entregas.'
-                },
-                {
-                    name: 'Site Completo para Restaurante',
-                    price: 'R$ 5.000 - R$ 10.000',
-                    description: 'Solução completa incluindo site institucional, cardápio digital, sistema de reservas, integração com delivery e área administrativa.'
-                }
-            ]
-        },
-        ecommerce: {
-            name: 'E-commerce',
-            description: 'Lojas virtuais completas com gestão de produtos, pagamentos e entregas.',
-            priceRange: 'R$ 5.000 - R$ 50.000',
-            icon: '🛍️',
-            features: [
-                'Catálogo de produtos',
-                'Carrinho de compras',
-                'Checkout seguro',
-                'Gestão de estoque',
-                'Integração com marketplaces',
-                'Relatórios avançados'
-            ],
-            services: [
-                {
-                    name: 'Loja Virtual Básica',
-                    price: 'R$ 5.000 - R$ 15.000',
-                    description: 'Loja virtual com catálogo de produtos, carrinho de compras, checkout e integração com principais gateways de pagamento.'
-                },
-                {
-                    name: 'E-commerce Completo',
-                    price: 'R$ 15.000 - R$ 50.000',
-                    description: 'Solução completa com gestão de estoque, múltiplos vendedores, sistema de afiliados, relatórios avançados e integração com marketplaces.'
-                },
-                {
-                    name: 'Marketplace',
-                    price: 'R$ 25.000 - R$ 50.000',
-                    description: 'Plataforma completa de marketplace com gestão de múltiplos vendedores, sistema de comissões, avaliações e relatórios detalhados.'
-                },
-                {
-                    name: 'Integração com Marketplaces',
-                    price: 'R$ 8.000 - R$ 20.000',
-                    description: 'Integração com principais marketplaces (Mercado Livre, Amazon, etc.) incluindo sincronização de produtos, estoque e pedidos.'
-                }
-            ]
-        },
-        blog: {
-            name: 'Blogs e Portais',
-            description: 'Plataformas de conteúdo com gestão de posts, categorias e comentários.',
-            priceRange: 'R$ 3.000 - R$ 20.000',
-            icon: '📝',
-            features: [
-                'Sistema de posts',
-                'Gestão de categorias',
-                'Comentários',
-                'Newsletter',
-                'Área de membros',
-                'Monetização'
-            ],
-            services: [
-                {
-                    name: 'Blog Pessoal',
-                    price: 'R$ 3.000 - R$ 8.000',
-                    description: 'Blog pessoal com sistema de posts, categorias, comentários e integração com redes sociais. Ideal para profissionais e influenciadores.'
-                },
-                {
-                    name: 'Portal de Notícias',
-                    price: 'R$ 10.000 - R$ 20.000',
-                    description: 'Portal completo com sistema de assinaturas, área de membros, newsletter, gestão de redatores e monetização por anúncios.'
-                },
-                {
-                    name: 'Blog Corporativo',
-                    price: 'R$ 5.000 - R$ 15.000',
-                    description: 'Blog integrado ao site institucional com gestão de conteúdo, SEO otimizado e ferramentas de análise de engajamento.'
-                },
-                {
-                    name: 'Plataforma de Conteúdo',
-                    price: 'R$ 8.000 - R$ 20.000',
-                    description: 'Plataforma completa para criação e distribuição de conteúdo, com sistema de assinaturas, cursos online e área de membros.'
-                }
-            ]
-        }
+    const handlePlanSelect = () => {
+        setIsPaymentModalOpen(true);
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 ">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center animate-fade-in mt-0 -translate-y-4 transform">
-                    <h2 className="text-3xl font-extrabold text-red-600 sm:text-4xl animate-slide-up">
-                        Nossos Serviços
-                    </h2>
-                    <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
-                        Soluções digitais personalizadas para impulsionar seu negócio
+        <section className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-12">
+                    <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">
+                        Nossos Planos
+                    </h1>
+                    <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                        Escolha o plano ideal para o seu negócio e comece sua transformação digital hoje mesmo
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-8 sm:gap-12">
-                    {/* Demais serviços */}
-                    {Object.entries(services).map(([key, service]) => (
-                        <div
-                            key={key}
-                            className="bg-gray-800 rounded-xl p-4 sm:p-8 border-2 border-gray-700 hover:border-red-500 transition-all duration-300 flex flex-col"
+                {/* Toggle Billing Cycle */}
+                <div className="mt-8 flex justify-center">
+                    <div className="relative bg-gray-800 p-1 rounded-lg">
+                        <button
+                            onClick={() => setBillingCycle('monthly')}
+                            className={`${
+                                billingCycle === 'monthly'
+                                    ? 'bg-red-600 text-white'
+                                    : 'text-gray-300 hover:text-white'
+                            } relative py-2 px-6 rounded-md transition-colors duration-200`}
                         >
-                            <div className="flex items-center mb-4 sm:mb-6">
-                                <span className="text-3xl sm:text-4xl mr-3 sm:mr-4">{service.icon}</span>
-                                <div>
-                                    <h3 className="text-lg sm:text-2xl font-bold text-gray-300">{service.name}</h3>
-                                    <p className="text-gray-400 text-xs sm:text-base">{service.description}</p>
-                                    <p className="text-red-500 font-medium mt-1 sm:mt-2 text-xs sm:text-base">{service.priceRange}</p>
+                            Mensal
+                        </button>
+                        <button
+                            onClick={() => setBillingCycle('yearly')}
+                            className={`${
+                                billingCycle === 'yearly'
+                                    ? 'bg-red-600 text-white'
+                                    : 'text-gray-300 hover:text-white'
+                            } relative py-2 px-6 rounded-md transition-colors duration-200`}
+                        >
+                            Anual
+                            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                                -16,67%
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Plan Card */}
+                <div className="mt-12">
+                    <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 max-w-2xl mx-auto">
+                        <div className="p-8">
+                            <div className="flex items-center justify-between">
+                                <span className="text-4xl">{plan.icon}</span>
+                                <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
+                            </div>
+                            <p className="mt-4 text-gray-300">{plan.description}</p>
+                            <div className="mt-8">
+                                <div className="flex items-baseline">
+                                    <span className="text-4xl font-extrabold text-white">
+                                        R$ {billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
+                                    </span>
+                                    <span className="ml-1 text-xl text-gray-300">
+                                        /{billingCycle === 'monthly' ? 'mês' : 'ano'}
+                                    </span>
                                 </div>
+                                {billingCycle === 'yearly' && (
+                                    <p className="mt-2 text-sm text-green-400">
+                                        Economia de R$ {(plan.monthlyPrice * 12) - plan.yearlyPrice} por ano!
+                                    </p>
+                                )}
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 flex-1">
-                                <div className="bg-gray-700 rounded-lg p-3 sm:p-6 mb-4 md:mb-0">
-                                    <h4 className="text-base sm:text-lg font-semibold text-gray-300 mb-2 sm:mb-4">Recursos Incluídos:</h4>
-                                    <ul className="space-y-2 sm:space-y-3">
-                                        {service.features.map((feature, index) => (
-                                            <li key={index} className="flex items-center text-gray-300 text-xs sm:text-base">
-                                                <span className="text-red-500 mr-2">•</span>
+                            {/* Features */}
+                            <div className="mt-8">
+                                <h4 className="text-lg font-semibold text-white mb-4">Recursos Incluídos:</h4>
+                                <ul className="space-y-3">
+                                    {plan.features.map((feature, index) => (
+                                        <li key={index} className="flex items-center text-gray-300">
+                                            <svg
+                                                className="h-5 w-5 text-red-500 mr-3"
+                                                fill="none"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path d="M5 13l4 4L19 7"></path>
+                                            </svg>
                                                 {feature}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
-                                <div className="space-y-3 sm:space-y-4">
-                                    <h4 className="text-base sm:text-lg font-semibold text-gray-300 mb-2 sm:mb-4">Serviços Disponíveis:</h4>
-                                    {service.services.map((item, index) => (
-                                        <div key={index} className="bg-gray-700 rounded-lg p-3 sm:p-4 hover:bg-gray-600 transition-colors duration-300">
-                                            <h5 className="font-medium text-gray-300 text-xs sm:text-base">{item.name}</h5>
-                                            <p className="text-red-500 text-xs sm:text-sm mb-1 sm:mb-2">{item.price}</p>
-                                            <p className="text-xs sm:text-sm text-gray-400">{item.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="flex justify-end mt-6">
-                                <Link
-                                    to="/budget"
-                                    className="px-5 py-2 text-xs sm:text-base font-medium text-white bg-red-600 rounded-lg shadow-lg hover:bg-red-700 transition-all duration-300"
+                            {/* CTA Button */}
+                            <div className="mt-8">
+                                <button
+                                    onClick={handlePlanSelect}
+                                    className="block w-full py-3 px-6 text-center text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
                                 >
-                                    Solicitar Orçamento
-                                </Link>
+                                    Contratar Agora
+                                </button>
                             </div>
                         </div>
-                    ))}
+                    </div>
+                </div>
+
+                {/* FAQ Section */}
+                <div className="mt-16">
+                    <h2 className="text-3xl font-bold text-white text-center mb-8">Perguntas Frequentes</h2>
+                    <div className="grid gap-6 max-w-3xl mx-auto">
+                        <div className="bg-gray-800 rounded-lg p-6">
+                            <h3 className="text-xl font-semibold text-white mb-2">Como funciona o pagamento?</h3>
+                            <p className="text-gray-300">
+                                Oferecemos opções de pagamento mensal (R$ 120) ou anual (R$ 1.200). O plano anual oferece 16,67% de desconto em relação ao valor total do plano mensal.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-lg p-6">
+                            <h3 className="text-xl font-semibold text-white mb-2">O que está incluído no plano?</h3>
+                            <p className="text-gray-300">
+                                O Plano WebPulse inclui site institucional responsivo, páginas ilimitadas, blog integrado, SEO básico, formulário de contato, integração com redes sociais, área administrativa, suporte por email, hospedagem inclusa e domínio gratuito por 1 ano.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-lg p-6">
+                            <h3 className="text-xl font-semibold text-white mb-2">Posso cancelar a qualquer momento?</h3>
+                            <p className="text-gray-300">
+                                Sim, você pode cancelar sua assinatura a qualquer momento. O cancelamento será efetivo no final do período atual.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <ProjectModal
-                isOpen={isFlashshipModalOpen}
-                onClose={() => setFlashshipModalOpen(false)}
-                title="Shippin - Loja de Dropshipping"
-                image="/Projetos/flashship.png"
-                description="Shippin é uma loja de e-commerce com modelo de dropshipping, desenvolvida com React. O site é totalmente responsivo, adaptando-se a diferentes tamanhos de tela, desde smartphones até monitores de desktop."
-                features={[
-                    'Design Responsivo: Interface adaptável para dispositivos móveis, tablets e desktops',
-                    'Carrinho de Compras: Gestão completa de produtos com persistência local',
-                    'Notificações: Feedback visual ao adicionar/remover produtos',
-                    'Checkout: Processo completo de finalização de compra',
-                ]}
-                responsivity={[
-                    'Layout Fluido: Uso de unidades relativas (%, rem) e CSS Grid/Flexbox',
-                    'Media Queries: Adaptações específicas para diferentes breakpoints',
-                    'Imagens Responsivas: Otimizadas para carregamento rápido em conexões móveis',
-                    'Touch-friendly: Elementos interativos dimensionados para facilitar o toque em dispositivos móveis',
-                ]}
-                structure={[
-                    '/src - Código fonte do React',
-                    '/public - Arquivos estáticos',
-                    '/src/components - Componentes reutilizáveis',
-                    '/src/pages - Páginas principais da aplicação',
-                    '/src/context - Gerenciamento de estado global',
-                ]}
-                technologies={[
-                    'React.js',
-                    'React Router',
-                    'Styled Components',
-                    'React Toastify',
-                ]}
+
+            {/* Payment Modal */}
+            <PaymentModal
+                isOpen={isPaymentModalOpen}
+                onClose={() => setIsPaymentModalOpen(false)}
+                plan={plan}
+                billingCycle={billingCycle}
             />
-        </div>
+        </section>
     );
 };
 

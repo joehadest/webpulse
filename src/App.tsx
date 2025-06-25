@@ -1,25 +1,35 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Footer from './components/Footer';
 import Budget from './pages/Budget';
+import Contact from './pages/Contact';
+import About from './pages/About';
+import Portfolio from './pages/Portfolio';
 import ScrollToTop from './components/ScrollToTop';
+import Sucesso from './pages/Sucesso';
+import WhatsAppChat from './components/WhatsAppChat';
 
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div className="min-h-screen bg-gray-900 text-white">
                 <Navbar />
+                <main className="flex-grow">
                 <ScrollToTop />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/services" element={<Services />} />
+                        <Route path="/budget" element={<Budget />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/budget" element={<Budget />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/portfolio" element={<Portfolio />} />
+                        <Route path="/sucesso" element={<Sucesso />} />
                 </Routes>
+                </main>
                 <Footer />
+                <WhatsAppChat />
             </div>
         </Router>
     );

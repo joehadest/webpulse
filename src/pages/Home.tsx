@@ -6,11 +6,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import ProjectModal from '../components/ProjectModal';
+import { plans } from '../data/plans';
 
 const Home: React.FC = () => {
     const [isFlashshipModalOpen, setFlashshipModalOpen] = useState(false);
     const [isBarachosModalOpen, setBarachosModalOpen] = useState(false);
     const [isDocheffModalOpen, setDocheffModalOpen] = useState(false);
+    const plan = plans[0]; // Pegando o único plano
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
             {/* Banner Section */}
@@ -25,16 +28,159 @@ const Home: React.FC = () => {
             >
                 {/* Banner sem texto */}
                 <Link
-                    to="/contact"
+                    to="/services"
                     className="absolute right-1 bottom-1 sm:right-4 sm:bottom-4 md:right-12 md:bottom-10 px-2 py-1 sm:px-5 sm:py-2.5 md:px-6 md:py-3 text-[10px] sm:text-base md:text-lg font-medium text-white bg-red-600 rounded-lg shadow-lg hover:bg-red-700 transition-all duration-300 animate-slide-up animation-delay-400"
                     style={{ zIndex: 10 }}
                 >
-                    Entrar em contato
+                    Ver Planos
                 </Link>
             </section>
 
-            {/* Hero Section */}
-            {/* Removido o botão centralizado abaixo do banner */}
+            {/* Plans Preview Section */}
+            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+                <div className="max-w-4xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                            Plano que Impulsiona seu Negócio
+                        </h2>
+                        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                            Escolha o plano perfeito para sua empresa e comece sua jornada digital
+                        </p>
+                    </div>
+
+                    <div className="max-w-2xl mx-auto">
+                        <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
+                            <div className="p-8">
+                                <div className="flex items-center justify-between mb-6">
+                                    <span className="text-4xl">{plan.icon}</span>
+                                    <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
+                                </div>
+                                <p className="text-gray-300 mb-6">{plan.description}</p>
+                                <div className="mb-6">
+                                    <div className="flex items-baseline">
+                                        <span className="text-4xl font-extrabold text-white">
+                                            R$ {plan.monthlyPrice}
+                                        </span>
+                                        <span className="ml-1 text-xl text-gray-300">/mês</span>
+                                    </div>
+                                    <p className="text-sm text-gray-400 mt-2">
+                                        ou R$ {plan.yearlyPrice}/ano (16,67% de desconto)
+                                    </p>
+                                </div>
+                                <ul className="space-y-3 mb-8">
+                                    {plan.features.slice(0, 6).map((feature, index) => (
+                                        <li key={index} className="flex items-center text-gray-300">
+                                            <svg
+                                                className="h-5 w-5 text-red-500 mr-3"
+                                                fill="none"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            {feature}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <Link
+                                    to="/services"
+                                    className="block w-full py-3 px-6 text-center text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
+                                >
+                                    Saiba Mais
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Benefits Section */}
+            <section className="py-20 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                            Por que Escolher Nossos Planos?
+                        </h2>
+                        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                            Benefícios exclusivos para impulsionar seu negócio
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="bg-gray-800 rounded-xl p-8">
+                            <div className="text-red-500 text-4xl mb-4">🚀</div>
+                            <h3 className="text-xl font-bold text-white mb-4">Desenvolvimento Rápido</h3>
+                            <p className="text-gray-300">
+                                Entregamos seu projeto em tempo recorde, sem comprometer a qualidade.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-xl p-8">
+                            <div className="text-red-500 text-4xl mb-4">💡</div>
+                            <h3 className="text-xl font-bold text-white mb-4">Suporte Dedicado</h3>
+                            <p className="text-gray-300">
+                                Equipe especializada disponível para ajudar em todas as etapas do projeto.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-xl p-8">
+                            <div className="text-red-500 text-4xl mb-4">🛡️</div>
+                            <h3 className="text-xl font-bold text-white mb-4">Segurança Garantida</h3>
+                            <p className="text-gray-300">
+                                Implementamos as melhores práticas de segurança para proteger seus dados.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-xl p-8">
+                            <div className="text-red-500 text-4xl mb-4">📱</div>
+                            <h3 className="text-xl font-bold text-white mb-4">Design Responsivo</h3>
+                            <p className="text-gray-300">
+                                Sites otimizados para todos os dispositivos, do celular ao desktop.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-xl p-8">
+                            <div className="text-red-500 text-4xl mb-4">⚡</div>
+                            <h3 className="text-xl font-bold text-white mb-4">Alta Performance</h3>
+                            <p className="text-gray-300">
+                                Sites rápidos e otimizados para melhor experiência do usuário.
+                            </p>
+                        </div>
+                        <div className="bg-gray-800 rounded-xl p-8">
+                            <div className="text-red-500 text-4xl mb-4">📈</div>
+                            <h3 className="text-xl font-bold text-white mb-4">SEO Otimizado</h3>
+                            <p className="text-gray-300">
+                                Estratégias para melhorar seu posicionamento nos motores de busca.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+                <div className="max-w-4xl mx-auto text-center">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+                        Pronto para Começar?
+                    </h2>
+                    <p className="text-xl text-gray-300 mb-8">
+                        Escolha seu plano agora e comece sua transformação digital
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Link
+                            to="/services"
+                            className="px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
+                        >
+                            Ver Planos
+                        </Link>
+                        <Link
+                            to="/contact"
+                            className="px-8 py-3 text-lg font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300"
+                        >
+                            Fale Conosco
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
             {/* Serviços em Destaque */}
             <div className="py-16 bg-gray-800/50 animate-fade-in animation-delay-200">

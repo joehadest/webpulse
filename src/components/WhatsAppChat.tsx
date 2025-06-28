@@ -19,13 +19,13 @@ const WhatsAppChat = () => {
             id: 1,
             text: "Olá! Quero contratar o plano WebPulse. Como faço?",
             icon: "🚀",
-            response: "Perfeito! Para contratar o Plano WebPulse é muito simples:\n\n1️⃣ Acesse nossa página de serviços\n2️⃣ Escolha entre:\n   • Plano Mensal: R$120/mês\n   • Plano Anual: R$1.200/ano (16,67% de desconto)\n3️⃣ Clique em 'Contratar Agora'\n4️⃣ Será direcionado para o pagamento seguro via InfinitePay\n5️⃣ Após o pagamento, entraremos em contato em até 24h para iniciar seu projeto!\n\nQuer que eu te ajude com mais alguma coisa? 😊"
+            response: "Perfeito! Para contratar o Plano WebPulse é muito simples:\n\n1️⃣ Acesse nossa página de serviços\n2️⃣ Escolha entre:\n   • Plano WebPulse (Restaurantes/Sites): R$120/mês\n   • Plano E-commerce: R$280/mês\n   • Planos Anuais com 16,67% de desconto\n3️⃣ Clique em 'Contratar Agora'\n4️⃣ Será direcionado para o pagamento seguro via InfinitePay\n5️⃣ Após o pagamento, entraremos em contato em até 24h para iniciar seu projeto!\n\nQuer que eu te ajude com mais alguma coisa? 😊"
         },
         {
             id: 2,
             text: "Qual a diferença entre o plano mensal (R$120) e anual (R$1200)?",
             icon: "💰",
-            response: "Ótima pergunta! Aqui estão as diferenças:\n\n📅 **Plano Mensal (R$120/mês):**\n• Pagamento mensal recorrente\n• Total anual: R$1.440\n• Flexibilidade para cancelar a qualquer momento\n• Ideal para testar o serviço\n\n📅 **Plano Anual (R$1.200/ano):**\n• Pagamento único anual\n• Economia de R$240 por ano (16,67% de desconto)\n• Melhor custo-benefício\n• Compromisso anual\n\n✅ **Ambos incluem:**\n• Site institucional responsivo\n• Páginas ilimitadas\n• Blog integrado\n• SEO básico\n• Formulário de contato\n• Integração com redes sociais\n• Área administrativa\n• Suporte por email\n• Hospedagem inclusa\n• Domínio gratuito por 1 ano\n\nQual plano te interessa mais? 🤔"
+            response: "Ótima pergunta! Aqui estão as diferenças:\n\n📅 **Plano Mensal (R$120/mês):**\n• Pagamento mensal recorrente\n• Total anual: R$1.440\n• Flexibilidade para cancelar a qualquer momento\n• Ideal para testar o serviço\n\n📅 **Plano Anual (R$1.200/ano):**\n• Pagamento único anual\n• Economia de R$240 por ano (16,67% de desconto)\n• Melhor custo-benefício\n• Compromisso anual\n\n✅ **Ambos incluem:**\n• Site institucional responsivo\n• Páginas ilimitadas\n• Blog integrado\n• SEO básico\n• Formulário de contato\n• Integração com redes sociais\n• Área administrativa\n• Suporte por email\n• Hospedagem inclusa\n• Domínio gratuito por 1 ano\n\n💡 **Ideal para:** Restaurantes e sites institucionais/portfólio\n\nQual plano te interessa mais? 🤔"
         },
         {
             id: 3,
@@ -55,13 +55,19 @@ const WhatsAppChat = () => {
             id: 7,
             text: "Preciso de um e-commerce. Vocês fazem?",
             icon: "🛒",
-            response: "Sim! 🛒 E-commerce é nossa especialidade!\n\n🛍️ **Funcionalidades incluídas:**\n• Catálogo de produtos ilimitado\n• Carrinho de compras\n• Pagamento online (PIX, cartão, boleto)\n• Gestão de pedidos\n• Relatórios de vendas\n• Integração com WhatsApp\n• Controle de estoque\n• Cupons de desconto\n\n💰 **Investimento:**\n• E-commerce básico: R$200/mês\n• E-commerce completo: R$300/mês\n• Taxa de setup: R$500 (única vez)\n\n⏱️ **Prazo:** 15-20 dias úteis\n\n🎯 **Incluído:**\n• Design personalizado\n• Integração com gateways de pagamento\n• Painel administrativo\n• Suporte técnico\n• Treinamento de uso\n\nQuer que eu te envie um orçamento detalhado? 😊"
+            response: "Sim! 🛒 E-commerce é nossa especialidade!\n\n🛍️ **Funcionalidades incluídas:**\n• Catálogo de produtos ilimitado\n• Carrinho de compras\n• Pagamento online (PIX, cartão, boleto)\n• Gestão de pedidos\n• Relatórios de vendas\n• Integração com WhatsApp\n• Controle de estoque\n• Cupons de desconto\n\n💰 **Investimento:**\n• E-commerce completo: R$280/mês\n• Plano anual: R$2.800/ano (16,67% de desconto)\n• Taxa de setup: R$500 (única vez)\n\n⏱️ **Prazo:** 15-20 dias úteis\n\n🎯 **Incluído:**\n• Design personalizado\n• Integração com gateways de pagamento\n• Painel administrativo\n• Suporte técnico\n• Treinamento de uso\n\nQuer que eu te envie um orçamento detalhado? 😊"
         },
         {
             id: 8,
             text: "Posso ver alguns sites que vocês já fizeram?",
             icon: "📱",
             response: "Claro! 📱 Aqui estão alguns dos nossos projetos:\n\n🎨 **Portfólio:**\n• https://www.do-cheff-rn.com.br/ (Delivery de Comida)\n• https://barachosolucoes.com/ (Soluções Industriais)\n• https://flash-ship.webpulseservicos.com/ (E-commerce)\n\n✨ **Destaques dos nossos sites:**\n• Design moderno e responsivo\n• SEO otimizado para Google\n• Performance rápida\n• Integração com redes sociais\n• Área administrativa intuitiva\n• Formulários de contato\n• Blog integrado\n\n🎯 **Tipos de sites que fazemos:**\n• Sites institucionais\n• Landing pages\n• Blogs\n• E-commerce\n• Sites de serviços\n• Portfólios\n\nQuer ver algum projeto específico ou tem alguma dúvida sobre algum deles? 😊"
+        },
+        {
+            id: 9,
+            text: "Tenho um restaurante. Qual plano vocês recomendam?",
+            icon: "🍕",
+            response: "Para restaurantes, recomendamos o **Plano WebPulse** por R$120/mês! 🍕\n\n✅ **Perfeito para restaurantes:**\n• Cardápio digital integrado\n• Sistema de delivery/retirada\n• Integração com WhatsApp\n• Galeria de fotos dos pratos\n• Horário de funcionamento\n• Localização e mapa\n• Avaliações de clientes\n• Blog para receitas e novidades\n\n💰 **Investimento:**\n• Mensal: R$120/mês\n• Anual: R$1.200/ano (16,67% de desconto)\n\n⏱️ **Prazo:** 5-10 dias úteis\n\n🎯 **Incluído:**\n• Design personalizado\n• Integração com redes sociais\n• Área administrativa\n• Suporte técnico\n• Hospedagem e domínio\n\nQuer que eu te ajude a contratar? 😊"
         }
     ];
 
@@ -251,7 +257,7 @@ const WhatsAppChat = () => {
                                         <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                                         </svg>
-                                        <span>Falar com atendente</span>
+                                        <span>Falar diretamente com o CEO</span>
                                     </button>
                                 </div>
                             </div>

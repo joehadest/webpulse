@@ -51,27 +51,26 @@ const Home: React.FC = () => {
                     <div className="max-w-2xl mx-auto">
                         <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
                             <div className="p-8">
-                                <div className="flex items-center justify-between mb-6">
-                                    <span className="text-4xl">{plan.icon}</span>
-                                    <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
+                                <div className="text-center mb-6">
+                                    <h3 className="text-2xl sm:text-3xl font-bold text-white">{plan.name}</h3>
                                 </div>
-                                <p className="text-gray-300 mb-6">{plan.description}</p>
-                                <div className="mb-6">
-                                    <div className="flex items-baseline">
-                                        <span className="text-4xl font-extrabold text-white">
+                                <p className="text-gray-300 mb-6 text-sm sm:text-base text-center">{plan.description}</p>
+                                <div className="mb-6 text-center">
+                                    <div className="flex items-baseline justify-center">
+                                        <span className="text-3xl sm:text-4xl font-extrabold text-white">
                                             R$ {plan.monthlyPrice}
                                         </span>
-                                        <span className="ml-1 text-xl text-gray-300">/mês</span>
+                                        <span className="ml-1 text-lg sm:text-xl text-gray-300">/mês</span>
                                     </div>
-                                    <p className="text-sm text-gray-400 mt-2">
+                                    <p className="text-xs sm:text-sm text-gray-400 mt-2">
                                         ou R$ {plan.yearlyPrice}/ano (16,67% de desconto)
                                     </p>
                                 </div>
                                 <ul className="space-y-3 mb-8">
                                     {plan.features.slice(0, 6).map((feature, index) => (
-                                        <li key={index} className="flex items-center text-gray-300">
+                                        <li key={index} className="flex items-center text-gray-300 text-sm sm:text-base">
                                             <svg
-                                                className="h-5 w-5 text-red-500 mr-3"
+                                                className="h-4 w-4 sm:h-5 sm:w-5 text-red-500 mr-3 flex-shrink-0"
                                                 fill="none"
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
@@ -87,7 +86,7 @@ const Home: React.FC = () => {
                                 </ul>
                                 <Link
                                     to="/services"
-                                    className="block w-full py-3 px-6 text-center text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
+                                    className="block w-full py-3 px-6 text-center text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 text-sm sm:text-base"
                                 >
                                     Saiba Mais
                                 </Link>

@@ -6,15 +6,16 @@ import PaymentModal from '../components/PaymentModal';
 const Services = () => {
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-    const plan = plans[0]; // Pegando o único plano
+    const [selectedPlan, setSelectedPlan] = useState(plans[0]);
 
-    const handlePlanSelect = () => {
+    const handlePlanSelect = (plan: any) => {
+        setSelectedPlan(plan);
         setIsPaymentModalOpen(true);
     };
 
     return (
         <section className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">
                         Nossos Planos
@@ -25,7 +26,7 @@ const Services = () => {
                 </div>
 
                 {/* Toggle Billing Cycle */}
-                <div className="mt-8 flex justify-center">
+                <div className="flex justify-center mb-12">
                     <div className="relative bg-gray-800 p-1 rounded-lg">
                         <button
                             onClick={() => setBillingCycle('monthly')}
@@ -53,65 +54,64 @@ const Services = () => {
                     </div>
                 </div>
 
-                {/* Plan Card */}
-                <div className="mt-12">
-                    <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 max-w-2xl mx-auto">
-                        <div className="p-8">
-                            <div className="flex items-center justify-between">
-                                <span className="text-4xl">{plan.icon}</span>
-                                <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
-                            </div>
-                            <p className="mt-4 text-gray-300">{plan.description}</p>
-                            <div className="mt-8">
-                                <div className="flex items-baseline">
-                                    <span className="text-4xl font-extrabold text-white">
-                                        R$ {billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
-                                    </span>
-                                    <span className="ml-1 text-xl text-gray-300">
-                                        /{billingCycle === 'monthly' ? 'mês' : 'ano'}
-                                    </span>
+                {/* Plans Grid */}
+                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    {plans.map((plan) => (
+                        <div key={plan.id} className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
+                            <div className="p-8">
+                                <div className="text-center mb-4">
+                                    <h3 className="text-xl sm:text-2xl font-bold text-white">{plan.name}</h3>
                                 </div>
-                                {billingCycle === 'yearly' && (
-                                    <p className="mt-2 text-sm text-green-400">
-                                        Economia de R$ {(plan.monthlyPrice * 12) - plan.yearlyPrice} por ano!
-                                    </p>
-                                )}
-                            </div>
+                                <p className="text-gray-300 mb-6 text-sm sm:text-base text-center">{plan.description}</p>
+                                
+                                <div className="mb-6 text-center">
+                                    <div className="flex items-baseline justify-center">
+                                        <span className="text-3xl sm:text-4xl font-extrabold text-white">
+                                            R$ {billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
+                                        </span>
+                                        <span className="ml-2 text-base sm:text-lg text-gray-300">
+                                            /{billingCycle === 'monthly' ? 'mês' : 'ano'}
+                                        </span>
+                                    </div>
+                                    {billingCycle === 'yearly' && (
+                                        <p className="mt-2 text-xs sm:text-sm text-green-400">
+                                            Economia de R$ {(plan.monthlyPrice * 12) - plan.yearlyPrice} por ano!
+                                        </p>
+                                    )}
+                                </div>
 
-                            {/* Features */}
-                            <div className="mt-8">
-                                <h4 className="text-lg font-semibold text-white mb-4">Recursos Incluídos:</h4>
-                                <ul className="space-y-3">
-                                    {plan.features.map((feature, index) => (
-                                        <li key={index} className="flex items-center text-gray-300">
-                                            <svg
-                                                className="h-5 w-5 text-red-500 mr-3"
-                                                fill="none"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path d="M5 13l4 4L19 7"></path>
-                                            </svg>
+                                <div className="mb-8">
+                                    <h4 className="text-base sm:text-lg font-semibold text-white mb-4 text-center">Recursos Incluídos:</h4>
+                                    <ul className="space-y-3">
+                                        {plan.features.map((feature, index) => (
+                                            <li key={index} className="flex items-center text-gray-300 text-sm sm:text-base">
+                                                <svg
+                                                    className="h-4 w-4 sm:h-5 sm:w-5 text-red-500 mr-3 flex-shrink-0"
+                                                    fill="none"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                >
+                                                    <path d="M5 13l4 4L19 7"></path>
+                                                </svg>
                                                 {feature}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
-                            {/* CTA Button */}
-                            <div className="mt-8">
+                                {/* CTA Button */}
                                 <button
-                                    onClick={handlePlanSelect}
-                                    className="block w-full py-3 px-6 text-center text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
+                                    onClick={() => handlePlanSelect(plan)}
+                                    className="block w-full py-3 px-6 text-center text-white bg-gradient-to-r from-red-600 to-red-700 rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 text-sm sm:text-base"
                                 >
                                     Contratar Agora
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
 
                 {/* FAQ Section */}
@@ -121,13 +121,13 @@ const Services = () => {
                         <div className="bg-gray-800 rounded-lg p-6">
                             <h3 className="text-xl font-semibold text-white mb-2">Como funciona o pagamento?</h3>
                             <p className="text-gray-300">
-                                Oferecemos opções de pagamento mensal (R$ 120) ou anual (R$ 1.200). O plano anual oferece 16,67% de desconto em relação ao valor total do plano mensal.
+                                Oferecemos opções de pagamento mensal ou anual. O plano anual oferece 16,67% de desconto em relação ao valor total do plano mensal.
                             </p>
                         </div>
                         <div className="bg-gray-800 rounded-lg p-6">
-                            <h3 className="text-xl font-semibold text-white mb-2">O que está incluído no plano?</h3>
+                            <h3 className="text-xl font-semibold text-white mb-2">Qual a diferença entre os planos?</h3>
                             <p className="text-gray-300">
-                                O Plano WebPulse inclui site institucional responsivo, páginas ilimitadas, blog integrado, SEO básico, formulário de contato, integração com redes sociais, área administrativa, suporte por email, hospedagem inclusa e domínio gratuito por 1 ano.
+                                O Plano WebPulse (R$120/mês) é ideal para restaurantes e sites institucionais/portfólio, enquanto o Plano E-commerce (R$280/mês) é perfeito para quem quer vender online com funcionalidades completas de loja virtual.
                             </p>
                         </div>
                         <div className="bg-gray-800 rounded-lg p-6">
@@ -144,7 +144,7 @@ const Services = () => {
             <PaymentModal
                 isOpen={isPaymentModalOpen}
                 onClose={() => setIsPaymentModalOpen(false)}
-                plan={plan}
+                plan={selectedPlan}
                 billingCycle={billingCycle}
             />
         </section>

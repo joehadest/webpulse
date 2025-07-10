@@ -12,6 +12,7 @@ const Home: React.FC = () => {
     const [isFlashshipModalOpen, setFlashshipModalOpen] = useState(false);
     const [isBarachosModalOpen, setBarachosModalOpen] = useState(false);
     const [isDocheffModalOpen, setDocheffModalOpen] = useState(false);
+    const [isReiDosSalgadosModalOpen, setReiDosSalgadosModalOpen] = useState(false);
     const plan = plans[0]; // Pegando o único plano
 
     return (
@@ -245,27 +246,15 @@ const Home: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Carrossel:: Criado por Nicolas Rock*/}
+                {/* Projetos Recentes - NOVO LAYOUT COM SCROLL */}
                 <div className="py-16 bg-gray-800/50 animate-fade-in animation-delay-500">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-8 sm:text-4xl">
                             Projetos Recentes
                         </h2>
-                        <Swiper
-                            modules={[Navigation, Pagination, Autoplay]}
-                            spaceBetween={30}
-                            slidesPerView={1}
-                            navigation
-                            pagination={{ clickable: true }}
-                            autoplay={{ delay: 4000 }}
-                            breakpoints={{
-                                640: { slidesPerView: 1 },
-                                768: { slidesPerView: 2 },
-                                1024: { slidesPerView: 3 }, 
-                            }}
-                        >
-                            <SwiperSlide>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col w-full max-w-sm mx-auto">
+                        <div className="w-full overflow-x-auto pb-4 recent-projects-scroll">
+                            <div className="flex gap-8 min-w-[700px] md:min-w-[1000px] lg:min-w-[1300px]">
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
                                     <img src="./Projetos/barachos.png" alt="Baracho" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
                                         <h3 className="text-xl text-red-500 font-bold mb-2">Baracho Soluções e Serviços</h3>
@@ -275,9 +264,7 @@ const Home: React.FC = () => {
                                         <button onClick={() => setBarachosModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col w-full max-w-sm mx-auto">
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
                                     <img src="./Projetos/docheff.png" alt="Docheff" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
                                         <h3 className="text-xl text-red-500 font-bold mb-2">Docheff</h3>
@@ -287,9 +274,7 @@ const Home: React.FC = () => {
                                         <button onClick={() => setDocheffModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col w-full max-w-sm mx-auto">
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
                                     <img src="./Projetos/flashship.png" alt="Shippin - Loja de Dropshipping" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
                                         <h3 className="text-xl text-red-500 font-bold mb-2">Shippin - Loja de Dropshipping</h3>
@@ -299,33 +284,51 @@ const Home: React.FC = () => {
                                         <button onClick={() => setFlashshipModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
-                            </SwiperSlide>
-                        </Swiper>
-                        <ProjectModal
-                            isOpen={isFlashshipModalOpen}
-                            onClose={() => setFlashshipModalOpen(false)}
-                            title="Shippin - Loja de Dropshipping"
-                            image="/Projetos/flashship.png"
-                            description="Loja virtual responsiva com carrinho e checkout."
-                             siteLink=""
-                        />
-                        <ProjectModal
-                            isOpen={isBarachosModalOpen}
-                            onClose={() => setBarachosModalOpen(false)}
-                            title="Baracho Soluções e Serviços"
-                            image="/Projetos/barachos.png"
-                            description="Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços."
-                             siteLink="http://barachosolucoes.com/"
-                        />
-                        <ProjectModal
-                            isOpen={isDocheffModalOpen}
-                            onClose={() => setDocheffModalOpen(false)}
-                            title="Docheff"
-                            image="/Projetos/docheff.png"
-                            description="Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos."
-                            siteLink="https://www.do-cheff-rn.com.br/"
-                        />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
+                                    <img src="./Projetos/reidossalgados.png" alt="Rei dos Salgados" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                    <div className="flex-1 flex flex-col">
+                                        <h3 className="text-xl text-red-500 font-bold mb-2">Rei dos Salgados</h3>
+                                        <p className="text-gray-300 flex-1">Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos.</p>
+                                    </div>
+                                    <div className="mt-3">
+                                        <button onClick={() => setReiDosSalgadosModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <ProjectModal
+                        isOpen={isFlashshipModalOpen}
+                        onClose={() => setFlashshipModalOpen(false)}
+                        title="Shippin - Loja de Dropshipping"
+                        image="/Projetos/flashship.png"
+                        description="Loja virtual responsiva com carrinho e checkout."
+                         siteLink=""
+                    />
+                    <ProjectModal
+                        isOpen={isBarachosModalOpen}
+                        onClose={() => setBarachosModalOpen(false)}
+                        title="Baracho Soluções e Serviços"
+                        image="/Projetos/barachos.png"
+                        description="Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços."
+                         siteLink="http://barachosolucoes.com/"
+                    />
+                    <ProjectModal
+                        isOpen={isDocheffModalOpen}
+                        onClose={() => setDocheffModalOpen(false)}
+                        title="Docheff"
+                        image="/Projetos/docheff.png"
+                        description="Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos."
+                        siteLink="https://www.do-cheff-rn.com.br/"
+                    />
+                    <ProjectModal
+                        isOpen={isReiDosSalgadosModalOpen}
+                        onClose={() => setReiDosSalgadosModalOpen(false)}
+                        title="Rei dos Salgados - Cardápio Digital"
+                        image="/Projetos/reidossalgados.png"
+                        description="Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos. Sistema de pedidos em tempo real, controle de estoque e categorização eficiente."
+                        siteLink="https://reidossalgados.webpulseservicos.com/"
+                    />
                 </div>
 
                 {/* Maps da empresa:: Criado por Nicolas ROck*/}
@@ -351,6 +354,23 @@ const Home: React.FC = () => {
                     position: relative !important;
                     opacity: 0 !important;
                     pointer-events: none !important;
+                }
+                /* Scrollbar customizado para a seção de projetos recentes */
+                .recent-projects-scroll::-webkit-scrollbar {
+                    height: 12px;
+                }
+                .recent-projects-scroll::-webkit-scrollbar-thumb {
+                    background: linear-gradient(90deg, #ef4444 40%, #b91c1c 100%);
+                    border-radius: 8px;
+                }
+                .recent-projects-scroll::-webkit-scrollbar-track {
+                    background: #222;
+                    border-radius: 8px;
+                }
+                /* Firefox */
+                .recent-projects-scroll {
+                    scrollbar-color: #ef4444 #222;
+                    scrollbar-width: thin;
                 }
             `}</style>
         </div>

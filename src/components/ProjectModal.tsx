@@ -66,9 +66,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                         position: 'relative',
                     }}
                 >
-                    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-2 border-red-600 shadow-2xl rounded-2xl p-3 sm:p-6 relative custom-scrollbar flex flex-col items-center pt-20">
+                    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-2 border-red-500 shadow-2xl rounded-2xl p-3 sm:p-8 relative custom-scrollbar flex flex-col items-center pt-16">
                         <button
-                            className="absolute top-4 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full w-12 h-12 flex items-center justify-center text-3xl font-bold shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 cursor-pointer z-10"
+                            className="absolute top-3 right-3 text-white bg-red-600 hover:bg-red-700 rounded-full w-9 h-9 flex items-center justify-center text-2xl font-bold shadow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 cursor-pointer z-10"
                             onClick={onClose}
                             aria-label="Fechar"
                         >
@@ -77,18 +77,16 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                         <img
                             src={image}
                             alt={title}
-                            className="w-full max-w-xs sm:max-w-sm md:max-w-md max-h-72 sm:max-h-96 md:max-h-[32rem] object-contain mx-auto mb-5 rounded-xl shadow-lg border-2 border-red-500"
+                            className="w-full max-w-xs sm:max-w-sm md:max-w-md max-h-80 sm:max-h-96 object-contain mx-auto mb-6 rounded-xl shadow border-2 border-red-400"
                         />
-                        <h2 className="text-lg sm:text-xl font-extrabold mb-2 text-center text-red-500 tracking-wide animate-fade-in">{title}</h2>
-                        <p className="mb-4 text-center text-gray-200 animate-fade-in animation-delay-200 text-sm sm:text-base">{description}</p>
-
-                        {/* Botão "Acessar site" criado::Nicolas Rock*/}
+                        <h2 className="text-2xl sm:text-3xl font-extrabold mb-3 text-center text-red-500 tracking-wide animate-fade-in drop-shadow-lg">{title}</h2>
+                        <p className="mb-6 text-center text-gray-200 animate-fade-in animation-delay-200 text-base sm:text-lg leading-relaxed px-2">{description}</p>
                         {siteLink && (
                             <a
                                 href={siteLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="mt-2 px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300"
+                                className="mt-2 px-7 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold rounded-lg hover:from-red-700 hover:to-red-800 shadow-lg transition-all duration-300 text-base"
                             >
                                 🔗 Acessar site
                             </a>

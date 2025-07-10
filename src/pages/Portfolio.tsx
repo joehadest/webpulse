@@ -6,6 +6,41 @@ const Portfolio = () => {
 
     const projects = [
         {
+            id: 'reidossalgados',
+            title: 'Rei dos Salgados - Cardápio Digital',
+            description: 'Cardápio digital completo com painel administrativo para gestão de produtos e pedidos.',
+            image: '/Projetos/reidossalgados.png',
+            features: [
+                'Cardápio Digital: Interface moderna e intuitiva para visualização de produtos',
+                'Painel Administrativo: Gestão completa de produtos, categorias e pedidos',
+                'Sistema de Pedidos: Processamento e acompanhamento de pedidos em tempo real',
+                'Gestão de Estoque: Controle automático de disponibilidade de produtos',
+                'Categorização: Organização eficiente dos produtos por categorias',
+                'Upload de Imagens: Sistema para adicionar e gerenciar imagens dos produtos',
+            ],
+            responsivity: [
+                'Design Mobile-First: Otimizado principalmente para dispositivos móveis',
+                'Interface Touch-Friendly: Elementos dimensionados para facilitar o toque',
+                'Layout Adaptativo: Se adapta a diferentes tamanhos de tela',
+                'Navegação Intuitiva: Menu e navegação otimizados para mobile',
+            ],
+            structure: [
+                '/src - Código fonte da aplicação',
+                '/public - Arquivos estáticos e imagens',
+                '/src/components - Componentes reutilizáveis',
+                '/src/pages - Páginas do cardápio e admin',
+                '/src/admin - Painel administrativo',
+                '/src/data - Dados e configurações',
+            ],
+            technologies: [
+                'React.js',
+                'React Router',
+                'Tailwind CSS',
+                'Local Storage',
+                'Context API',
+            ],
+        },
+        {
             id: 'flashship',
             title: 'Shippin - Loja de Dropshipping',
             description: 'Loja de e-commerce com modelo de dropshipping, desenvolvida com React.',

@@ -61,7 +61,7 @@ const WhatsAppChat = () => {
             id: 8,
             text: "Posso ver alguns sites que vocês já fizeram?",
             icon: "📱",
-            response: "Claro! 📱 Aqui estão alguns dos nossos projetos:\n\n🎨 **Portfólio:**\n• https://www.do-cheff-rn.com.br/ (Delivery de Comida)\n• https://barachosolucoes.com/ (Soluções Industriais)\n• https://flash-ship.webpulseservicos.com/ (E-commerce)\n\n✨ **Destaques dos nossos sites:**\n• Design moderno e responsivo\n• SEO otimizado para Google\n• Performance rápida\n• Integração com redes sociais\n• Área administrativa intuitiva\n• Formulários de contato\n• Blog integrado\n\n🎯 **Tipos de sites que fazemos:**\n• Sites institucionais\n• Landing pages\n• Blogs\n• E-commerce\n• Sites de serviços\n• Portfólios\n\nQuer ver algum projeto específico ou tem alguma dúvida sobre algum deles? 😊"
+            response: "Claro! 📱 Aqui estão alguns dos nossos projetos:\n\n🎨 **Portfólio:**\n• https://www.do-cheff-rn.com.br/ (Delivery de Comida)\n• https://barachosolucoes.com/ (Soluções Industriais)\n• https://flash-ship.webpulseservicos.com/ (E-commerce)\n• https://reidossalgados.webpulseservicos.com/ (Cardápio Digital)\n\n✨ **Destaques dos nossos sites:**\n• Design moderno e responsivo\n• SEO otimizado para Google\n• Performance rápida\n• Integração com redes sociais\n• Área administrativa intuitiva\n• Formulários de contato\n• Blog integrado\n\n🎯 **Tipos de sites que fazemos:**\n• Sites institucionais\n• Landing pages\n• Blogs\n• E-commerce\n• Sites de serviços\n• Portfólios\n\nQuer ver algum projeto específico ou tem alguma dúvida sobre algum deles? 😊"
         },
         {
             id: 9,

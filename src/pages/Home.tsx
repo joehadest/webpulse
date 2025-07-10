@@ -253,45 +253,45 @@ const Home: React.FC = () => {
                             Projetos Recentes
                         </h2>
                         <div className="w-full overflow-x-auto pb-4 recent-projects-scroll">
-                            <div className="flex gap-8 min-w-[700px] md:min-w-[1000px] lg:min-w-[1300px]">
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
-                                    <img src="./Projetos/barachos.png" alt="Baracho" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                            <div className="flex gap-3 sm:gap-6 lg:gap-8 min-w-[280px] sm:min-w-[600px] md:min-w-[900px] lg:min-w-[1200px] xl:min-w-[1400px]">
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/barachos.png" alt="Baracho" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-xl text-red-500 font-bold mb-2">Baracho Soluções e Serviços</h3>
-                                        <p className="text-gray-300 flex-1">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços.</p>
+                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Baracho Soluções e Serviços</h3>
+                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços.</p>
                                     </div>
-                                    <div className="mt-3">
-                                        <button onClick={() => setBarachosModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                    <div className="mt-2 sm:mt-3">
+                                        <button onClick={() => setBarachosModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
-                                    <img src="./Projetos/docheff.png" alt="Docheff" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/docheff.png" alt="Docheff" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-xl text-red-500 font-bold mb-2">Docheff</h3>
-                                        <p className="text-gray-300 flex-1">Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos.</p>
+                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Docheff</h3>
+                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos.</p>
                                     </div>
-                                    <div className="mt-3">
-                                        <button onClick={() => setDocheffModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                    <div className="mt-2 sm:mt-3">
+                                        <button onClick={() => setDocheffModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
-                                    <img src="./Projetos/flashship.png" alt="Shippin - Loja de Dropshipping" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/flashship.png" alt="Shippin - Loja de Dropshipping" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-xl text-red-500 font-bold mb-2">Shippin - Loja de Dropshipping</h3>
-                                        <p className="text-gray-300 flex-1">Loja virtual responsiva com carrinho e checkout.</p>
+                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Shippin - Loja de Dropshipping</h3>
+                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Loja virtual responsiva com carrinho e checkout.</p>
                                     </div>
-                                    <div className="mt-3">
-                                        <button onClick={() => setFlashshipModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                    <div className="mt-2 sm:mt-3">
+                                        <button onClick={() => setFlashshipModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-full flex flex-col min-h-[420px] max-w-sm min-w-[320px] mx-auto justify-between border-2 border-red-500">
-                                    <img src="./Projetos/reidossalgados.png" alt="Rei dos Salgados" className="w-full h-48 sm:h-64 object-cover mx-auto mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/reidossalgados.png" alt="Rei dos Salgados" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-xl text-red-500 font-bold mb-2">Rei dos Salgados</h3>
-                                        <p className="text-gray-300 flex-1">Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos.</p>
+                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Rei dos Salgados</h3>
+                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos.</p>
                                     </div>
-                                    <div className="mt-3">
-                                        <button onClick={() => setReiDosSalgadosModalOpen(true)} className="w-full px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                    <div className="mt-2 sm:mt-3">
+                                        <button onClick={() => setReiDosSalgadosModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
                                     </div>
                                 </div>
                             </div>

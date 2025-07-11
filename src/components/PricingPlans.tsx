@@ -10,19 +10,19 @@ const PricingPlans = () => {
     };
 
     return (
-        <div className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center">
-                    <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 sm:text-4xl">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-3 sm:mb-4">
                         Escolha o Plano Ideal para Você
                     </h2>
-                    <p className="mt-4 text-xl text-gray-300">
+                    <p className="text-lg sm:text-xl text-gray-300 px-4">
                         Solução completa para sua presença digital
                     </p>
                 </div>
 
                 {/* Toggle Billing Cycle */}
-                <div className="mt-8 flex justify-center">
+                <div className="mt-6 sm:mt-8 flex justify-center">
                     <div className="relative bg-gray-800 p-1 rounded-lg">
                         <button
                             onClick={() => setBillingCycle('monthly')}
@@ -30,7 +30,7 @@ const PricingPlans = () => {
                                 billingCycle === 'monthly'
                                     ? 'bg-red-600 text-white'
                                     : 'text-gray-300 hover:text-white'
-                            } relative py-2 px-6 rounded-md transition-colors duration-200`}
+                            } relative py-2 px-4 sm:px-6 rounded-md transition-colors duration-200 text-sm sm:text-base`}
                         >
                             Mensal
                         </button>
@@ -40,10 +40,10 @@ const PricingPlans = () => {
                                 billingCycle === 'yearly'
                                     ? 'bg-red-600 text-white'
                                     : 'text-gray-300 hover:text-white'
-                            } relative py-2 px-6 rounded-md transition-colors duration-200`}
+                            } relative py-2 px-4 sm:px-6 rounded-md transition-colors duration-200 text-sm sm:text-base`}
                         >
                             Anual
-                            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-1 sm:px-2 py-1 rounded-full">
                                 -16,67%
                             </span>
                         </button>
@@ -51,11 +51,11 @@ const PricingPlans = () => {
                 </div>
 
                 {/* Plans Grid */}
-                <div className="mt-12 grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
                     {plans.map((plan) => (
                         <div key={plan.id} className="relative">
                             <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105">
-                                <div className="p-8">
+                                <div className="p-6 sm:p-8">
                                     <div className="text-center mb-4">
                                         <h3 className="text-xl sm:text-2xl font-bold text-white">{plan.name}</h3>
                                     </div>

@@ -77,16 +77,16 @@ const Portfolio = () => {
     return (
         <section className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12">
-                    <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">
+                <div className="text-center mb-8 sm:mb-12">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-3 sm:mb-4">
                         Nosso Portfólio
                     </h1>
-                    <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                    <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
                         Conheça alguns dos nossos projetos mais recentes
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                     {projects.map((project) => (
                         <div
                             key={project.id}
@@ -97,18 +97,18 @@ const Portfolio = () => {
                                 <img
                                     src={project.image}
                                     alt={project.title}
-                                    className="w-full h-48 object-cover"
+                                    className="w-full h-40 sm:h-48 object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
                             </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                                <p className="text-gray-300">{project.description}</p>
-                                <div className="mt-4 flex flex-wrap gap-2">
+                            <div className="p-4 sm:p-6">
+                                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{project.title}</h3>
+                                <p className="text-gray-300 text-sm sm:text-base">{project.description}</p>
+                                <div className="mt-3 sm:mt-4 flex flex-wrap gap-1 sm:gap-2">
                                     {project.technologies.map((tech, index) => (
                                         <span
                                             key={index}
-                                            className="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full"
+                                            className="px-2 sm:px-3 py-1 bg-gray-700 text-gray-300 text-xs sm:text-sm rounded-full"
                                         >
                                             {tech}
                                         </span>

@@ -45,17 +45,17 @@ const Contact: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center animate-fade-in">
-                        <h2 className="text-3xl font-extrabold text-red-500 sm:text-4xl">
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-red-500 mb-3 sm:mb-4">
                             Entre em Contato
                         </h2>
-                        <p className="mt-4 text-lg text-gray-300">
+                        <p className="text-base sm:text-lg text-gray-300 px-4">
                             Estamos prontos para transformar sua ideia em realidade. Conte-nos sobre seu projeto e receba uma proposta personalizada.
                         </p>
                     </div>
 
-                    <div className="mt-12 bg-gray-800 shadow-lg rounded-lg overflow-hidden border border-gray-700 animate-fade-in animation-delay-400">
-                        <div className="px-6 py-8">
-                            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                    <div className="mt-8 sm:mt-12 bg-gray-800 shadow-lg rounded-lg overflow-hidden border border-gray-700 animate-fade-in animation-delay-400">
+                        <div className="px-4 sm:px-6 py-6 sm:py-8">
+                            <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-200">
                                         Nome Completo
@@ -139,11 +139,11 @@ const Contact: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="mt-12 text-center animate-fade-in animation-delay-600">
-                        <h3 className="text-xl font-bold text-red-500 mb-4">
+                    <div className="mt-8 sm:mt-12 text-center animate-fade-in animation-delay-600">
+                        <h3 className="text-lg sm:text-xl font-bold text-red-500 mb-3 sm:mb-4">
                             Garantimos Resposta em até 24 Horas
                         </h3>
-                        <p className="text-gray-300">
+                        <p className="text-gray-300 text-sm sm:text-base px-4">
                             Nossa equipe está pronta para atender você e transformar suas ideias em realidade. Entre em contato e receba uma proposta personalizada para seu projeto.
                         </p>
                     </div>

@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="https://instagram.com/webpulse"
+                href="https://www.instagram.com/webpulse.oficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-pink-500 transition-colors duration-300 p-2 bg-gray-800/50 rounded-lg hover:bg-gray-700/50"

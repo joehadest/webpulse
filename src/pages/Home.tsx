@@ -58,7 +58,7 @@ const Home: React.FC = () => {
                 {/* Botão Ver Planos pequeno no canto inferior direito */}
                 <Link
                     to="/services"
-                    className="absolute bottom-4 right-4 sm:bottom-8 sm:right-12 z-20 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 text-xs sm:text-sm min-w-[80px] text-center"
+                    className="absolute bottom-6 right-6 sm:bottom-12 sm:right-16 z-20 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 text-xs sm:text-sm min-w-[100px] text-center"
                 >
                     Ver Planos
                 </Link>

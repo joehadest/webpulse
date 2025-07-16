@@ -55,13 +55,7 @@ const Home: React.FC = () => {
                     {/* Banner vazio - apenas com imagem de fundo */}
                 </div>
 
-                {/* Botão Ver Planos pequeno no canto inferior direito */}
-                <Link
-                    to="/services"
-                    className="absolute bottom-6 right-6 sm:bottom-12 sm:right-16 z-20 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 text-xs sm:text-sm min-w-[100px] text-center"
-                >
-                    Ver Planos
-                </Link>
+
 
                 {/* Scroll indicator */}
                 {/* REMOVIDO */}
@@ -347,12 +341,7 @@ const Home: React.FC = () => {
                             Vamos criar algo incrível juntos!
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-                            <Link
-                                to="/services"
-                                className="px-10 py-4 text-lg font-semibold text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-xl hover:shadow-xl hover:shadow-red-500/25 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 transform hover:scale-105"
-                            >
-                                Ver Planos
-                            </Link>
+
                             <button
                                 onClick={() => {
                                     const msg = "Olá! Gostaria de falar sobre um projeto.";

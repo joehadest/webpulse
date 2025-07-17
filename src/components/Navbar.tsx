@@ -30,32 +30,16 @@ const Navbar: React.FC = () => {
     }, []);
 
     return (
-        <nav className={`hidden sm:block fixed w-full top-0 z-50 transition-all duration-500 ${
+        <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${
             scrolled 
                 ? 'bg-gray-900/95 backdrop-blur-xl shadow-2xl border-b border-gray-800/50' 
                 : 'bg-transparent'
         }`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-center items-center h-20">
-                    {/* Desktop menu */}
+                    {/* Desktop menu - REMOVIDO OS BOTÕES */}
                     <div className="hidden sm:flex sm:items-center sm:space-x-8">
-                        <Link
-                            to="/"
-                            className="relative text-gray-300 hover:text-white px-4 py-2 rounded-lg text-base font-medium transition-all duration-300 group overflow-hidden"
-                        >
-                            <span className="relative z-10">Início</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-purple-500/10 rounded-lg transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                        </Link>
-                        {/* Removido o link duplicado 'Ver Planos' */}
-
-                        
-                        {/* CTA Button */}
-                        <Link
-                            to="/services"
-                            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-2.5 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
-                        >
-                            Ver Planos
-                        </Link>
+                        {/* Botões movidos para a área marcada em branco na página Home */}
                     </div>
 
                     {/* Mobile menu button */}

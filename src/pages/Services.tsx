@@ -181,8 +181,8 @@ const Services = () => {
                     </div>
                 </div>
 
-                {/* Plans Grid */}
-                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+                {/* Plans List - Vertical */}
+                <div className="space-y-8 max-w-4xl mx-auto mb-16">
                     {plans.map((plan) => (
                         <div key={plan.id} className="glass rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50 transform transition-all duration-300 hover:scale-105 hover:border-red-500/50">
                             <div className="p-8">

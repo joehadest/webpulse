@@ -45,4 +45,23 @@ export const plans: Plan[] = [
             'Painel administrativo completo',
         ],
     },
+    {
+        id: 'estoque',
+        name: 'Plano Gestão de Estoque WebPulse',
+        description: 'Sistema completo de gestão de estoque para controle total do seu negócio com 16,67% de desconto no plano anual',
+        icon: '',
+        monthlyPrice: 180,
+        yearlyPrice: 1800,
+        monthlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/5vbNGzK33r',
+        yearlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/1H8TovS4P',
+        features: [
+            'Controle de estoque em tempo real',
+            'Gestão de produtos e categorias',
+            'Relatórios de movimentação',
+            'Controle de fornecedores',
+            'Histórico de entradas e saídas',
+            'Dashboard com métricas',
+            'Suporte técnico especializado',
+        ],
+    },
 ]; 

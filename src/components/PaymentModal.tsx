@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Plan } from '../types/Plan';
+import SecurityBadge from './SecurityBadge';
 
 interface PaymentModalProps {
     isOpen: boolean;
@@ -29,7 +30,7 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
             document.body.style.position = 'unset';
             document.body.style.width = 'unset';
         }
-        
+
         return () => {
             // Cleanup: restaura scroll quando componente é desmontado
             document.body.style.overflow = 'unset';
@@ -73,9 +74,9 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
                             <h3 className="text-lg sm:text-xl font-bold text-white">{billingCycle === 'yearly' ? `${plan.name} Anual` : plan.name}</h3>
                             <span className="text-xl sm:text-2xl">{plan.icon}</span>
                         </div>
-                        
+
                         <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">{plan.description}</p>
-                        
+
                         {/* Price Display */}
                         <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-600/30">
                             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-0">
@@ -97,7 +98,7 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
                                     )}
                                 </div>
                             </div>
-                            
+
                             {billingCycle === 'yearly' && (
                                 <p className="text-xs sm:text-sm text-green-400 mt-2 font-medium">
                                     💰 Economia de R$ {(plan.monthlyPrice * 12) - plan.yearlyPrice} por ano!
@@ -161,7 +162,7 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
                             Ir para o pagamento
                         </span>
                     </a>
-                    
+
                     <button
                         onClick={onClose}
                         className="w-full py-2.5 sm:py-3 px-4 sm:px-6 text-center text-gray-300 bg-gray-700/50 hover:bg-gray-600/50 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300 font-medium border border-gray-600/30 hover:border-gray-500/50 text-sm sm:text-base"
@@ -171,12 +172,7 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
 
                     {/* Security Badge */}
                     <div className="flex justify-center pt-2">
-                        <div className="flex items-center text-xs text-gray-400 bg-gray-800/80 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full border border-gray-600/30">
-                            <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                            </svg>
-                            <span className="text-xs">Pagamento 100% Seguro</span>
-                        </div>
+                        <SecurityBadge type="ssl" size="sm" />
                     </div>
                 </div>
             </div>

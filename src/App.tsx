@@ -10,6 +10,8 @@ import ScrollToTop from './components/ScrollToTop';
 import Sucesso from './pages/Sucesso';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import Falha from './pages/Falha';
+import Pendente from './pages/Pendente';
 import WhatsAppChat from './components/WhatsAppChat';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/portfolio" element={<Portfolio />} />
                         <Route path="/sucesso" element={<Sucesso />} />
+                        <Route path="/falha" element={<Falha />} />
+                        <Route path="/pendente" element={<Pendente />} />
                         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                         <Route path="/terms-of-service" element={<TermsOfService />} />
                     </Routes>

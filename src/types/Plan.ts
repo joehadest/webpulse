@@ -8,4 +8,7 @@ export interface Plan {
     yearlyPrice: number;
     monthlyPaymentLink?: string;
     yearlyPaymentLink?: string;
+    // Novas propriedades para Mercado Pago
+    useMercadoPago?: boolean;
+    mercadoPagoEnabled?: boolean;
 } 

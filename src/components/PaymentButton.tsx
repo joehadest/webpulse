@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { mercadoPagoService, PaymentData } from '../services/mercadopago';
-import { simpleMercadoPagoService } from '../services/mercadopago-simple';
+import React, { useState } from 'react';
+import { mercadoPagoService } from '../services/mercadopago';
+import type { SubscriptionData } from '../services/mercadopago';
 
 interface PaymentButtonProps {
   planId: string;
@@ -23,55 +23,35 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [serviceStatus, setServiceStatus] = useState<string>('');
-
-  // Verifica o status do serviço ao carregar
-  React.useEffect(() => {
-    const checkStatus = () => {
-      if (mercadoPagoService.isConfigured()) {
-        setServiceStatus('Mercado Pago configurado');
-      } else if (simpleMercadoPagoService.isConfigured()) {
-        setServiceStatus(simpleMercadoPagoService.getStatus());
-      } else {
-        setServiceStatus('Serviço não configurado');
-      }
-    };
-    
-    checkStatus();
-  }, []);
+  const [email, setEmail] = useState('');
+  const [showEmailInput, setShowEmailInput] = useState(false);
 
   const handlePayment = async () => {
+    if (!email) {
+      setShowEmailInput(true);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      // Tenta usar o serviço completo primeiro, depois o simplificado
-      if (mercadoPagoService.isConfigured()) {
-        const paymentData: PaymentData = {
-          title: `${planName} - ${billingType === 'monthly' ? 'Mensal' : 'Anual'}`,
-          description: description,
-          price: price,
-          quantity: 1,
-          currency_id: 'BRL',
-          plan_id: `${planId}-${billingType}`,
-        };
-        await mercadoPagoService.createPayment(paymentData);
-      } else if (simpleMercadoPagoService.isConfigured()) {
-        const paymentData = {
-          title: `${planName} - ${billingType === 'monthly' ? 'Mensal' : 'Anual'}`,
-          description: description,
-          price: price,
-          plan_id: planId,
-          billingType: billingType
-        };
-        await simpleMercadoPagoService.processPayment(paymentData);
-      } else {
-        throw new Error('Nenhum serviço de pagamento está configurado');
-      }
+      const subscriptionData: SubscriptionData = {
+        title: `${planName} - ${billingType === 'monthly' ? 'Mensal' : 'Anual'}`,
+        description: description,
+        price: price,
+        plan_id: `${planId}-${billingType}`,
+        frequency: 1,
+        frequency_type: billingType === 'monthly' ? 'months' : 'years',
+        payer_email: email
+      };
+
+      await mercadoPagoService.createSubscription(subscriptionData);
       
     } catch (error) {
       console.error('Erro ao processar pagamento:', error);
-      setError('Erro ao processar pagamento. Verifique sua conexão e tente novamente.');
+      const errorMessage = error instanceof Error ? error.message : 'Erro ao processar pagamento. Verifique sua conexão e tente novamente.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +59,23 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 
   return (
     <div className="w-full">
+      {showEmailInput && (
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            Seu e-mail para a assinatura:
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="seu@email.com"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+            required
+          />
+        </div>
+      )}
+      
       <button
         onClick={handlePayment}
         disabled={disabled || isLoading}
@@ -98,7 +95,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
             </svg>
-            <span>Pagar R$ {price.toFixed(2).replace('.', ',')}</span>
+            <span>{showEmailInput && !email ? 'Informe seu e-mail' : `Assinar R$ ${price.toFixed(2).replace('.', ',')}/${billingType === 'monthly' ? 'mês' : 'ano'}`}</span>
           </div>
         )}
       </button>
@@ -114,7 +111,6 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
         </svg>
         <span>Pagamento seguro via Mercado Pago</span>
-        {serviceStatus && <span className="text-green-400">• {serviceStatus}</span>}
       </div>
     </div>
   );

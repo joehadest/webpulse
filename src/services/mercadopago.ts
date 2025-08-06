@@ -4,32 +4,37 @@ export interface MercadoPagoConfig {
   accessToken: string;
 }
 
-export interface PaymentData {
+export interface SubscriptionData {
   title: string;
   description: string;
   price: number;
-  quantity: number;
-  currency_id: string;
+  frequency: number;
+  frequency_type: 'months' | 'years';
   plan_id: string;
-  payer_email?: string;
+  payer_email: string; // Obrigatório para assinaturas
 }
 
-export interface PreferenceResponse {
+export interface SubscriptionResponse {
   id: string;
   init_point: string;
   sandbox_init_point: string;
 }
 
-// Configuração do ambiente
+// Declaração global para o SDK do Mercado Pago
+declare global {
+  interface Window {
+    MercadoPago: any;
+  }
+}
+
 const MP_CONFIG: MercadoPagoConfig = {
   publicKey: import.meta.env.VITE_MP_PUBLIC_KEY || 'TEST-your-public-key',
   accessToken: import.meta.env.VITE_MP_ACCESS_TOKEN || 'TEST-your-access-token'
 };
 
 export class MercadoPagoService {
-  private mp: any = null;
-
   constructor() {
+    console.log('MercadoPagoService inicializado para assinaturas');
     this.initializeMercadoPago();
   }
 
@@ -40,86 +45,105 @@ export class MercadoPagoService {
         await this.loadMercadoPagoSDK();
       }
       
-      this.mp = new window.MercadoPago(MP_CONFIG.publicKey, {
-        locale: 'pt-BR'
-      });
+      console.log('Mercado Pago SDK carregado com sucesso');
     } catch (error) {
-      console.error('Erro ao inicializar Mercado Pago:', error);
+      console.error('Erro ao inicializar o SDK do Mercado Pago:', error);
     }
   }
 
   private loadMercadoPagoSDK(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (window.MercadoPago) {
-        resolve();
-        return;
-      }
-
       const script = document.createElement('script');
       script.src = 'https://sdk.mercadopago.com/js/v2';
       script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Erro ao carregar SDK do Mercado Pago'));
+      script.onerror = () => reject(new Error('Falha ao carregar o SDK do Mercado Pago'));
       document.head.appendChild(script);
     });
   }
 
-  async createPayment(paymentData: PaymentData): Promise<void> {
+  async createSubscription(subscriptionData: SubscriptionData): Promise<SubscriptionResponse> {
+    // Primeiro tenta criar via API direta
     try {
-      if (!this.mp) {
-        await this.initializeMercadoPago();
-      }
-
-      // Se está configurado com credenciais reais, usa a API do Mercado Pago
-      if (this.isConfigured()) {
-        const preference = await this.createPreference(paymentData);
-        // Abre o checkout real do Mercado Pago
-        window.open(preference.init_point, '_blank');
-      } else {
-        // Para desenvolvimento, usa implementação simplificada
-        const testPaymentUrl = this.createTestPaymentUrl(paymentData);
-        window.open(testPaymentUrl, '_blank');
-      }
-      
+      return await this.createSubscriptionViaAPI(subscriptionData);
     } catch (error) {
-      console.error('Erro no MercadoPago:', error);
-      throw new Error('Erro ao processar pagamento. Verifique suas credenciais.');
+      console.log('API direta falhou, tentando via checkout preferência:', error);
+      // Se falhar, usa abordagem alternativa com preferência
+      return await this.createSubscriptionViaPreference(subscriptionData);
     }
   }
 
-  private createTestPaymentUrl(paymentData: PaymentData): string {
-    // URL de teste que simula o processo de pagamento
-    const params = new URLSearchParams({
-      title: paymentData.title,
-      price: paymentData.price.toString(),
-      plan_id: paymentData.plan_id,
-      description: paymentData.description
+  private async createSubscriptionViaAPI(subscriptionData: SubscriptionData): Promise<SubscriptionResponse> {
+    const subscription = {
+      reason: subscriptionData.title,
+      external_reference: `webpulse-subscription-${subscriptionData.plan_id}-${Date.now()}`,
+      payer_email: subscriptionData.payer_email,
+      back_url: `https://www.webpulseservicos.com/sucesso?plan=${subscriptionData.plan_id}&payment_type=mp&subscription=true`,
+      auto_recurring: {
+        frequency: subscriptionData.frequency,
+        frequency_type: subscriptionData.frequency_type,
+        transaction_amount: subscriptionData.price,
+        currency_id: 'BRL'
+      }
+    };
+
+    const response = await fetch('https://api.mercadopago.com/preapproval', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${MP_CONFIG.accessToken}`,
+        'X-Idempotency-Key': `webpulse-${Date.now()}-${Math.random()}`
+      },
+      body: JSON.stringify(subscription),
+      mode: 'cors'
     });
 
-    // Para teste, redireciona para a página de sucesso após 3 segundos
-    return `${window.location.origin}/sucesso?${params.toString()}&test=true`;
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`API Error: ${response.status} - ${errorText}`);
+    }
+
+    const result = await response.json();
+    
+    if (result.init_point) {
+      window.location.href = result.init_point;
+    }
+    
+    return {
+      id: result.id,
+      init_point: result.init_point,
+      sandbox_init_point: result.sandbox_init_point || result.init_point
+    };
   }
 
-  async createPreference(paymentData: PaymentData): Promise<PreferenceResponse> {
+  private async createSubscriptionViaPreference(subscriptionData: SubscriptionData): Promise<SubscriptionResponse> {
+    console.log('Criando preferência para assinatura:', subscriptionData.title);
+
+    // Cria uma preferência de pagamento que pode ser convertida em assinatura
     const preference = {
       items: [
         {
-          title: paymentData.title,
-          description: paymentData.description,
-          quantity: paymentData.quantity,
-          currency_id: paymentData.currency_id,
-          unit_price: paymentData.price,
+          title: `[ASSINATURA] ${subscriptionData.title}`,
+          description: `Assinatura ${subscriptionData.frequency_type === 'months' ? 'mensal' : 'anual'} - ${subscriptionData.description}`,
+          quantity: 1,
+          currency_id: 'BRL',
+          unit_price: subscriptionData.price,
         }
       ],
+      payer: {
+        email: subscriptionData.payer_email
+      },
       back_urls: {
-        success: `https://www.webpulseservicos.com/sucesso?plan=${paymentData.plan_id}`,
+        success: `https://www.webpulseservicos.com/sucesso?plan=${subscriptionData.plan_id}&payment_type=mp&subscription=true`,
         failure: `https://www.webpulseservicos.com/falha`,
         pending: `https://www.webpulseservicos.com/pendente`
       },
       auto_return: 'approved',
-      external_reference: `webpulse-${paymentData.plan_id}-${Date.now()}`,
-      expires: true,
-      expiration_date_from: new Date().toISOString(),
-      expiration_date_to: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      external_reference: `webpulse-sub-${subscriptionData.plan_id}-${Date.now()}`,
+      metadata: {
+        subscription_type: subscriptionData.frequency_type,
+        subscription_frequency: subscriptionData.frequency,
+        plan_id: subscriptionData.plan_id
+      }
     };
 
     try {
@@ -133,38 +157,48 @@ export class MercadoPagoService {
       });
 
       if (!response.ok) {
-        const error = await response.text();
-        console.error('Erro da API MP:', error);
-        throw new Error('Erro ao criar preferência de pagamento');
+        const errorText = await response.text();
+        throw new Error(`Preference Error: ${response.status} - ${errorText}`);
       }
 
-      return await response.json();
-    } catch (error) {
-      console.error('Erro no createPreference:', error);
-      // Fallback para modo teste se a API falhar
-      const testUrl = this.createTestPaymentUrl(paymentData);
+      const result = await response.json();
+      
+      if (result.init_point) {
+        window.location.href = result.init_point;
+      }
+      
       return {
-        id: `test-${Date.now()}`,
-        init_point: testUrl,
-        sandbox_init_point: testUrl
+        id: result.id,
+        init_point: result.init_point,
+        sandbox_init_point: result.sandbox_init_point || result.init_point
+      };
+      
+    } catch (error) {
+      console.error('Erro na criação de preferência:', error);
+      
+      // Última tentativa: redirecionar direto para o MP com parâmetros
+      const mpUrl = this.buildDirectMPUrl(subscriptionData);
+      window.location.href = mpUrl;
+      
+      return {
+        id: 'direct-redirect',
+        init_point: mpUrl,
+        sandbox_init_point: mpUrl
       };
     }
   }
 
-  getPublicKey(): string {
-    return MP_CONFIG.publicKey;
-  }
+  private buildDirectMPUrl(subscriptionData: SubscriptionData): string {
+    const params = new URLSearchParams({
+      public_key: MP_CONFIG.publicKey,
+      title: `[ASSINATURA] ${subscriptionData.title}`,
+      price: subscriptionData.price.toString(),
+      currency_id: 'BRL',
+      external_reference: `webpulse-direct-${subscriptionData.plan_id}`,
+      back_url: `https://www.webpulseservicos.com/sucesso?plan=${subscriptionData.plan_id}&payment_type=mp&subscription=true`
+    });
 
-  isConfigured(): boolean {
-    return !!(MP_CONFIG.publicKey && MP_CONFIG.publicKey !== 'TEST-your-public-key' &&
-           MP_CONFIG.accessToken && MP_CONFIG.accessToken !== 'TEST-your-access-token');
-  }
-}
-
-// Declaração global para o SDK do Mercado Pago
-declare global {
-  interface Window {
-    MercadoPago: any;
+    return `https://www.mercadopago.com.br/checkout/v1/redirect?${params.toString()}`;
   }
 }
 

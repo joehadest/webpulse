@@ -5,31 +5,27 @@ const Sucesso: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [paymentInfo, setPaymentInfo] = useState({
     plan: '',
-    paymentMethod: 'InfinitePay'
+    paymentMethod: 'Mercado Pago'
   });
 
   useEffect(() => {
     const plan = searchParams.get('plan') || '';
-    const paymentId = searchParams.get('payment_id');
-    const status = searchParams.get('status');
+    const paymentType = searchParams.get('payment_type');
     
-    // Se tem payment_id, veio do Mercado Pago
-    if (paymentId) {
-      setPaymentInfo({
-        plan,
-        paymentMethod: 'Mercado Pago'
-      });
-    } else {
-      setPaymentInfo({
-        plan,
-        paymentMethod: 'InfinitePay'
-      });
-    }
+    // Determina o método de pagamento baseado na URL
+    const method = paymentType === 'mp' ? 'Mercado Pago' : 'InfinitePay';
+    
+    setPaymentInfo({
+      plan,
+      paymentMethod: method
+    });
   }, [searchParams]);
 
   const handleWhatsAppContact = () => {
     const planText = paymentInfo.plan ? ` do ${paymentInfo.plan}` : '';
-    const message = encodeURIComponent(`Olá! Acabei de realizar o pagamento${planText} via ${paymentInfo.paymentMethod} e gostaria de dar início à criação do meu site.`);
+    const message = encodeURIComponent(
+      `Olá! Acabei de realizar o pagamento${planText} via ${paymentInfo.paymentMethod} e gostaria de dar início à criação do meu site.`
+    );
     const whatsappUrl = `https://wa.me/5584998699449?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -50,9 +46,12 @@ const Sucesso: React.FC = () => {
           <p className="text-base sm:text-lg leading-relaxed">
             Obrigado por contratar nossos serviços! 🎉
           </p>
+          
           <p className="text-base sm:text-lg leading-relaxed">
-            Seu pagamento foi processado com sucesso via {paymentInfo.paymentMethod}. Em até 24 horas, nossa equipe entrará em contato para dar início à criação do seu site.
+            Seu pagamento foi processado com sucesso via {paymentInfo.paymentMethod}. 
+            Em até 24 horas, nossa equipe entrará em contato para dar início à criação do seu site.
           </p>
+          
           <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
             Enquanto isso, você pode falar diretamente com nossos desenvolvedores para tirar dúvidas ou adiantar o processo.
           </p>

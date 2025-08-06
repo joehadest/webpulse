@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://webpulseservicos.com/sitemap.xml
+
+# Diretórios permitidos
+Allow: /services
+Allow: /portfolio
+Allow: /about
+Allow: /contact
+Allow: /budget
+Allow: /privacy-policy
+Allow: /terms-of-service
+
+# Diretórios bloqueados
+Disallow: /admin
+Disallow: /api
+Disallow: /*.json$
+Disallow: /*?*
+Disallow: /node_modules/
+
+# Crawl-delay para bots específicos
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: Bingbot
+Crawl-delay: 2

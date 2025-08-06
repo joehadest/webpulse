@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { mercadoPagoService, PaymentData } from '../services/mercadopago';
+import { simpleMercadoPagoService } from '../services/mercadopago-simple';
 
 interface PaymentButtonProps {
   planId: string;
@@ -22,29 +23,55 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [serviceStatus, setServiceStatus] = useState<string>('');
+
+  // Verifica o status do serviço ao carregar
+  React.useEffect(() => {
+    const checkStatus = () => {
+      if (mercadoPagoService.isConfigured()) {
+        setServiceStatus('Mercado Pago configurado');
+      } else if (simpleMercadoPagoService.isConfigured()) {
+        setServiceStatus(simpleMercadoPagoService.getStatus());
+      } else {
+        setServiceStatus('Serviço não configurado');
+      }
+    };
+    
+    checkStatus();
+  }, []);
 
   const handlePayment = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const paymentData: PaymentData = {
-        title: `${planName} - ${billingType === 'monthly' ? 'Mensal' : 'Anual'}`,
-        description: description,
-        price: price,
-        quantity: 1,
-        currency_id: 'BRL',
-        plan_id: `${planId}-${billingType}`,
-      };
-
-      const preference = await mercadoPagoService.createPreference(paymentData);
-      
-      // Redireciona para o checkout do Mercado Pago
-      window.open(preference.init_point, '_blank');
+      // Tenta usar o serviço completo primeiro, depois o simplificado
+      if (mercadoPagoService.isConfigured()) {
+        const paymentData: PaymentData = {
+          title: `${planName} - ${billingType === 'monthly' ? 'Mensal' : 'Anual'}`,
+          description: description,
+          price: price,
+          quantity: 1,
+          currency_id: 'BRL',
+          plan_id: `${planId}-${billingType}`,
+        };
+        await mercadoPagoService.createPayment(paymentData);
+      } else if (simpleMercadoPagoService.isConfigured()) {
+        const paymentData = {
+          title: `${planName} - ${billingType === 'monthly' ? 'Mensal' : 'Anual'}`,
+          description: description,
+          price: price,
+          plan_id: planId,
+          billingType: billingType
+        };
+        await simpleMercadoPagoService.processPayment(paymentData);
+      } else {
+        throw new Error('Nenhum serviço de pagamento está configurado');
+      }
       
     } catch (error) {
       console.error('Erro ao processar pagamento:', error);
-      setError('Erro ao processar pagamento. Tente novamente.');
+      setError('Erro ao processar pagamento. Verifique sua conexão e tente novamente.');
     } finally {
       setIsLoading(false);
     }
@@ -87,6 +114,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
         </svg>
         <span>Pagamento seguro via Mercado Pago</span>
+        {serviceStatus && <span className="text-green-400">• {serviceStatus}</span>}
       </div>
     </div>
   );

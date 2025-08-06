@@ -10,14 +10,6 @@ interface PaymentModalProps {
     billingCycle: 'monthly' | 'yearly';
 }
 
-const getCheckoutUrl = (plan: Plan, billingCycle: 'monthly' | 'yearly') => {
-    if (billingCycle === 'monthly') {
-        return plan.monthlyPaymentLink || 'https://invoice.infinitepay.io/plans/webpulse/2sfDw71vAv';
-    } else {
-        return plan.yearlyPaymentLink || 'https://invoice.infinitepay.io/plans/webpulse/ZjRSMtEXt';
-    }
-};
-
 const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps) => {
     useEffect(() => {
         if (isOpen) {
@@ -41,8 +33,6 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
     }, [isOpen]);
 
     if (!isOpen) return null;
-
-    const checkoutUrl = getCheckoutUrl(plan, billingCycle);
 
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-start justify-center z-50 p-2 sm:p-4 animate-modal-fade-in overflow-y-auto">
@@ -143,38 +133,22 @@ const PaymentModal = ({ isOpen, onClose, plan, billingCycle }: PaymentModalProps
                             <h4 className="text-xs sm:text-sm font-semibold text-blue-300">Segurança Garantida</h4>
                         </div>
                         <p className="text-xs text-gray-400 leading-relaxed">
-                            Seus dados estão protegidos com criptografia SSL de 256 bits. O pagamento é processado pelo InfinitePay, uma das plataformas mais seguras do Brasil.
+                            Seus dados estão protegidos com criptografia SSL de 256 bits. O pagamento é processado pelo Mercado Pago, uma das plataformas mais seguras do Brasil.
                         </p>
                     </div>
                 </div>
 
                 {/* Action Buttons - Fixed at Bottom */}
                 <div className="p-4 sm:p-6 lg:p-8 pt-0 space-y-4 sm:space-y-6 bg-gradient-to-t from-gray-800/50 to-transparent rounded-b-2xl sm:rounded-b-3xl">
-                    {/* Usar Mercado Pago se habilitado, senão usar links antigos */}
-                    {plan.useMercadoPago && plan.mercadoPagoEnabled ? (
-                        <PaymentButton
-                            planId={plan.id}
-                            planName={plan.name}
-                            price={billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
-                            billingType={billingCycle}
-                            description={plan.description}
-                            className="shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
-                        />
-                    ) : (
-                        <a
-                            href={checkoutUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full py-3 sm:py-4 px-4 sm:px-6 text-center text-white bg-gradient-to-r from-red-600 via-red-500 to-red-600 rounded-lg sm:rounded-xl hover:from-red-700 hover:via-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 text-base sm:text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
-                        >
-                            <span className="flex items-center justify-center">
-                                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                                Ir para o pagamento
-                            </span>
-                        </a>
-                    )}
+                    {/* Usando apenas Mercado Pago */}
+                    <PaymentButton
+                        planId={plan.id}
+                        planName={plan.name}
+                        price={billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
+                        billingType={billingCycle}
+                        description={plan.description}
+                        className="shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+                    />
                     <button
                         onClick={onClose}
                         className="w-full py-2.5 sm:py-3 px-4 sm:px-6 text-center text-gray-300 bg-gray-700/50 hover:bg-gray-600/50 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300 font-medium border border-gray-600/30 hover:border-gray-500/50 text-sm sm:text-base"

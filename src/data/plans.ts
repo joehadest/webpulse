@@ -8,10 +8,7 @@ export const plans: Plan[] = [
         icon: '',
         monthlyPrice: 120,
         yearlyPrice: 1200,
-        // Links atualizados do InfinityPay
-        monthlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/BfWGhaO8H',
-        yearlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/AN849mDY5',
-        // Ativar Mercado Pago
+        // Usando apenas Mercado Pago
         useMercadoPago: true,
         mercadoPagoEnabled: true,
         features: [
@@ -34,10 +31,7 @@ export const plans: Plan[] = [
         icon: '',
         monthlyPrice: 280,
         yearlyPrice: 2800,
-        // Links atualizados do InfinityPay
-        monthlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/61QjSA3zlD',
-        yearlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/7T3Q7D8uZ',
-        // Ativar Mercado Pago
+        // Usando apenas Mercado Pago
         useMercadoPago: true,
         mercadoPagoEnabled: true,
         features: [
@@ -60,9 +54,7 @@ export const plans: Plan[] = [
         icon: '',
         monthlyPrice: 180,
         yearlyPrice: 1800,
-        monthlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/FYgwZeSjN',
-        yearlyPaymentLink: 'https://invoice.infinitepay.io/plans/webpulse/30iGLtNjA5',
-        // Ativar Mercado Pago
+        // Usando apenas Mercado Pago
         useMercadoPago: true,
         mercadoPagoEnabled: true,
         features: [

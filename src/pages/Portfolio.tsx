@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ProjectModal from '../components/ProjectModal';
+import Header from '../components/Header';
 
 const Portfolio = () => {
     const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -86,11 +87,12 @@ const Portfolio = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+            <Header />
             {/* Header */}
             <div className="relative overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+                <div className="max-w-7xl mx-auto px-8 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-32">
                     <div className="text-center">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700 mb-6">
+                        <h1 className="text-4xl sm:text-xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700 mb-6">
                             Nosso Portfólio
                         </h1>
                         <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto">

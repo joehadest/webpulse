@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import Header from '../components/Header';
 
 const Sucesso: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -32,6 +33,7 @@ const Sucesso: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
+      <Header />
       <div className="bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 max-w-lg w-full text-center">
         <div className="mb-4 sm:mb-6">
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">

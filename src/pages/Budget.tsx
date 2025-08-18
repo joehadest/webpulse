@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import PricingPlans from '../components/PricingPlans';
+import Header from '../components/Header';
 
 const Budget = () => {
     const [formData, setFormData] = useState({
@@ -70,6 +71,7 @@ const Budget = () => {
             key={location.pathname}
             className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 animate-fade-in animation-delay-200"
         >
+            <Header />
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-8 sm:mb-12 animate-fade-in">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-3 sm:mb-4">

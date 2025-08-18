@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Header from '../components/Header';
 import emailjs from 'emailjs-com';
 
 const Contact: React.FC = () => {
@@ -41,8 +42,9 @@ const Contact: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 overflow-x-hidden py-12">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-900 overflow-x-hidden">
+            <Header />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-32">
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center animate-fade-in">
                         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-red-500 mb-3 sm:mb-4">

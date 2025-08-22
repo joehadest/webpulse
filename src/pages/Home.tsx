@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -16,29 +17,56 @@ const Home: React.FC = () => {
     const [isBarachosModalOpen, setBarachosModalOpen] = useState(false);
     const [isDocheffModalOpen, setDocheffModalOpen] = useState(false);
     const [isReiDosSalgadosModalOpen, setReiDosSalgadosModalOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const plan = plans[0]; // Pegando o único plano
+
+        const [showHeader, setShowHeader] = useState(true);
+        useEffect(() => {
+            const checkWidth = () => {
+                setShowHeader(window.innerWidth >= 1035);
+            };
+            checkWidth();
+            window.addEventListener('resize', checkWidth);
+            return () => window.removeEventListener('resize', checkWidth);
+        }, []);
 
     const handleCustomProject = () => {
         const msg = "Olá! Gostaria de um orçamento para desenvolvimento de site com domínio próprio para minha empresa.";
         window.open(`https://wa.me/5584998699449?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-            {/* Banner Section */}
+                {showHeader && <Header />}
+            {/* ============================================ */}
+            {/* ===== SEÇÃO DO BANNER MODIFICADA ABAIXO ===== */}
+            {/* ============================================ */}
             <section
-                className="relative w-full h-40 xs:h-48 sm:h-72 md:h-[500px] bg-black text-white flex items-center justify-center animate-fade-in animation-delay-200 overflow-hidden"
+                className="relative w-full h-[30vh] sm:h-[50vh] lg:h-screen bg-black overflow-hidden"
                 style={{
-                    backgroundImage: "url('Imgs/banner.png')",
+                    backgroundImage: "url('/Imgs/banner.png')",
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundPosition: 'center center',
                     backgroundRepeat: 'no-repeat',
                 }}
             >
                 {/* Overlay gradiente */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
-
-                {/* Efeito de partículas */}
                 <div className="particles">
                     {[...Array(20)].map((_, i) => (
                         <div
@@ -52,16 +80,9 @@ const Home: React.FC = () => {
                         />
                     ))}
                 </div>
-
-                {/* Conteúdo do banner */}
-                <div className="relative z-10 text-center animate-slide-up animation-delay-400">
-                    {/* Banner vazio - apenas com imagem de fundo */}
+                <div className="relative z-10">
+                    {/* Vazio */}
                 </div>
-
-
-
-                {/* Scroll indicator */}
-                {/* REMOVIDO */}
             </section>
 
             {/* Plans Preview Section */}
@@ -603,4 +624,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home; 
+export default Home;

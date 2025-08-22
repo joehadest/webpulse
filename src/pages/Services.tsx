@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { plans } from '../data/plans';
 import PaymentModal from '../components/PaymentModal';
+import Header from '../components/Header';
 
 const Services = () => {
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
@@ -19,8 +20,9 @@ const Services = () => {
     };
 
     return (
-        <section className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 pt-32 pb-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-6xl mx-auto">
+        <section className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 pb-12 px-4 sm:px-6 lg:px-8">
+            <Header />
+            <div className="max-w-6xl mx-auto pt-20 sm:pt-24 lg:pt-32">
                 <div className="text-center mb-8 sm:mb-12">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-3 sm:mb-4">
                         Nossos Planos

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import PricingPlans from '../components/PricingPlans';
+import Header from '../components/Header';
 
 const Budget = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +15,16 @@ const Budget = () => {
     const [cpfCnpj, setCpfCnpj] = useState('');
     const [cpfCnpjError, setCpfCnpjError] = useState('');
     const location = useLocation();
+
+        const [showHeader, setShowHeader] = useState(true);
+        useEffect(() => {
+            const checkWidth = () => {
+                setShowHeader(window.innerWidth >= 1035);
+            };
+            checkWidth();
+            window.addEventListener('resize', checkWidth);
+            return () => window.removeEventListener('resize', checkWidth);
+        }, []);
 
     function validateCpfCnpj(value: string) {
         const v = value.replace(/\D/g, '');
@@ -70,6 +81,7 @@ const Budget = () => {
             key={location.pathname}
             className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 animate-fade-in animation-delay-200"
         >
+                {showHeader && <Header />}
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-8 sm:mb-12 animate-fade-in">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-3 sm:mb-4">

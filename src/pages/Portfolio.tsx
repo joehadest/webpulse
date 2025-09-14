@@ -83,6 +83,38 @@ const Portfolio = () => {
             technologies: ['React', 'D3.js', 'WebSocket', 'Express'],
             demoLink: 'https://cripto-dashboard.com',
         },
+        {
+            id: 'acai-altostop',
+            title: 'Açaí Alto Stop',
+            subtitle: 'Cardápio Digital',
+            description: 'Um sistema de cardápio digital com categorias, preços e descrições, incluindo painel administrativo para atualizações rápidas.',
+            image: '/Projetos/acai.png',
+            features: [
+                'Exibição do cardápio organizado por categorias',
+                'Painel administrativo para gerenciamento de categorias e itens',
+                'Interface responsiva e moderna',
+                'Atualizações em tempo real',
+                'Gerenciamento de itens: nome, descrição, preço, disponibilidade e categoria',
+            ],
+            technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+            demoLink: 'https://acaialtostop.vercel.app',
+        },
+        {
+            id: 'elohim',
+            title: 'Academia Elohim',
+            subtitle: 'Sistema de Feedback e Gestão',
+            description: 'Sistema completo para coleta e gestão de feedbacks de alunos com painel administrativo seguro e estatísticas em tempo real.',
+            image: '/Projetos/elohim.png',
+            features: [
+                'Formulário público responsivo com avaliação por estrelas e NPS',
+                'Painel administrativo com autenticação e filtros avançados',
+                'Estatísticas e métricas em tempo real (NPS e médias)',
+                'Funções de copiar, imprimir e visualização organizada',
+                'Interface moderna com tema escuro e usabilidade otimizada'
+            ],
+            technologies: ['Node.js', 'Express', 'MongoDB Atlas', 'HTML5', 'CSS3', 'JavaScript'],
+            demoLink: 'https://academiaelohim.com',
+        },
     ];
 
     return (
@@ -176,4 +208,4 @@ const Portfolio = () => {
     );
 };
 
-export default Portfolio; 
+export default Portfolio;

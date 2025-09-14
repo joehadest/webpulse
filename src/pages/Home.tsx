@@ -17,6 +17,8 @@ const Home: React.FC = () => {
     const [isBarachosModalOpen, setBarachosModalOpen] = useState(false);
     const [isDocheffModalOpen, setDocheffModalOpen] = useState(false);
     const [isReiDosSalgadosModalOpen, setReiDosSalgadosModalOpen] = useState(false);
+    const [isAcaiModalOpen, setAcaiModalOpen] = useState(false);
+    const [isElohimModalOpen, setElohimModalOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const plan = plans[0]; // Pegando o único plano
@@ -488,44 +490,66 @@ const Home: React.FC = () => {
                         </h2>
                         <div className="w-full overflow-x-auto pb-4 recent-projects-scroll">
                             <div className="flex gap-3 sm:gap-6 lg:gap-8 min-w-[280px] sm:min-w-[600px] md:min-w-[900px] lg:min-w-[1200px] xl:min-w-[1400px]">
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
-                                    <img src="./Projetos/barachos.png" alt="Baracho" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 flex flex-col recent-project-card border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/barachos.png" alt="Baracho" className="project-image" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Baracho Soluções e Serviços</h3>
-                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços.</p>
+                                        <h3 className="project-title">Baracho Soluções e Serviços</h3>
+                                        <p className="project-desc">Site empresarial para apresentação de projetos, serviços e informações institucionais da empresa Baracho Soluções e Serviços.</p>
                                     </div>
                                     <div className="mt-2 sm:mt-3">
-                                        <button onClick={() => setBarachosModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                        <button onClick={() => setBarachosModalOpen(true)} className="project-btn-primary">Ver detalhes</button>
                                     </div>
                                 </div>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
-                                    <img src="./Projetos/docheff.png" alt="Docheff" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 flex flex-col recent-project-card border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/docheff.png" alt="Docheff" className="project-image" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Docheff</h3>
-                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos.</p>
+                                        <h3 className="project-title">Docheff</h3>
+                                        <p className="project-desc">Cardápio digital completo, com painel administrativo para gestão de produtos e página de impressão de pedidos.</p>
                                     </div>
                                     <div className="mt-2 sm:mt-3">
-                                        <button onClick={() => setDocheffModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                        <button onClick={() => setDocheffModalOpen(true)} className="project-btn-primary">Ver detalhes</button>
                                     </div>
                                 </div>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
-                                    <img src="./Projetos/flashship.png" alt="Shippin - Loja de Dropshipping" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 flex flex-col recent-project-card border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/flashship.png" alt="Shippin - Loja de Dropshipping" className="project-image" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Shippin - Loja de Dropshipping</h3>
-                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Loja virtual responsiva com carrinho e checkout.</p>
+                                        <h3 className="project-title">Shippin - Loja de Dropshipping</h3>
+                                        <p className="project-desc">Loja virtual responsiva com carrinho e checkout.</p>
                                     </div>
                                     <div className="mt-2 sm:mt-3">
-                                        <button onClick={() => setFlashshipModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                        <button onClick={() => setFlashshipModalOpen(true)} className="project-btn-primary">Ver detalhes</button>
                                     </div>
                                 </div>
-                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 h-full flex flex-col min-h-[380px] sm:min-h-[420px] max-w-[240px] sm:max-w-xs lg:max-w-sm min-w-[220px] sm:min-w-[280px] lg:min-w-[320px] mx-auto justify-between border-2 border-red-500 flex-shrink-0">
-                                    <img src="./Projetos/reidossalgados.png" alt="Rei dos Salgados" className="w-full h-40 sm:h-48 lg:h-64 object-cover mx-auto mb-2 sm:mb-3 rounded-xl shadow-lg border-2 border-red-500" />
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 flex flex-col recent-project-card border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/reidossalgados.png" alt="Rei dos Salgados" className="project-image" />
                                     <div className="flex-1 flex flex-col">
-                                        <h3 className="text-lg sm:text-xl text-red-500 font-bold mb-1 sm:mb-2">Rei dos Salgados</h3>
-                                        <p className="text-gray-300 flex-1 text-sm sm:text-base">Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos.</p>
+                                        <h3 className="project-title">Rei dos Salgados</h3>
+                                        <p className="project-desc">Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos.</p>
                                     </div>
                                     <div className="mt-2 sm:mt-3">
-                                        <button onClick={() => setReiDosSalgadosModalOpen(true)} className="w-full px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">Ver detalhes</button>
+                                        <button onClick={() => setReiDosSalgadosModalOpen(true)} className="project-btn-primary">Ver detalhes</button>
+                                    </div>
+                                </div>
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 flex flex-col recent-project-card border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/acai.png" alt="Açaí Altos Top" className="project-image" />
+                                    <div className="flex-1 flex flex-col">
+                                        <h3 className="project-title">Açaí Altos Top</h3>
+                                        <p className="project-desc">Cardápio digital com categorias, painel administrativo e atualização em tempo real.</p>
+                                    </div>
+                                    <div className="mt-2 sm:mt-3 flex gap-2">
+                                        <button onClick={() => setAcaiModalOpen(true)} className="project-btn-primary w-1/2">Detalhes</button>
+                                        <a href="https://acaialtostop.vercel.app" target="_blank" rel="noopener noreferrer" className="project-btn-secondary w-1/2 text-center">Visitar</a>
+                                    </div>
+                                </div>
+                                <div className="bg-gray-900 rounded-lg shadow-lg p-3 sm:p-4 lg:p-6 flex flex-col recent-project-card border-2 border-red-500 flex-shrink-0">
+                                    <img src="./Projetos/elohim.png" alt="Academia Elohim" className="project-image" />
+                                    <div className="flex-1 flex flex-col">
+                                        <h3 className="project-title">Academia Elohim</h3>
+                                        <p className="project-desc">Sistema de feedback com painel administrativo e métricas em tempo real.</p>
+                                    </div>
+                                    <div className="mt-2 sm:mt-3 flex gap-2">
+                                        <button onClick={() => setElohimModalOpen(true)} className="project-btn-primary w-1/2">Detalhes</button>
+                                        <a href="https://academiaelohim.com" target="_blank" rel="noopener noreferrer" className="project-btn-secondary w-1/2 text-center">Visitar</a>
                                     </div>
                                 </div>
                             </div>
@@ -562,6 +586,22 @@ const Home: React.FC = () => {
                         image="/Projetos/reidossalgados.png"
                         description="Cardápio digital completo com painel administrativo para gestão de produtos, categorias e pedidos. Sistema de pedidos em tempo real, controle de estoque e categorização eficiente."
                         siteLink="https://reidossalgados.webpulseservicos.com/"
+                    />
+                    <ProjectModal
+                        isOpen={isAcaiModalOpen}
+                        onClose={() => setAcaiModalOpen(false)}
+                        title="Açaí Altos Top - Cardápio Digital"
+                        image="/Projetos/acai.png"
+                        description="Sistema de cardápio digital com categorias, preços e descrições. Painel administrativo para atualizações rápidas e interface responsiva."
+                        siteLink="https://acaialtostop.vercel.app"
+                    />
+                    <ProjectModal
+                        isOpen={isElohimModalOpen}
+                        onClose={() => setElohimModalOpen(false)}
+                        title="Academia Elohim - Sistema de Feedback"
+                        image="/Projetos/elohim.png"
+                        description="Coleta de feedbacks completos (NPS, avaliações por estrelas e comentários) com painel administrativo autenticado, filtros, estatísticas e métricas em tempo real."
+                        siteLink="https://academiaelohim.com"
                     />
                 </div>
 
@@ -619,6 +659,19 @@ const Home: React.FC = () => {
                     scrollbar-color: #ef4444 #222;
                     scrollbar-width: thin;
                 }
+                /* Padronização de cards recentes */
+                .recent-project-card { min-height: 430px; max-height:430px; width: 240px; }
+                @media (min-width: 640px) { .recent-project-card { width: 280px; } }
+                @media (min-width: 1024px) { .recent-project-card { width: 320px; } }
+                .project-image { width:100%; height:180px; object-fit:cover; border-radius:0.75rem; margin-bottom:0.75rem; border:2px solid #ef4444; }
+                @media (min-width:640px){ .project-image { height:200px; } }
+                @media (min-width:1024px){ .project-image { height:256px; } }
+                .project-title { font-size:1.125rem; font-weight:700; color:#ef4444; margin-bottom:0.5rem; }
+                .project-desc { font-size:0.875rem; color:#d1d5db; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+                .project-btn-primary { background:#dc2626; color:#fff; padding:0.5rem 0.75rem; border-radius:0.5rem; font-size:0.75rem; line-height:1rem; transition:background .2s ease; width:100%; }
+                .project-btn-primary:hover { background:#b91c1c; }
+                .project-btn-secondary { background:#374151; color:#fff; padding:0.5rem 0.75rem; border-radius:0.5rem; font-size:0.75rem; line-height:1rem; transition:background .2s ease; }
+                .project-btn-secondary:hover { background:#4b5563; }
             `}</style>
         </div>
     );

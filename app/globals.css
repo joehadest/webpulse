@@ -5,4 +5,10 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+  background-color: #030303;
+}
+
+body {
+  background-color: #030303;
+  min-height: 100vh;
 }

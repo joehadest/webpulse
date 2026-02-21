@@ -9,6 +9,7 @@ const imageClass =
 const projectsData = [
   {
     title: "Camarote PMD",
+    url: "https://camarotepmd.com.br/",
     content: (
       <div>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
@@ -36,6 +37,7 @@ const projectsData = [
   },
   {
     title: "Baracho Industrial",
+    url: "https://barachosolucoes.com/",
     content: (
       <div>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
@@ -63,6 +65,7 @@ const projectsData = [
   },
   {
     title: "Rei dos Salgados",
+    url: "https://reidossalgados.webpulseservicos.com/",
     content: (
       <div>
         <p className="text-white/70 text-xs md:text-sm font-normal mb-8">

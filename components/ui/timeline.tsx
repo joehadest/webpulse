@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 interface TimelineEntry {
   title: string;
   content: React.ReactNode;
+  url?: string;
 }
 
 export const Timeline = ({
@@ -71,6 +72,19 @@ export const Timeline = ({
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-white/50">
                 {item.title}
               </h3>
+              {item.url && (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white border border-white/20 hover:border-white/40 rounded-lg px-4 py-2 mb-4 transition-colors"
+                >
+                  Acessar site
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              )}
               {item.content}
             </div>
           </div>

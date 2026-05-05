@@ -5,7 +5,7 @@ import { MessageCircle, Instagram, Github } from "lucide-react";
 import { ModemAnimatedFooter } from "@/components/ui/modem-animated-footer";
 
 const WHATSAPP_NUMBER = "5584998699449";
-const INSTAGRAM_USER = "webpulse";
+const INSTAGRAM_USER = "webpulse.oficial";
 const GITHUB_USER = "joehadest";
 
 export function Footer() {

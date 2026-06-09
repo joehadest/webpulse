@@ -92,6 +92,62 @@ const projectsData = [
     ),
   },
   {
+    title: "Seu manto",
+    url: "https://seumanto.webpulseservicos.com/",
+    content: (
+      <div>
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
+          E-commerce full-stack de camisetas com loja, carrinho, checkout,
+          painel admin, Supabase Realtime e integração com Mercado Pago.
+        </p>
+        <div className="grid grid-cols-2 gap-4">
+          <Image
+            src="/projetos/seumanto.png"
+            alt="Seu manto - E-commerce de Camisetas"
+            width={500}
+            height={500}
+            className={imageClass}
+          />
+          <Image
+            src="/projetos/seumanto%202.png"
+            alt="Seu manto - Painel Admin"
+            width={500}
+            height={500}
+            className={imageClass}
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "DRM SERVIÇOS",
+    url: "https://www.wwsdrmmontgem.com.br/",
+    content: (
+      <div>
+        <p className="text-white/70 text-xs md:text-sm font-normal mb-8">
+          Site institucional para serviços industriais, com seções editáveis de
+          serviços, projetos em destaque e contatos comerciais.
+        </p>
+        <div className="grid grid-cols-2 gap-4">
+          <Image
+            src="/projetos/DRM%20.png"
+            alt="DRM SERVIÇOS - Site institucional"
+            width={500}
+            height={500}
+            className={imageClass}
+          />
+          <Image
+            src="/projetos/DRM%202.png"
+            alt="DRM SERVIÇOS - Serviços em destaque"
+            width={500}
+            height={500}
+            className={imageClass}
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
     title: "Seu projeto aqui",
     content: (
       <p className="text-white/50 text-sm md:text-base">

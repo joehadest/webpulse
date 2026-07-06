@@ -47,7 +47,7 @@ const Feature197 = ({ features }: Feature197Props) => {
                       className="cursor-pointer py-5 text-left !no-underline transition hover:no-underline"
                     >
                       <h6
-                        className={`text-xl font-semibold transition-colors ${isOpen ? "text-white" : "text-white/50"}`}
+                        className={`text-xl font-semibold transition-colors ${isOpen ? "text-sky-300" : "text-white/50"}`}
                       >
                         {tab.title}
                       </h6>
@@ -68,7 +68,8 @@ const Feature197 = ({ features }: Feature197Props) => {
             </Accordion>
           </div>
           {activeFeature?.icon && (
-            <div className="hidden md:flex m-auto w-1/2 items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.08] min-h-[280px] p-8 overflow-hidden">
+            <div className="hidden md:flex m-auto w-1/2 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400/[0.08] to-white/[0.02] border border-white/[0.08] min-h-[300px] p-8 overflow-hidden relative">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.08),transparent_70%)]" />
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTabId}
@@ -76,7 +77,7 @@ const Feature197 = ({ features }: Feature197Props) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.25, ease: [0.25, 0.4, 0.25, 1] }}
-                className="[&>svg]:w-24 [&>svg]:h-24 [&>svg]:max-w-full [&>svg]:max-h-full"
+                className="relative z-10 [&>svg]:w-24 [&>svg]:h-24 [&>svg]:max-w-full [&>svg]:max-h-full"
               >
                 {activeFeature.icon}
               </motion.div>

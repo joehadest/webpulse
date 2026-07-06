@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
+  <defs>
+    <linearGradient id="wm-pulse" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="wm-text" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#a1a1aa"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4, 8)">
+    <circle cx="32" cy="32" r="30" stroke="rgba(56,189,248,0.25)" stroke-width="1.5" fill="rgba(56,189,248,0.05)"/>
+    <path
+      d="M10 34 L20 34 L26 18 L32 46 L38 26 L44 38 L54 34"
+      stroke="url(#wm-pulse)"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <circle cx="26" cy="18" r="2" fill="#7dd3fc"/>
+    <circle cx="32" cy="46" r="2" fill="#38bdf8"/>
+  </g>
+  <text x="78" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="url(#wm-text)" letter-spacing="-0.5">
+    Web<tspan fill="url(#wm-pulse)">Pulse</tspan>
+  </text>
+</svg>

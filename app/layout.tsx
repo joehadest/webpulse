@@ -1,18 +1,25 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, Syne } from "next/font/google";
 import "./globals.css";
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "WebPulse",
   description: "Tem uma ideia? Desenvolvimento de sites e sistemas sob medida.",
-  icons: {
-    icon: [
-      { url: "/favicon/favicon_io/favicon.ico", sizes: "any" },
-      { url: "/favicon/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: "/favicon/favicon_io/apple-touch-icon.png",
+  appleWebApp: {
+    title: "webpulse",
   },
-  manifest: "/favicon/favicon_io/site.webmanifest",
 };
 
 export default function RootLayout({
@@ -21,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className="antialiased bg-[#030303] min-h-screen">{children}</body>
+    <html lang="pt-BR" className={`${plusJakarta.variable} ${syne.variable}`}>
+      <body className="font-sans antialiased bg-background min-h-screen">{children}</body>
     </html>
   );
 }

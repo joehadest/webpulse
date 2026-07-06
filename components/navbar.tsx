@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { WebPulseLogo } from "@/components/ui/webpulse-logo";
 
 const Navbar1 = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,25 +69,19 @@ const Navbar1 = () => {
         ease: [0.25, 0.4, 0.25, 1],
       }}
     >
-      <div className="flex items-center justify-between px-6 py-3 bg-[#030303] border border-white/[0.08] rounded-full w-full max-w-3xl relative z-10 backdrop-blur-sm">
+      <div className="flex items-center justify-between px-6 py-3 glass rounded-full w-full max-w-3xl relative z-10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
         <div className="flex items-center">
           <motion.a
             href="#top"
             onClick={(e) => handleNavClick(e, "#top")}
-            className="flex items-center w-[72px] h-[72px] mr-4 relative shrink-0"
+            className="flex items-center w-14 h-14 mr-2 relative shrink-0"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             whileHover={{ rotate: 10 }}
             whileTap={{ scale: 0.92 }}
             transition={{ duration: 0.2 }}
           >
-            <Image
-              src="/logo/logo%20webpulse.png"
-              alt="WebPulse"
-              width={72}
-              height={72}
-              className="object-contain w-full h-full"
-            />
+            <WebPulseLogo size={56} />
           </motion.a>
         </div>
 
@@ -98,7 +92,7 @@ const Navbar1 = () => {
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className="text-sm text-white/80 hover:text-white transition-colors font-medium"
+              className="text-sm text-white/70 hover:text-sky-300 transition-colors font-medium"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
@@ -114,7 +108,7 @@ const Navbar1 = () => {
         <motion.a
           href="#contato"
           onClick={(e) => handleNavClick(e, "#contato")}
-          className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm text-black bg-white rounded-full hover:bg-white/90 transition-colors font-medium"
+          className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm text-black bg-white rounded-full hover:bg-sky-50 transition-all font-semibold shadow-[0_0_20px_rgba(56,189,248,0.15)] hover:shadow-[0_0_30px_rgba(56,189,248,0.25)]"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
@@ -139,7 +133,7 @@ const Navbar1 = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-[#030303] border-l border-white/[0.08] z-50 pt-24 px-6 md:hidden"
+            className="fixed inset-0 bg-background/95 backdrop-blur-xl border-l border-white/[0.08] z-50 pt-24 px-6 md:hidden"
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}

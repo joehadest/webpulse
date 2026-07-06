@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { MessageCircle, Instagram, Github } from "lucide-react";
 import { ModemAnimatedFooter } from "@/components/ui/modem-animated-footer";
+import { WebPulseLogo } from "@/components/ui/webpulse-logo";
 
 const WHATSAPP_NUMBER = "5584998699449";
 const INSTAGRAM_USER = "webpulse.oficial";
@@ -41,15 +41,7 @@ export function Footer() {
       ctaIcon={<MessageCircle className="w-5 h-5" />}
       socialLinks={socialLinks}
       navLinks={navLinks}
-      brandIcon={
-        <Image
-          src="/logo/logo%20webpulse.png"
-          alt="WebPulse"
-          width={80}
-          height={80}
-          className="w-full h-full object-contain p-1"
-        />
-      }
+      brandIcon={<WebPulseLogo size={72} />}
     />
   );
 }

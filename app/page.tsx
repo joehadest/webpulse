@@ -7,7 +7,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 
 export default function Home() {
   return (
-    <main id="top" className="bg-[#030303] min-h-screen">
+    <main id="top" className="bg-background min-h-screen">
       <Navbar1 />
       <ScrollToTop />
       {/* Hero Section */}

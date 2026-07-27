@@ -71,3 +71,41 @@
     pointer-events: none;
   }
 }
+
+/* Convite — Pai do Ano Programador */
+.convite-root {
+  --convite-bg: #0c1f1c;
+  --convite-ink: #e8f0ec;
+  --convite-paper: #f3f7f4;
+  --convite-mint: #7dffa3;
+  --convite-gold: #e8c27a;
+  --convite-terminal: #071412;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 20%, rgba(125, 255, 163, 0.07), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 80%, rgba(232, 194, 122, 0.08), transparent 50%),
+    linear-gradient(165deg, #0c1f1c 0%, #12302b 45%, #0a1815 100%);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.convite-root .font-display {
+  font-family: var(--font-convite-display), var(--font-display), system-ui, sans-serif;
+}
+
+.convite-root .font-mono {
+  font-family: var(--font-convite-mono), ui-monospace, monospace;
+}
+
+@keyframes cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1.1s step-end infinite;
+}

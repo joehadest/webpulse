@@ -12,6 +12,17 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "system-ui", "sans-serif"],
+        "convite-display": [
+          "var(--font-convite-display)",
+          "var(--font-display)",
+          "system-ui",
+          "sans-serif",
+        ],
+        "convite-mono": [
+          "var(--font-convite-mono)",
+          "ui-monospace",
+          "monospace",
+        ],
       },
       colors: {
         background: "#030303",

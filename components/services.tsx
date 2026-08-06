@@ -1,55 +1,67 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Globe,
-  Smartphone,
+  ShoppingCart,
   Database,
-  Code2,
-  Layout,
-  Rocket,
+  Workflow,
+  Palette,
+  LifeBuoy,
+  type LucideIcon,
 } from "lucide-react";
-import { Feature197 } from "@/components/ui/accordion-feature-section";
-import type { FeatureItem } from "@/components/ui/accordion-feature-section";
+import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 
-const iconClass = "w-24 h-24 text-sky-400/80";
+interface Service {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  points: string[];
+}
 
-const servicesFeatures: FeatureItem[] = [
+const services: Service[] = [
   {
-    id: 1,
-    title: "Sites",
-    description: "Sites responsivos, bonitos e fáceis de usar.",
-    icon: <Globe className={iconClass} />,
+    title: "Sites institucionais",
+    description:
+      "A cara da sua empresa na internet: rápido, responsivo e pronto para aparecer no Google.",
+    icon: Globe,
+    points: ["Design exclusivo", "SEO técnico", "Domínio configurado"],
   },
   {
-    id: 2,
-    title: "Apps",
-    description: "Aplicativos para celular e web.",
-    icon: <Smartphone className={iconClass} />,
+    title: "Lojas e e-commerce",
+    description:
+      "Catálogo, carrinho e checkout com pagamento online. Do produto à confirmação do pedido.",
+    icon: ShoppingCart,
+    points: ["Mercado Pago", "Painel de pedidos", "Controle de estoque"],
   },
   {
-    id: 3,
-    title: "Sistemas",
-    description: "Sistemas para gestão e controle do seu negócio.",
-    icon: <Database className={iconClass} />,
+    title: "Sistemas de gestão",
+    description:
+      "Painéis sob medida para organizar o que hoje vive em planilha ou no papel.",
+    icon: Database,
+    points: ["Dashboard admin", "Multiusuário", "Dados em tempo real"],
   },
   {
-    id: 4,
-    title: "Integrações",
-    description: "Conecto sistemas e automatizo processos.",
-    icon: <Code2 className={iconClass} />,
+    title: "Integrações e automação",
+    description:
+      "Conecto seus sistemas e elimino trabalho manual repetitivo do dia a dia.",
+    icon: Workflow,
+    points: ["APIs externas", "WhatsApp", "Relatórios automáticos"],
   },
   {
-    id: 5,
-    title: "Design",
-    description: "Layout limpo e fácil de navegar.",
-    icon: <Layout className={iconClass} />,
+    title: "Design de interface",
+    description:
+      "Layout limpo e navegação óbvia. Bonito importa, mas fácil de usar importa mais.",
+    icon: Palette,
+    points: ["Mobile first", "Identidade visual", "Acessibilidade"],
   },
   {
-    id: 6,
-    title: "Manutenção",
-    description: "Ajustes e melhorias no que já existe.",
-    icon: <Rocket className={iconClass} />,
+    title: "Manutenção e evolução",
+    description:
+      "Já tem site ou sistema? Corrijo, atualizo e adiciono o que faltou.",
+    icon: LifeBuoy,
+    points: ["Correção de bugs", "Novas features", "Melhoria de performance"],
   },
 ];
 
@@ -57,47 +69,56 @@ export function Services() {
   return (
     <section
       id="servicos"
-      className="relative w-full bg-background text-white overflow-hidden"
+      className="relative w-full bg-background text-white overflow-hidden py-24 md:py-32"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-        <div className="absolute top-[20%] left-[10%] w-72 h-72 bg-sky-400/[0.06] rounded-full blur-[100px] animate-pulse-glow" />
-        <div className="absolute bottom-[20%] right-[10%] w-72 h-72 bg-white/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute top-[15%] left-[8%] w-72 h-72 bg-sky-400/[0.06] rounded-full blur-[110px] animate-pulse-glow" />
+        <div className="absolute bottom-[15%] right-[8%] w-72 h-72 bg-white/[0.035] rounded-full blur-[110px]" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 pt-24 pb-4">
-        <div className="text-center mb-12 md:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-4"
-          >
-            <span className="section-label">Serviços</span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-display text-3xl md:text-5xl font-bold mb-4 text-gradient"
-          >
-            O que faço
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-white/45 max-w-2xl mx-auto text-base md:text-lg"
-          >
-            Sites, sistemas e manutenção. Uso as tecnologias certas para cada
-            projeto.
-          </motion.p>
+      <div className="container mx-auto px-4 relative z-10">
+        <SectionHeading
+          label="Serviços"
+          title="O que eu"
+          highlight="construo"
+          subtitle="Do site simples ao sistema completo. Cada projeto é feito do zero, com a tecnologia certa para o que você precisa."
+        />
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-16">
+          {services.map((service, i) => {
+            const Icon = service.icon;
+            return (
+              <Reveal key={service.title} delay={(i % 3) * 0.1}>
+                <SpotlightCard className="h-full p-7">
+                  <div className="flex flex-col h-full">
+                    <div className="mb-5 inline-flex w-fit items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/[0.08] p-3 transition-all duration-500 group-hover:border-sky-400/40 group-hover:bg-sky-400/[0.14] group-hover:scale-105">
+                      <Icon className="w-6 h-6 text-sky-300" />
+                    </div>
+
+                    <h3 className="font-display text-xl font-semibold text-white mb-2.5">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-sm text-white/50 leading-relaxed mb-6 flex-1">
+                      {service.description}
+                    </p>
+
+                    <ul className="flex flex-wrap gap-2">
+                      {service.points.map((point) => (
+                        <li
+                          key={point}
+                          className="rounded-full border border-white/[0.07] bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-white/45 transition-colors duration-500 group-hover:border-white/[0.12] group-hover:text-white/60"
+                        >
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </SpotlightCard>
+              </Reveal>
+            );
+          })}
         </div>
-      </div>
-
-      <div className="relative z-10">
-        <Feature197 features={servicesFeatures} />
       </div>
     </section>
   );

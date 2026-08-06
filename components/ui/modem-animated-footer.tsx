@@ -50,10 +50,7 @@ export const ModemAnimatedFooter = ({
         className,
       )}
     >
-      <footer
-        id="contato"
-        className="border-t border-white/[0.06] bg-background mt-20 relative"
-      >
+      <footer className="border-t border-white/[0.06] bg-background mt-20 relative">
         <div className="max-w-7xl flex flex-col justify-between mx-auto min-h-[30rem] sm:min-h-[35rem] md:min-h-[40rem] relative p-4 py-10">
           <div className="flex flex-col mb-12 sm:mb-20 md:mb-0 w-full">
             <div className="w-full flex flex-col items-center">

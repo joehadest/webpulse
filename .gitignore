@@ -34,6 +34,9 @@ Thumbs.db
 # Vercel
 .vercel
 
+# Claude Code local config
+.claude
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts

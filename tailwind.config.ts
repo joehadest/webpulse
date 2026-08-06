@@ -15,8 +15,11 @@ const config: Config = {
       },
       colors: {
         background: "#030303",
+        surface: "#08080a",
         accent: {
           DEFAULT: "#38bdf8",
+          soft: "#7dd3fc",
+          deep: "#0ea5e9",
           muted: "rgba(56, 189, 248, 0.12)",
         },
       },
@@ -37,12 +40,28 @@ const config: Config = {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "0.8" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        "border-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 8s ease-in-out infinite",
         "pulse-glow": "pulse-glow 4s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
+        "marquee-slow": "marquee 60s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        "border-spin": "border-spin 6s linear infinite",
       },
     },
   },

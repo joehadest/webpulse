@@ -329,6 +329,7 @@ export function CinematicHero({
     if (!useCinematicScroll) return;
     if (!containerRef.current || !wrapperRef.current) return;
 
+    gsap.set(".text-brand", { autoAlpha: 0, y: 24 });
     gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 });
     gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" });
     gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
@@ -337,7 +338,8 @@ export function CinematicHero({
 
     const introTl = gsap.timeline({ delay: 0.3 });
     introTl
-      .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" })
+      .to(".text-brand", { duration: 0.9, autoAlpha: 1, y: 0, ease: "expo.out" })
+      .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" }, "-=0.55")
       .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0");
 
     const scrollTl = gsap.timeline({
@@ -451,8 +453,13 @@ export function CinematicHero({
       >
         <div className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50" aria-hidden="true" />
         <div className="relative z-10 container mx-auto px-4 pt-32 pb-16 text-center">
-          <h1 className="text-3d-matte text-4xl sm:text-6xl font-bold tracking-tight mb-2">{tagline1}</h1>
-          <h1 className="text-silver-matte text-4xl sm:text-6xl font-extrabold tracking-tighter mb-10">{tagline2}</h1>
+          <p className="font-display text-xs md:text-sm font-bold uppercase tracking-[0.28em] text-sky-300/80">
+            {brandName}
+          </p>
+          <h1 className="mt-4 md:mt-5 font-display text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-[0.88] tracking-tight mb-10">
+            <span className="text-3d-matte block">{tagline1}</span>
+            <span className="text-silver-matte block">{tagline2}</span>
+          </h1>
 
           <div className="premium-depth-card relative mx-auto max-w-3xl rounded-[32px] p-8 md:p-12 text-left">
             <h2
@@ -676,11 +683,12 @@ export function CinematicHero({
           deixa o bloco mais largo que a area util, empurra o conteudo alguns
           px pra esquerda e cria rolagem horizontal. */}
       <div className="hero-text-wrapper absolute inset-x-0 z-10 flex flex-col items-center justify-center text-center px-4 will-change-transform">
-        <h1 className="text-track gsap-reveal text-3d-matte text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tight mb-2">
-          {tagline1}
-        </h1>
-        <h1 className="text-days gsap-reveal text-silver-matte text-5xl md:text-7xl lg:text-[6rem] font-extrabold tracking-tighter">
-          {tagline2}
+        <p className="text-brand gsap-reveal font-display text-xs md:text-sm font-bold uppercase tracking-[0.28em] text-sky-300/80">
+          {brandName}
+        </p>
+        <h1 className="mt-4 md:mt-5 font-display text-[clamp(4.75rem,11vw,9rem)] font-black uppercase leading-[0.88] tracking-tight">
+          <span className="text-track gsap-reveal text-3d-matte block">{tagline1}</span>
+          <span className="text-days gsap-reveal text-silver-matte block">{tagline2}</span>
         </h1>
       </div>
 

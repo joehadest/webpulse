@@ -1,22 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
-
-const SCROLL_THRESHOLD = 400;
+import { usePastSection } from "@/lib/use-past-section";
 
 export function ScrollToTop() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > SCROLL_THRESHOLD);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Mesmo sinal usado pela navbar: só faz sentido oferecer "voltar ao topo"
+  // depois que o hero (com sua própria altura de scroll) ficou pra trás.
+  const visible = usePastSection("hero");
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -64,12 +64,20 @@
 }
 
 @layer utilities {
+  /* bg-clip-text pinta o gradiente so dentro da caixa do elemento. Com
+     tracking negativo a caixa fica mais estreita que a tinta do ultimo
+     glifo, e a ponta da letra final some. A folga abaixo devolve esse
+     espaco. Simetrica no bloco (preserva a centralizacao); so a direita
+     no acento, que e inline e vem depois de um espaco — padding a
+     esquerda abriria um vao antes da palavra. */
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/60;
+    padding-inline: 0.06em;
   }
 
   .text-gradient-accent {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-300 via-sky-400 to-cyan-300;
+    padding-right: 0.06em;
   }
 
   .glass {
@@ -142,5 +150,12 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* Sem empilhamento: os contêineres de projeto viram uma lista vertical
+     comum. O GSAP já não aplica a rotação nesse modo (gsap.matchMedia),
+     então aqui só resta desligar o sticky. */
+  [data-flow-section] {
+    position: relative;
   }
 }

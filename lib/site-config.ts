@@ -17,7 +17,7 @@ export const siteConfig = {
    * Mantenha honesto: cliente confere.
    */
   stats: [
-    { value: "6+", label: "Projetos entregues" },
+    { value: "5+", label: "Projetos entregues" },
     { value: "100%", label: "Código sob medida" },
     { value: "24h", label: "Tempo médio de resposta" },
     { value: "30 dias", label: "Suporte pós-entrega incluso" },

@@ -1,231 +1,207 @@
 "use client";
 
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { Timeline, type TimelineEntry } from "@/components/ui/timeline";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
+import { LiveSitePreview } from "@/components/ui/live-site-preview";
 import { whatsappLink } from "@/lib/site-config";
 
-const imageClass =
-  "rounded-xl object-cover h-28 md:h-44 lg:h-60 w-full border border-white/10 shadow-lg transition-all duration-500 group-hover:border-sky-400/30 group-hover:shadow-[0_8px_30px_rgba(56,189,248,0.12)] group-hover:scale-[1.02]";
+interface Project {
+  index: string;
+  kind: string;
+  /** Quebrado em linhas para o título grande respirar. */
+  title: string[];
+  description: string;
+  tags: string[];
+  url?: string;
+  image: { src: string; alt: string };
+  accent: string;
+}
 
-const descriptionClass =
-  "text-white/60 text-xs md:text-sm font-normal mb-8 leading-relaxed max-w-2xl";
-
-const projectsData: TimelineEntry[] = [
+const projects: Project[] = [
   {
-    title: "Camarote PMD",
-    url: "https://camarotepmd.com.br/",
+    index: "01",
+    kind: "Landing de eventos",
+    title: ["Camarote", "PMD"],
+    description:
+      "Venda de ingressos com line-up, galeria e animações de rolagem. Feita para converter no celular, onde acontece a maior parte do acesso.",
     tags: ["React", "Vite", "Framer Motion"],
-    content: (
-      <div>
-        <p className={descriptionClass}>
-          Landing de eventos para venda de ingressos, com line-up, galeria e
-          animações de rolagem. Feita para converter no celular, onde acontece a
-          maior parte do acesso.
-        </p>
-        <div className="grid grid-cols-2 gap-4 group">
-          <Image
-            src="/projetos/pmd.png"
-            alt="Camarote PMD — página inicial"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-          <Image
-            src="/projetos/pmd%202.png"
-            alt="Camarote PMD — seção de line-up"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-        </div>
-      </div>
-    ),
+    url: "https://camarotepmd.com.br/",
+    image: { src: "/projetos/pmd.png", alt: "Camarote PMD — página inicial" },
+    accent: "#a78bfa",
   },
   {
-    title: "Baracho Industrial",
-    url: "https://barachosolucoes.com/",
+    index: "02",
+    kind: "Site institucional",
+    title: ["Baracho", "Industrial"],
+    description:
+      "Engenharia pesada: alpinismo industrial, solda e manutenção. Estrutura pensada para transmitir autoridade técnica e gerar contato comercial direto.",
     tags: ["React", "Tailwind CSS", "SEO"],
-    content: (
-      <div>
-        <p className={descriptionClass}>
-          Site institucional para engenharia: alpinismo industrial, solda e
-          manutenção. Estrutura pensada para transmitir autoridade técnica e
-          gerar contato comercial direto.
-        </p>
-        <div className="grid grid-cols-2 gap-4 group">
-          <Image
-            src="/projetos/baracho.png"
-            alt="Baracho Industrial — página inicial"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-          <Image
-            src="/projetos/barachos%202.png"
-            alt="Baracho Industrial — página de serviços"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-        </div>
-      </div>
-    ),
+    url: "https://barachosolucoes.com/",
+    image: { src: "/projetos/baracho.png", alt: "Baracho Industrial — página inicial" },
+    accent: "#94a3b8",
   },
   {
-    title: "Rei dos Salgados",
-    url: "https://reidossalgados.webpulseservicos.com/",
+    index: "03",
+    kind: "App de delivery",
+    title: ["Rei dos", "Salgados"],
+    description:
+      "Cardápio, carrinho, acompanhamento de pedido e painel para a cozinha receber tudo em tempo real, sem depender de telefone.",
     tags: ["Next.js", "MongoDB", "Tempo real"],
-    content: (
-      <div>
-        <p className={descriptionClass}>
-          App de delivery completo: cardápio, carrinho, acompanhamento de pedido
-          e painel para a cozinha receber os pedidos em tempo real.
-        </p>
-        <div className="grid grid-cols-2 gap-4 group">
-          <Image
-            src="/projetos/rei%20dos%20salgados.png"
-            alt="Rei dos Salgados — cardápio do cliente"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-          <Image
-            src="/projetos/rei%20dos%20salgados%20admin.png"
-            alt="Rei dos Salgados — painel da cozinha"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-        </div>
-      </div>
-    ),
+    url: "https://reidossalgados.webpulseservicos.com/",
+    image: {
+      src: "/projetos/rei%20dos%20salgados.png",
+      alt: "Rei dos Salgados — cardápio do cliente",
+    },
+    accent: "#fbbf24",
   },
   {
-    title: "Seu Manto",
-    url: "https://seumanto.webpulseservicos.com/",
+    index: "04",
+    kind: "E-commerce completo",
+    title: ["Seu", "Manto"],
+    description:
+      "Loja de camisetas de ponta a ponta: vitrine, carrinho, checkout com pagamento online, painel administrativo e pedidos atualizando em tempo real.",
     tags: ["Next.js", "Supabase", "Mercado Pago"],
-    content: (
-      <div>
-        <p className={descriptionClass}>
-          E-commerce full-stack de camisetas: loja, carrinho, checkout com
-          pagamento online, painel administrativo e atualização de pedidos em
-          tempo real via Supabase.
-        </p>
-        <div className="grid grid-cols-2 gap-4 group">
-          <Image
-            src="/projetos/seumanto.png"
-            alt="Seu Manto — vitrine da loja"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-          <Image
-            src="/projetos/seumanto%202.png"
-            alt="Seu Manto — painel administrativo"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-        </div>
-      </div>
-    ),
+    url: "https://seumanto.webpulseservicos.com/",
+    image: { src: "/projetos/seumanto.png", alt: "Seu Manto — vitrine da loja" },
+    accent: "#818cf8",
   },
   {
-    title: "DRM Serviços",
-    url: "https://www.wwsdrmmontgem.com.br/",
-    tags: ["Next.js", "Conteúdo editável", "SEO"],
-    content: (
-      <div>
-        <p className={descriptionClass}>
-          Site institucional para serviços industriais, com seções editáveis de
-          serviços, projetos em destaque e canais de contato comercial.
-        </p>
-        <div className="grid grid-cols-2 gap-4 group">
-          <Image
-            src="/projetos/DRM%20.png"
-            alt="DRM Serviços — página inicial"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-          <Image
-            src="/projetos/DRM%202.png"
-            alt="DRM Serviços — serviços em destaque"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: "Shellton Auto Mecânica",
-    url: "https://shelltonautomecanica.webpulseservicos.com/",
+    index: "05",
+    kind: "Site + painel administrativo",
+    title: ["Shellton", "Auto Mecânica"],
+    description:
+      "Oficina com agendamento online, fila pública atualizando ao vivo e dashboard para a equipe gerenciar os atendimentos do dia.",
     tags: ["Next.js", "TypeScript", "Supabase Realtime"],
-    content: (
-      <div>
-        <p className={descriptionClass}>
-          Site e painel administrativo para oficina mecânica: portfólio de
-          serviços, agendamento online, fila pública em tempo real e dashboard
-          para a equipe gerenciar os atendimentos do dia.
-        </p>
-        <div className="grid grid-cols-2 gap-4 group">
-          <Image
-            src="/projetos/shelltonautomecanica.png"
-            alt="Shellton Auto Mecânica — site público"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-          <Image
-            src="/projetos/shelltonautomecanica2.png"
-            alt="Shellton Auto Mecânica — painel administrativo"
-            width={500}
-            height={500}
-            className={imageClass}
-          />
-        </div>
-      </div>
-    ),
+    url: "https://shelltonautomecanica.webpulseservicos.com/",
+    image: {
+      src: "/projetos/shelltonautomecanica.png",
+      alt: "Shellton Auto Mecânica — site público",
+    },
+    accent: "#2dd4bf",
   },
-  {
-    title: "Seu projeto aqui",
-    content: (
-      <div className="rounded-2xl border border-dashed border-sky-400/20 bg-sky-400/[0.03] p-8 max-w-2xl">
-        <p className="font-display text-lg font-semibold text-white">
-          O próximo case pode ser o seu.
+];
+
+const ruleClass = "border-none border-t border-white/15";
+const sectionStyle = { background: "#030303", color: "#fff" } as const;
+
+export function Portfolio() {
+  return (
+    <FlowArt id="portfolio" aria-label="Projetos entregues">
+      {projects.map((project) => (
+        <FlowSection
+          key={project.index}
+          aria-label={project.title.join(" ")}
+          style={sectionStyle}
+        >
+          {/* Topo — etiqueta */}
+          <div className="flex items-baseline justify-between gap-4">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
+              Projeto {project.index} — {project.kind}
+            </p>
+            <p
+              className="font-display text-[11px] font-bold uppercase tracking-[0.2em]"
+              style={{ color: project.accent }}
+            >
+              WebPulse
+            </p>
+          </div>
+
+          <hr className={ruleClass} />
+
+          {/* Miolo — título e telas lado a lado */}
+          <div className="grid flex-1 items-center gap-[4vw] py-[2vw] lg:grid-cols-[1.05fr_1fr]">
+            <div>
+              <h3 className="font-display text-[clamp(2.5rem,6.5vw,5.5rem)] font-bold uppercase leading-[0.9] tracking-tight">
+                {project.title.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h3>
+
+              <p className="mt-[2vw] max-w-[46ch] text-[clamp(0.95rem,1.5vw,1.2rem)] leading-relaxed text-white/65">
+                {project.description}
+              </p>
+            </div>
+
+            {project.url ? (
+              <LiveSitePreview
+                url={project.url}
+                title={project.title.join(" ")}
+                poster={project.image}
+                accent={project.accent}
+              />
+            ) : null}
+          </div>
+
+          <hr className={ruleClass} />
+
+          {/* Base — tecnologias e link */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <ul className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border border-white/15 px-3 py-1 text-[11px] font-medium text-white/60"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+
+            {project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold transition-colors duration-300 hover:bg-white hover:text-black"
+                style={{ color: project.accent }}
+              >
+                <span className="transition-colors duration-300 group-hover:text-black">
+                  Visitar site
+                </span>
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-black" />
+              </a>
+            )}
+          </div>
+        </FlowSection>
+      ))}
+
+      {/* Fechamento — convite */}
+      <FlowSection aria-label="Seu projeto aqui" style={sectionStyle}>
+        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
+          Projeto 06 — O próximo
         </p>
-        <p className="mt-2 text-sm text-white/45 leading-relaxed">
-          Me conte sua ideia e eu volto com escopo, prazo e valor. A primeira
-          conversa não custa nada.
-        </p>
+
+        <hr className={ruleClass} />
+
+        <div className="flex flex-1 flex-col justify-center py-[4vw]">
+          <h3 className="font-display text-[clamp(2.75rem,8vw,7rem)] font-bold uppercase leading-[0.9] tracking-tight">
+            <span className="block">Seu</span>
+            <span className="block text-sky-300">projeto</span>
+            <span className="block">aqui</span>
+          </h3>
+
+          <p className="mt-[3vw] max-w-[46ch] text-[clamp(1rem,1.8vw,1.35rem)] leading-relaxed text-white/65">
+            Me conte sua ideia e eu volto com escopo, prazo e valor por escrito.
+            A primeira conversa não custa nada.
+          </p>
+        </div>
+
+        <hr className={ruleClass} />
+
         <a
           href={whatsappLink(
             "Olá! Vi seu portfólio no site da WebPulse e quero conversar sobre um projeto.",
           )}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary group mt-6"
+          className="btn-primary group w-fit"
         >
           Começar meu projeto
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </a>
-      </div>
-    ),
-  },
-];
-
-export function Portfolio() {
-  return (
-    <section id="portfolio" className="w-full">
-      <Timeline
-        data={projectsData}
-        title="Projetos"
-        highlight="entregues"
-        subtitle="Sites e sistemas reais, no ar, rodando para clientes de verdade. Clique para visitar."
-      />
-    </section>
+      </FlowSection>
+    </FlowArt>
   );
 }

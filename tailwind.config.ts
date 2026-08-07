@@ -13,6 +13,20 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "system-ui", "sans-serif"],
       },
+      // O Tailwind embute line-height: 1 nesses tamanhos por padrão — sem
+      // folga nenhuma pra glifos arredondados (ex: "e"). Isso corta letras
+      // toda vez que o texto usa background-clip: text (gradiente/prata),
+      // já que o bounding box de pintura fica mais apertado que a fonte
+      // real precisa. "normal" deixa o navegador calcular a altura certa
+      // pra cada fonte, então vale pra qualquer texto grande do site,
+      // atual ou futuro — não só o hero.
+      fontSize: {
+        "5xl": ["3rem", { lineHeight: "normal" }],
+        "6xl": ["3.75rem", { lineHeight: "normal" }],
+        "7xl": ["4.5rem", { lineHeight: "normal" }],
+        "8xl": ["6rem", { lineHeight: "normal" }],
+        "9xl": ["8rem", { lineHeight: "normal" }],
+      },
       colors: {
         background: "#030303",
         surface: "#08080a",

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { WebPulseLogo } from "@/components/ui/webpulse-logo";
+import { usePastSection } from "@/lib/use-past-section";
 
 const navItems = [
   { label: "Serviços", href: "#servicos" },
@@ -15,9 +16,11 @@ const navItems = [
 
 const Navbar1 = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [heroThreshold, setHeroThreshold] = useState(600);
+  // O hero cinematográfico prende o scroll por milhares de pixels antes de
+  // liberar o resto da página — um limiar fixo de scrollY não dá conta disso.
+  // Em vez de medir distância, observamos quando a própria seção #hero sai
+  // da viewport, o que funciona independente da altura de scroll dela.
+  const isVisible = usePastSection("hero");
   const [activeSection, setActiveSection] = useState<string>("");
 
   const { scrollYProgress } = useScroll();
@@ -28,21 +31,6 @@ const Navbar1 = () => {
   });
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
-  useEffect(() => {
-    const thresh = window.innerHeight * 0.75;
-    setHeroThreshold(thresh);
-
-    const handleScroll = () => {
-      const y = window.scrollY;
-      setScrollY(y);
-      setIsVisible(y > thresh);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Destaca no menu a seção que está sendo lida
   useEffect(() => {
@@ -91,11 +79,6 @@ const Navbar1 = () => {
     setIsOpen(false);
   };
 
-  const justPastHero = isVisible && scrollY < heroThreshold + 120;
-  const slideInOffset = justPastHero
-    ? -Math.min((scrollY - heroThreshold) * 0.4, 30)
-    : 0;
-
   return (
     <>
       {/* Barra de progresso de leitura */}
@@ -111,7 +94,7 @@ const Navbar1 = () => {
         initial={{ opacity: 0, y: -100 }}
         animate={{
           opacity: isVisible ? 1 : 0,
-          y: isVisible ? slideInOffset : -100,
+          y: isVisible ? 0 : -100,
         }}
         transition={{ duration: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
       >

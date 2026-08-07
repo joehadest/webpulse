@@ -13,7 +13,6 @@ interface Project {
   description: string;
   tags: string[];
   url?: string;
-  image: { src: string; alt: string };
   accent: string;
 }
 
@@ -26,7 +25,6 @@ const projects: Project[] = [
       "Venda de ingressos com line-up, galeria e animações de rolagem. Feita para converter no celular, onde acontece a maior parte do acesso.",
     tags: ["React", "Vite", "Framer Motion"],
     url: "https://camarotepmd.com.br/",
-    image: { src: "/projetos/pmd.png", alt: "Camarote PMD — página inicial" },
     accent: "#a78bfa",
   },
   {
@@ -37,7 +35,6 @@ const projects: Project[] = [
       "Engenharia pesada: alpinismo industrial, solda e manutenção. Estrutura pensada para transmitir autoridade técnica e gerar contato comercial direto.",
     tags: ["React", "Tailwind CSS", "SEO"],
     url: "https://barachosolucoes.com/",
-    image: { src: "/projetos/baracho.png", alt: "Baracho Industrial — página inicial" },
     accent: "#94a3b8",
   },
   {
@@ -48,10 +45,6 @@ const projects: Project[] = [
       "Cardápio, carrinho, acompanhamento de pedido e painel para a cozinha receber tudo em tempo real, sem depender de telefone.",
     tags: ["Next.js", "MongoDB", "Tempo real"],
     url: "https://reidossalgados.webpulseservicos.com/",
-    image: {
-      src: "/projetos/rei%20dos%20salgados.png",
-      alt: "Rei dos Salgados — cardápio do cliente",
-    },
     accent: "#fbbf24",
   },
   {
@@ -62,7 +55,6 @@ const projects: Project[] = [
       "Loja de camisetas de ponta a ponta: vitrine, carrinho, checkout com pagamento online, painel administrativo e pedidos atualizando em tempo real.",
     tags: ["Next.js", "Supabase", "Mercado Pago"],
     url: "https://seumanto.webpulseservicos.com/",
-    image: { src: "/projetos/seumanto.png", alt: "Seu Manto — vitrine da loja" },
     accent: "#818cf8",
   },
   {
@@ -73,10 +65,6 @@ const projects: Project[] = [
       "Oficina com agendamento online, fila pública atualizando ao vivo e dashboard para a equipe gerenciar os atendimentos do dia.",
     tags: ["Next.js", "TypeScript", "Supabase Realtime"],
     url: "https://shelltonautomecanica.webpulseservicos.com/",
-    image: {
-      src: "/projetos/shelltonautomecanica.png",
-      alt: "Shellton Auto Mecânica — site público",
-    },
     accent: "#2dd4bf",
   },
 ];
@@ -128,7 +116,6 @@ export function Portfolio() {
               <LiveSitePreview
                 url={project.url}
                 title={project.title.join(" ")}
-                poster={project.image}
                 accent={project.accent}
               />
             ) : null}

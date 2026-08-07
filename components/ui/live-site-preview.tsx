@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -11,8 +10,6 @@ const FRAME_HEIGHT = 800;
 interface LiveSitePreviewProps {
   url: string;
   title: string;
-  /** Poster enquanto o iframe não carregou (ou se falhar). */
-  poster?: { src: string; alt: string };
   className?: string;
   accent?: string;
 }
@@ -28,7 +25,6 @@ function hostnameOf(url: string) {
 export function LiveSitePreview({
   url,
   title,
-  poster,
   className,
   accent = "#94a3b8",
 }: LiveSitePreviewProps) {
@@ -82,7 +78,6 @@ export function LiveSitePreview({
     return () => window.clearTimeout(t);
   }, [shouldLoad, loaded, failed]);
 
-  const showPoster = Boolean(poster) && (!loaded || failed);
   const host = hostnameOf(url);
 
   return (
@@ -117,17 +112,6 @@ export function LiveSitePreview({
         className="relative w-full overflow-hidden bg-[#090b0f]"
         style={{ height: FRAME_HEIGHT * scale }}
       >
-        {showPoster && poster && (
-          <Image
-            src={poster.src}
-            alt={poster.alt}
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover object-top"
-            priority={false}
-          />
-        )}
-
         {shouldLoad && !failed && (
           <iframe
             title={`Prévia ao vivo — ${title}`}

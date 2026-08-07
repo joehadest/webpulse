@@ -152,10 +152,8 @@
     transition-duration: 0.01ms !important;
   }
 
-  /* Sem empilhamento: os contêineres de projeto viram uma lista vertical
-     comum. O GSAP já não aplica a rotação nesse modo (gsap.matchMedia),
-     então aqui só resta desligar o sticky. */
+  /* Sem empilhamento sticky antigo — portfólio é lista vertical. */
   [data-flow-section] {
-    position: relative;
+    position: relative !important;
   }
 }

@@ -214,7 +214,7 @@ export function CinematicHero({
       administrativo prontos — tudo sob seu controle.
     </>
   ),
-  metricValue = 6,
+  metricValue = 5,
   metricSuffix = "+",
   metricLabel = "Projetos no ar",
   ctaHeading = "Bora tirar seu projeto do papel?",
@@ -236,8 +236,13 @@ export function CinematicHero({
   const mainCardRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
+  // Mobile e reduced-motion ficam separados: no celular queremos presença
+  // visual (mockup + entrada), sem o pin/scrub que causa o “vai e volta”.
+  const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
   const [pinDistance, setPinDistance] = useState(scrollDistance);
+  const mobileStageRef = useRef<HTMLDivElement>(null);
 
   const waHref =
     primaryCtaHref ??
@@ -252,25 +257,28 @@ export function CinematicHero({
   };
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    const computePinDistance = () => {
-      setPinDistance(window.innerWidth < 768 ? scrollDistanceMobile : scrollDistance);
+    const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileMq = window.matchMedia("(max-width: 767px)");
+    const sync = () => {
+      setPrefersReducedMotion(reduceMq.matches);
+      setIsMobile(mobileMq.matches);
+      setPinDistance(mobileMq.matches ? scrollDistanceMobile : scrollDistance);
+      setHeroReady(true);
     };
-    computePinDistance();
-    window.addEventListener("resize", computePinDistance);
-    return () => window.removeEventListener("resize", computePinDistance);
+    sync();
+    reduceMq.addEventListener("change", sync);
+    mobileMq.addEventListener("change", sync);
+    return () => {
+      reduceMq.removeEventListener("change", sync);
+      mobileMq.removeEventListener("change", sync);
+    };
   }, [scrollDistance, scrollDistanceMobile]);
 
-  // 1. Tilt do celular seguindo o mouse — desligado para quem prefere menos movimento
+  const useCinematicScroll = heroReady && !isMobile && !prefersReducedMotion;
+
+  // 1. Tilt do celular seguindo o mouse — só no hero cinematográfico (desktop)
   useGSAP(() => {
-    if (prefersReducedMotion) return;
+    if (!useCinematicScroll) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (window.scrollY > window.innerHeight * 2) return;
@@ -304,9 +312,9 @@ export function CinematicHero({
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(requestRef.current);
     };
-  }, { scope: containerRef, dependencies: [prefersReducedMotion] });
+  }, { scope: containerRef, dependencies: [useCinematicScroll] });
 
-  // 2. Timeline cinematográfica de scroll — pulada inteira para quem prefere menos movimento.
+  // 2. Timeline cinematográfica de scroll — só no desktop.
   //
   // Importante: NÃO usamos `pin: true` do ScrollTrigger. Pin reparenta o
   // elemento pinado dentro de um <div class="pin-spacer"> criado por fora do
@@ -318,10 +326,8 @@ export function CinematicHero({
   // mexer no DOM) no wrapperRef abaixo — o GSAP só anima propriedades de
   // estilo dos elementos, nunca move nós na árvore.
   useGSAP(() => {
-    if (prefersReducedMotion) return;
+    if (!useCinematicScroll) return;
     if (!containerRef.current || !wrapperRef.current) return;
-
-    const isMobile = window.innerWidth < 768;
 
     gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 });
     gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" });
@@ -339,7 +345,8 @@ export function CinematicHero({
         trigger: wrapperRef.current,
         start: "top top",
         end: `+=${pinDistance}`,
-        scrub: 1,
+        scrub: 0.35,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -348,13 +355,13 @@ export function CinematicHero({
       .to(".main-card", { y: 0, ease: "power3.inOut", duration: 2 }, 0)
       .to(".main-card", { width: "100%", height: "100%", borderRadius: "0px", ease: "power3.inOut", duration: 1.5 })
       .fromTo(".mockup-scroll-wrapper",
-        { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
-        { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 2.5 }, "-=0.8"
+        { y: 300, z: -500, rotationX: 50, rotateY: -30, autoAlpha: 0, scale: 0.6 },
+        { y: 0, z: 0, rotateX: 0, rotateY: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 2.5 }, "-=0.8"
       )
       .fromTo(".phone-widget", { y: 40, autoAlpha: 0, scale: 0.95 }, { y: 0, autoAlpha: 1, scale: 1, stagger: 0.15, ease: "back.out(1.2)", duration: 1.5 }, "-=1.5")
       .to(".progress-ring", { strokeDashoffset: 60, duration: 2, ease: "power3.inOut" }, "-=1.2")
       .to(".counter-val", { innerHTML: metricValue, snap: { innerHTML: 1 }, duration: 2, ease: "expo.out" }, "-=2.0")
-      .fromTo(".floating-badge", { y: 100, autoAlpha: 0, scale: 0.7, rotationZ: -10 }, { y: 0, autoAlpha: 1, scale: 1, rotationZ: 0, ease: "back.out(1.5)", duration: 1.5, stagger: 0.2 }, "-=2.0")
+      .fromTo(".floating-badge", { y: 100, autoAlpha: 0, scale: 0.7, rotateZ: -10 }, { y: 0, autoAlpha: 1, scale: 1, rotateZ: 0, ease: "back.out(1.5)", duration: 1.5, stagger: 0.2 }, "-=2.0")
       .fromTo(".card-left-text", { x: -50, autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: "power4.out", duration: 1.5 }, "-=1.5")
       .to({}, { duration: 2.5 })
       .set(".hero-text-wrapper", { autoAlpha: 0 })
@@ -364,17 +371,77 @@ export function CinematicHero({
         scale: 0.9, y: -40, z: -200, autoAlpha: 0, ease: "power3.in", duration: 1.2, stagger: 0.05,
       })
       .to(".main-card", {
-        width: isMobile ? "92vw" : "85vw",
-        height: isMobile ? "92vh" : "85vh",
-        borderRadius: isMobile ? "32px" : "40px",
+        width: "85vw",
+        height: "85vh",
+        borderRadius: "40px",
         ease: "expo.inOut",
         duration: 1.8,
       }, "pullback")
       .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
       .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 });
-  }, { scope: containerRef, dependencies: [metricValue, prefersReducedMotion, pinDistance] });
+  }, { scope: containerRef, dependencies: [metricValue, useCinematicScroll, pinDistance] });
 
-  // Quem prefere menos movimento vê tudo já montado, em fluxo normal, sem scroll-jacking
+  // Entrada do hero mobile — tempo, não scrub. Presença sem travar o dedo.
+  useGSAP(
+    () => {
+      if (!heroReady || !isMobile || prefersReducedMotion) return;
+      if (!mobileStageRef.current) return;
+
+      const root = mobileStageRef.current;
+      const q = gsap.utils.selector(root);
+
+      gsap.set(q(".m-hero-brand"), { autoAlpha: 0, y: 28 });
+      gsap.set(q(".m-hero-copy"), { autoAlpha: 0, y: 20 });
+      gsap.set(q(".m-hero-phone"), { autoAlpha: 0, y: 48, scale: 0.92 });
+      gsap.set(q(".m-hero-badge"), { autoAlpha: 0, y: 16, scale: 0.9 });
+      gsap.set(q(".m-hero-cta"), { autoAlpha: 0, y: 18 });
+      gsap.set(q(".m-progress-ring"), { strokeDashoffset: 301 });
+      gsap.set(q(".m-counter-val"), { innerHTML: 0 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
+      tl.to(q(".m-hero-brand"), { autoAlpha: 1, y: 0, duration: 0.9, ease: "expo.out" })
+        .to(q(".m-hero-copy"), { autoAlpha: 1, y: 0, duration: 0.75, ease: "power3.out" }, "-=0.55")
+        .to(q(".m-hero-phone"), { autoAlpha: 1, y: 0, scale: 1, duration: 1.1, ease: "expo.out" }, "-=0.45")
+        .to(q(".m-hero-badge"), {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "back.out(1.4)",
+        }, "-=0.55")
+        .to(q(".m-progress-ring"), { strokeDashoffset: 75, duration: 1.4, ease: "power3.inOut" }, "-=0.7")
+        .to(q(".m-counter-val"), {
+          innerHTML: metricValue,
+          snap: { innerHTML: 1 },
+          duration: 1.2,
+          ease: "expo.out",
+        }, "-=1.2")
+        .to(q(".m-hero-cta"), { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.9");
+
+      gsap.to(q(".m-hero-phone-float"), {
+        y: -10,
+        duration: 2.8,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    },
+    { scope: mobileStageRef, dependencies: [heroReady, isMobile, prefersReducedMotion, metricValue] },
+  );
+
+  // Placeholder mínimo até saber se é mobile — evita flash do pin sticky
+  if (!heroReady) {
+    return (
+      <div
+        id="hero"
+        className="relative w-full min-h-[100dvh] bg-background"
+        aria-hidden
+      />
+    );
+  }
+
+  // Reduced-motion: fluxo estático, sem animações de entrada
   if (prefersReducedMotion) {
     return (
       <div
@@ -388,8 +455,6 @@ export function CinematicHero({
           <h1 className="text-silver-matte text-4xl sm:text-6xl font-extrabold tracking-tighter mb-10">{tagline2}</h1>
 
           <div className="premium-depth-card relative mx-auto max-w-3xl rounded-[32px] p-8 md:p-12 text-left">
-            {/* text-4xl fixo, sem escala responsiva pra 5xl+ — mantém o
-                line-height inline porque a config do Tailwind só cobre 5xl+. */}
             <h2
               className="text-card-silver-matte text-4xl font-black uppercase tracking-tighter mb-6 text-center"
               style={{ lineHeight: "normal" }}
@@ -420,16 +485,185 @@ export function CinematicHero({
     );
   }
 
+  // Mobile: mesma linguagem visual do desktop, em fluxo normal (sem pin/scrub)
+  if (isMobile) {
+    return (
+      <div
+        id="hero"
+        ref={mobileStageRef}
+        className={cn(
+          "relative w-full min-h-[100dvh] overflow-hidden bg-background text-white font-sans antialiased",
+          className,
+        )}
+        {...props}
+      >
+        <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
+        <div className="film-grain" aria-hidden="true" />
+        <div className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-40" aria-hidden="true" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-sky-400/[0.12] blur-[90px]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-10 right-[-20%] h-64 w-64 rounded-full bg-white/[0.04] blur-[80px]"
+        />
+
+        <div className="relative z-10 flex min-h-[100dvh] flex-col px-5 pb-8 pt-28">
+          {/* Marca + promessa — um bloco só */}
+          <div className="text-center">
+            <p className="m-hero-brand font-display text-[11px] font-bold uppercase tracking-[0.28em] text-sky-300/80">
+              {brandName}
+            </p>
+            <h1 className="m-hero-brand mt-3 font-display text-[clamp(3.25rem,14vw,4.75rem)] font-black uppercase leading-[0.88] tracking-tight">
+              <span className="text-3d-matte block">{tagline1}</span>
+              <span className="text-silver-matte block">{tagline2}</span>
+            </h1>
+            <div className="m-hero-copy mx-auto mt-5 max-w-[28ch]">
+              <p className="text-lg font-semibold tracking-tight text-white">{cardHeading}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/50">
+                Sites, lojas e sistemas sob medida — do briefing ao deploy.
+              </p>
+            </div>
+          </div>
+
+          {/* Visual dominante — mockup */}
+          <div className="m-hero-phone relative mx-auto flex min-h-0 flex-1 items-center justify-center py-6">
+            <div className="m-hero-phone-float relative">
+              <div className="relative w-[220px] scale-[0.92] sm:w-[240px] sm:scale-100">
+                <div className="iphone-bezel relative mx-auto aspect-[9/19] w-full rounded-[2.4rem]">
+                  <div className="absolute inset-[6px] overflow-hidden rounded-[2rem] bg-[#050914] text-white shadow-[inset_0_0_15px_rgba(0,0,0,1)]">
+                    <div className="screen-glare absolute inset-0 z-40 pointer-events-none" aria-hidden="true" />
+                    <div className="absolute left-1/2 top-[4px] z-50 flex h-[22px] w-[84px] -translate-x-1/2 items-center justify-end rounded-full bg-black px-2.5 shadow-[inset_0_-1px_2px_rgba(255,255,255,0.1)]">
+                      <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]" />
+                    </div>
+
+                    <div className="flex h-full flex-col px-4 pb-6 pt-10">
+                      <div className="mb-5 flex items-center justify-between">
+                        <div>
+                          <span className="mb-0.5 block text-[9px] font-bold uppercase tracking-widest text-neutral-400">
+                            Hoje
+                          </span>
+                          <span className="text-base font-bold tracking-tight text-white">Painel</span>
+                        </div>
+                        <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5">
+                          <WebPulseLogo size={18} />
+                        </div>
+                      </div>
+
+                      <div className="relative mx-auto mb-5 flex h-32 w-32 items-center justify-center drop-shadow-[0_12px_20px_rgba(0,0,0,0.8)]">
+                        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 128 128" aria-hidden="true">
+                          <circle cx="64" cy="64" r="48" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="10" />
+                          <circle
+                            className="m-progress-ring"
+                            cx="64"
+                            cy="64"
+                            r="48"
+                            fill="none"
+                            stroke="#38bdf8"
+                            strokeWidth="10"
+                            strokeLinecap="round"
+                            style={{
+                              strokeDasharray: 301,
+                              strokeDashoffset: 301,
+                              transform: "rotate(-90deg)",
+                              transformOrigin: "50% 50%",
+                            }}
+                          />
+                        </svg>
+                        <div className="z-10 flex flex-col items-center text-center">
+                          <span className="text-3xl font-extrabold tracking-tighter text-white">
+                            <span className="m-counter-val">0</span>
+                            {metricSuffix}
+                          </span>
+                          <span className="mt-0.5 text-[7px] font-bold uppercase tracking-[0.12em] text-blue-200/50">
+                            {metricLabel}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="widget-depth flex items-center rounded-xl p-2.5">
+                          <div className="mr-2.5 flex h-8 w-8 items-center justify-center rounded-lg border border-sky-400/20 bg-gradient-to-br from-sky-400/20 to-sky-500/5">
+                            <span className="h-2 w-2 rounded-full bg-sky-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="mb-1.5 h-1.5 w-16 rounded-full bg-neutral-300/80" />
+                            <div className="h-1 w-10 rounded-full bg-neutral-600" />
+                          </div>
+                        </div>
+                        <div className="widget-depth flex items-center rounded-xl p-2.5">
+                          <div className="mr-2.5 flex h-8 w-8 items-center justify-center rounded-lg border border-emerald-400/20 bg-gradient-to-br from-emerald-500/20 to-emerald-600/5">
+                            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="mb-1.5 h-1.5 w-12 rounded-full bg-neutral-300/80" />
+                            <div className="h-1 w-20 rounded-full bg-neutral-600" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="m-hero-badge floating-ui-badge absolute -left-3 top-10 z-30 flex items-center gap-2.5 rounded-xl p-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full border border-sky-400/30 bg-gradient-to-b from-sky-400/20 to-sky-600/10">
+                    <span className="h-1.5 w-1.5 rounded-full bg-sky-300 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold tracking-tight text-white">Site no ar</p>
+                    <p className="text-[9px] font-medium text-blue-200/50">Deploy concluído</p>
+                  </div>
+                </div>
+
+                <div className="m-hero-badge floating-ui-badge absolute -right-3 bottom-16 z-30 flex items-center gap-2.5 rounded-xl p-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full border border-indigo-400/30 bg-gradient-to-b from-indigo-500/20 to-indigo-900/10">
+                    <span className="h-1.5 w-1.5 rounded-full bg-indigo-300" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold tracking-tight text-white">Novo pedido</p>
+                    <p className="text-[9px] font-medium text-blue-200/50">Recebido agora</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="m-hero-cta mx-auto flex w-full max-w-sm flex-col gap-3">
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-modern-light flex items-center justify-center gap-2 rounded-[1.15rem] px-6 py-3.5 font-semibold"
+            >
+              <MessageCircle className="h-5 w-5" />
+              {primaryCtaLabel}
+            </a>
+            <a
+              href={secondaryCtaHref}
+              onClick={(e) => handleNavClick(e, secondaryCtaHref)}
+              className="btn-modern-dark flex items-center justify-center gap-2 rounded-[1.15rem] px-6 py-3.5 font-semibold"
+            >
+              {secondaryCtaLabel}
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={wrapperRef}
       className="relative w-full"
-      style={{ height: `calc(100vh + ${pinDistance}px)` }}
+      style={{ height: `calc(100dvh + ${pinDistance}px)` }}
     >
     <div
       id="hero"
       ref={containerRef}
-      className={cn("sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center bg-background text-white font-sans antialiased", className)}
+      className={cn("sticky top-0 w-full h-[100dvh] overflow-hidden flex items-center justify-center bg-background text-white font-sans antialiased", className)}
       style={{ perspective: "1500px" }}
       {...props}
     >

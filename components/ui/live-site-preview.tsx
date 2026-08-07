@@ -85,6 +85,8 @@ export function LiveSitePreview({
       ref={shellRef}
       className={cn(
         "flex w-full flex-col overflow-hidden rounded-xl border border-white/12 bg-[#0c0e12] shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]",
+        // No mobile o iframe não deve “roubar” o gesto de rolagem da página
+        !interactive && "touch-pan-y",
         className,
       )}
     >

@@ -46,7 +46,8 @@ export function Footer() {
       ctaIcon={<MessageCircle className="w-5 h-5" />}
       socialLinks={socialLinks}
       navLinks={navLinks}
-      brandIcon={<WebPulseLogo size={72} />}
+      brandLogo={<WebPulseLogo showWordmark size={100} className="w-64 sm:w-80" />}
+      brandIcon={<WebPulseLogo size={72} className="w-full max-w-[72px]" />}
     />
   );
 }

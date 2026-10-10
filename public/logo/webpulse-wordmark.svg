@@ -1,28 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
-  <defs>
-    <linearGradient id="wm-pulse" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7dd3fc"/>
-      <stop offset="100%" stop-color="#38bdf8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1144 192" fill="none" role="img" aria-labelledby="title">
+  <title id="title">WebPulse</title>
+  <g transform="translate(24 30)">
+    <defs>
+    <linearGradient id="pulse" x1="0" y1="42" x2="207" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7dd3fc"/><stop offset=".52" stop-color="#38bdf8"/><stop offset="1" stop-color="#0ea5e9"/>
     </linearGradient>
-    <linearGradient id="wm-text" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#a1a1aa"/>
+    <linearGradient id="fold" x1="92" y1="42" x2="50" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a5edff"/><stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="rise" x1="193" y1="10" x2="124" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9"/><stop offset="1" stop-color="#22d3ee"/>
     </linearGradient>
   </defs>
-  <g transform="translate(4, 8)">
-    <circle cx="32" cy="32" r="30" stroke="rgba(56,189,248,0.25)" stroke-width="1.5" fill="rgba(56,189,248,0.05)"/>
-    <path
-      d="M10 34 L20 34 L26 18 L32 46 L38 26 L44 38 L54 34"
-      stroke="url(#wm-pulse)"
-      stroke-width="3"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      fill="none"
-    />
-    <circle cx="26" cy="18" r="2" fill="#7dd3fc"/>
-    <circle cx="32" cy="46" r="2" fill="#38bdf8"/>
+  <path fill="url(#pulse)" d="M0 42H30L54 93L79 42H109L133 93L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121L94 82L75 121Q70 130 61 130H48Q39 130 34 121Z"/>
+  <path fill="url(#fold)" d="M34 121L79 42H109L75 121Q70 130 61 130H48Q39 130 34 121Z"/>
+  <path fill="url(#rise)" d="M113 121L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121Z"/>
   </g>
-  <text x="78" y="48" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="url(#wm-text)" letter-spacing="-0.5">
-    Web<tspan fill="url(#wm-pulse)">Pulse</tspan>
-  </text>
+  <g transform="translate(272 60)" fill="#fafafa" fill-rule="evenodd">
+    <path transform="translate(0 0)" d="M0 0H21L38 56L54 11H72L88 56L105 0H126L99 84H79L63 42L47 84H27Z"/>
+    <path transform="translate(137 0)" d="M0 0H81V16H20V34H73V50H20V68H81V84H0Z"/>
+    <path transform="translate(229 0)" d="M0 0H61C84 0 98 7 98 23C98 33 92 39 83 42C94 45 100 52 100 64C100 77 86 84 64 84H0ZM20 16V34H61C72 34 78 30 78 25C78 20 72 16 61 16ZM20 50V68H63C74 68 80 65 80 60C80 54 74 50 63 50Z"/>
+    <path transform="translate(340 0)" d="M0 0H61C85 0 100 10 100 28C100 46 85 56 61 56H20V84H0ZM20 17V39H60C73 39 80 35 80 28C80 21 73 17 60 17Z"/>
+    <path transform="translate(451 0)" d="M0 0H20V48C20 63 30 69 50 69C70 69 80 63 80 48V0H100V49C100 75 81 86 50 86C19 86 0 75 0 49Z"/>
+    <path transform="translate(562 0)" d="M0 0H20V68H83V84H0Z"/>
+    <path transform="translate(656 0)" d="M96 5V23C81 17 66 15 50 15C28 15 20 19 20 26C20 33 34 34 56 36C86 39 100 45 100 61C100 78 82 86 52 86C32 86 14 82 0 80V61C18 68 37 69 54 69C74 69 80 66 80 59C80 52 66 51 44 50C14 47 0 40 0 26C0 9 18 0 48 0C69 0 84 0 96 5Z"/>
+    <path transform="translate(767 0)" d="M0 0H81V16H20V34H73V50H20V68H81V84H0Z"/>
+  </g>
 </svg>

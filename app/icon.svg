@@ -1,18 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><g clip-path="url(#SvgjsClipPath1771)"><rect width="1000" height="1000" fill="#000000"></rect><g transform="matrix(8.333333333333334,0,0,8.333333333333334,-5.684341886080802e-14,-5.684341886080802e-14)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" width="120" height="120"><defs>
-    <linearGradient id="pulse-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7dd3fc"></stop>
-      <stop offset="50%" stop-color="#38bdf8"></stop>
-      <stop offset="100%" stop-color="#0ea5e9"></stop>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" role="img" aria-labelledby="title"><rect width="240" height="240" fill="#030303"/>
+  <title id="title">Símbolo WebPulse</title>
+  <g transform="translate(16.5 50)">
+    <defs>
+    <linearGradient id="pulse" x1="0" y1="42" x2="207" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7dd3fc"/><stop offset=".52" stop-color="#38bdf8"/><stop offset="1" stop-color="#0ea5e9"/>
     </linearGradient>
-    <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"></stop>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.15"></stop>
+    <linearGradient id="fold" x1="92" y1="42" x2="50" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a5edff"/><stop offset="1" stop-color="#38bdf8"/>
     </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
-      <feMerge>
-        <feMergeNode in="blur"></feMergeNode>
-        <feMergeNode in="SourceGraphic"></feMergeNode>
-      </feMerge>
-    </filter>
-  <clipPath id="SvgjsClipPath1771"><rect width="1000" height="1000" x="0" y="0" rx="500" ry="500"></rect></clipPath></defs><circle cx="60" cy="60" r="52" stroke="url(#ring-grad)" stroke-width="2" fill="rgba(56,189,248,0.06)"></circle><circle cx="60" cy="60" r="38" stroke="rgba(56,189,248,0.12)" stroke-width="1" stroke-dasharray="4 6"></circle><path d="M22 62 L38 62 L46 38 L54 82 L62 52 L70 72 L78 62 L98 62" stroke="url(#pulse-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"></path><circle cx="46" cy="38" r="3" fill="#7dd3fc"></circle><circle cx="54" cy="82" r="3" fill="#38bdf8"></circle><circle cx="62" cy="52" r="3" fill="#7dd3fc"></circle></svg></g></g></svg>
+    <linearGradient id="rise" x1="193" y1="10" x2="124" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9"/><stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#pulse)" d="M0 42H30L54 93L79 42H109L133 93L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121L94 82L75 121Q70 130 61 130H48Q39 130 34 121Z"/>
+  <path fill="url(#fold)" d="M34 121L79 42H109L75 121Q70 130 61 130H48Q39 130 34 121Z"/>
+  <path fill="url(#rise)" d="M113 121L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121Z"/>
+  </g>
+</svg>

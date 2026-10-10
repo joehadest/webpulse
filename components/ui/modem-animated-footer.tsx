@@ -27,6 +27,7 @@ interface FooterProps {
   creatorName?: string;
   creatorUrl?: string;
   brandIcon?: React.ReactNode;
+  brandLogo?: React.ReactNode;
   className?: string;
 }
 
@@ -41,6 +42,7 @@ export const ModemAnimatedFooter = ({
   creatorName,
   creatorUrl,
   brandIcon,
+  brandLogo,
   className,
 }: FooterProps) => {
   return (
@@ -56,9 +58,11 @@ export const ModemAnimatedFooter = ({
             <div className="w-full flex flex-col items-center">
               <div className="space-y-2 flex flex-col items-center flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-white text-3xl font-display font-bold">
-                    {brandName}
-                  </span>
+                  {brandLogo ?? (
+                    <span className="text-white text-3xl font-display font-bold">
+                      {brandName}
+                    </span>
+                  )}
                 </div>
                 <p className="text-white/60 font-semibold text-center w-full max-w-sm sm:w-96 px-4 sm:px-0">
                   {brandDescription}

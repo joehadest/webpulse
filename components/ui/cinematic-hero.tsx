@@ -453,9 +453,9 @@ export function CinematicHero({
       >
         <div className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50" aria-hidden="true" />
         <div className="relative z-10 container mx-auto px-4 pt-32 pb-16 text-center">
-          <p className="font-display text-xs md:text-sm font-bold uppercase tracking-[0.28em] text-sky-300/80">
-            {brandName}
-          </p>
+          <div>
+            <WebPulseLogo showWordmark size={60} className="mx-auto w-44 md:w-52" />
+          </div>
           <h1 className="mt-4 md:mt-5 font-display text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-[0.88] tracking-tight mb-10">
             <span className="text-3d-matte block">{tagline1}</span>
             <span className="text-silver-matte block">{tagline2}</span>
@@ -519,9 +519,9 @@ export function CinematicHero({
         <div className="relative z-10 flex min-h-[100dvh] flex-col px-5 pb-8 pt-28">
           {/* Marca + promessa — um bloco só */}
           <div className="text-center">
-            <p className="m-hero-brand font-display text-[11px] font-bold uppercase tracking-[0.28em] text-sky-300/80">
-              {brandName}
-            </p>
+            <div className="m-hero-brand">
+              <WebPulseLogo showWordmark size={55} className="mx-auto w-44" />
+            </div>
             <h1 className="m-hero-brand mt-3 font-display text-[clamp(3.25rem,14vw,4.75rem)] font-black uppercase leading-[0.88] tracking-tight">
               <span className="text-3d-matte block">{tagline1}</span>
               <span className="text-silver-matte block">{tagline2}</span>
@@ -683,9 +683,9 @@ export function CinematicHero({
           deixa o bloco mais largo que a area util, empurra o conteudo alguns
           px pra esquerda e cria rolagem horizontal. */}
       <div className="hero-text-wrapper absolute inset-x-0 z-10 flex flex-col items-center justify-center text-center px-4 will-change-transform">
-        <p className="text-brand gsap-reveal font-display text-xs md:text-sm font-bold uppercase tracking-[0.28em] text-sky-300/80">
-          {brandName}
-        </p>
+        <div className="text-brand gsap-reveal">
+          <WebPulseLogo showWordmark size={65} className="w-52" />
+        </div>
         <h1 className="mt-4 md:mt-5 font-display text-[clamp(4.75rem,11vw,9rem)] font-black uppercase leading-[0.88] tracking-tight">
           <span className="text-track gsap-reveal text-3d-matte block">{tagline1}</span>
           <span className="text-days gsap-reveal text-silver-matte block">{tagline2}</span>

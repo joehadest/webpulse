@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/lib/site-config";
+import { projects } from "@/lib/projects";
 import { WebPulseLogo } from "@/components/ui/webpulse-logo";
 
 if (typeof window !== "undefined") {
@@ -214,7 +215,7 @@ export function CinematicHero({
       administrativo prontos — tudo sob seu controle.
     </>
   ),
-  metricValue = 5,
+  metricValue = projects.length,
   metricSuffix = "+",
   metricLabel = "Projetos no ar",
   ctaHeading = "Bora tirar seu projeto do papel?",
@@ -329,7 +330,6 @@ export function CinematicHero({
     if (!useCinematicScroll) return;
     if (!containerRef.current || !wrapperRef.current) return;
 
-    gsap.set(".text-brand", { autoAlpha: 0, y: 24 });
     gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 });
     gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" });
     gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
@@ -338,8 +338,7 @@ export function CinematicHero({
 
     const introTl = gsap.timeline({ delay: 0.3 });
     introTl
-      .to(".text-brand", { duration: 0.9, autoAlpha: 1, y: 0, ease: "expo.out" })
-      .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" }, "-=0.55")
+      .to(".text-track", { duration: 1.8, autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", rotationX: 0, ease: "expo.out" })
       .to(".text-days", { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" }, "-=1.0");
 
     const scrollTl = gsap.timeline({
@@ -453,10 +452,7 @@ export function CinematicHero({
       >
         <div className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50" aria-hidden="true" />
         <div className="relative z-10 container mx-auto px-4 pt-32 pb-16 text-center">
-          <div>
-            <WebPulseLogo showWordmark size={60} className="mx-auto w-44 md:w-52" />
-          </div>
-          <h1 className="mt-4 md:mt-5 font-display text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-[0.88] tracking-tight mb-10">
+          <h1 className="font-display text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-[0.88] tracking-tight mb-10">
             <span className="text-3d-matte block">{tagline1}</span>
             <span className="text-silver-matte block">{tagline2}</span>
           </h1>
@@ -519,10 +515,7 @@ export function CinematicHero({
         <div className="relative z-10 flex min-h-[100dvh] flex-col px-5 pb-8 pt-28">
           {/* Marca + promessa — um bloco só */}
           <div className="text-center">
-            <div className="m-hero-brand">
-              <WebPulseLogo showWordmark size={55} className="mx-auto w-44" />
-            </div>
-            <h1 className="m-hero-brand mt-3 font-display text-[clamp(3.25rem,14vw,4.75rem)] font-black uppercase leading-[0.88] tracking-tight">
+            <h1 className="m-hero-brand font-display text-[clamp(3.25rem,14vw,4.75rem)] font-black uppercase leading-[0.88] tracking-tight">
               <span className="text-3d-matte block">{tagline1}</span>
               <span className="text-silver-matte block">{tagline2}</span>
             </h1>
@@ -683,10 +676,7 @@ export function CinematicHero({
           deixa o bloco mais largo que a area util, empurra o conteudo alguns
           px pra esquerda e cria rolagem horizontal. */}
       <div className="hero-text-wrapper absolute inset-x-0 z-10 flex flex-col items-center justify-center text-center px-4 will-change-transform">
-        <div className="text-brand gsap-reveal">
-          <WebPulseLogo showWordmark size={65} className="w-52" />
-        </div>
-        <h1 className="mt-4 md:mt-5 font-display text-[clamp(4.75rem,11vw,9rem)] font-black uppercase leading-[0.88] tracking-tight">
+        <h1 className="font-display text-[clamp(4.75rem,11vw,9rem)] font-black uppercase leading-[0.88] tracking-tight">
           <span className="text-track gsap-reveal text-3d-matte block">{tagline1}</span>
           <span className="text-days gsap-reveal text-silver-matte block">{tagline2}</span>
         </h1>

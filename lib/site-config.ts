@@ -3,6 +3,8 @@
  * Edite aqui — os componentes leem tudo deste arquivo.
  */
 
+import { projects } from "@/lib/projects";
+
 export const siteConfig = {
   name: "WebPulse",
   tagline: "Sites e sistemas sob medida",
@@ -17,7 +19,7 @@ export const siteConfig = {
    * Mantenha honesto: cliente confere.
    */
   stats: [
-    { value: "5+", label: "Projetos entregues" },
+    { value: `${projects.length}+`, label: "Projetos entregues" },
     { value: "100%", label: "Código sob medida" },
     { value: "24h", label: "Tempo médio de resposta" },
     { value: "30 dias", label: "Suporte pós-entrega incluso" },

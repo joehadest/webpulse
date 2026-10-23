@@ -5,70 +5,7 @@ import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 import { LiveSitePreview } from "@/components/ui/live-site-preview";
 import { Reveal } from "@/components/ui/reveal";
 import { whatsappLink } from "@/lib/site-config";
-
-interface Project {
-  index: string;
-  kind: string;
-  /** Quebrado em linhas para o título grande respirar. */
-  title: string[];
-  description: string;
-  tags: string[];
-  url?: string;
-  accent: string;
-}
-
-const projects: Project[] = [
-  {
-    index: "01",
-    kind: "Landing de eventos",
-    title: ["Camarote", "PMD"],
-    description:
-      "Venda de ingressos com line-up, galeria e animações de rolagem. Feita para converter no celular, onde acontece a maior parte do acesso.",
-    tags: ["React", "Vite", "Framer Motion"],
-    url: "https://camarotepmd.com.br/",
-    accent: "#a78bfa",
-  },
-  {
-    index: "02",
-    kind: "Site institucional",
-    title: ["Baracho", "Industrial"],
-    description:
-      "Engenharia pesada: alpinismo industrial, solda e manutenção. Estrutura pensada para transmitir autoridade técnica e gerar contato comercial direto.",
-    tags: ["React", "Tailwind CSS", "SEO"],
-    url: "https://barachosolucoes.com/",
-    accent: "#94a3b8",
-  },
-  {
-    index: "03",
-    kind: "App de delivery",
-    title: ["Rei dos", "Salgados"],
-    description:
-      "Cardápio, carrinho, acompanhamento de pedido e painel para a cozinha receber tudo em tempo real, sem depender de telefone.",
-    tags: ["Next.js", "MongoDB", "Tempo real"],
-    url: "https://reidossalgados.webpulseservicos.com/",
-    accent: "#fbbf24",
-  },
-  {
-    index: "04",
-    kind: "E-commerce completo",
-    title: ["Seu", "Manto"],
-    description:
-      "Loja de camisetas de ponta a ponta: vitrine, carrinho, checkout com pagamento online, painel administrativo e pedidos atualizando em tempo real.",
-    tags: ["Next.js", "Supabase", "Mercado Pago"],
-    url: "https://seumanto.webpulseservicos.com/",
-    accent: "#818cf8",
-  },
-  {
-    index: "05",
-    kind: "Site + painel administrativo",
-    title: ["Shellton", "Auto Mecânica"],
-    description:
-      "Oficina com agendamento online, fila pública atualizando ao vivo e dashboard para a equipe gerenciar os atendimentos do dia.",
-    tags: ["Next.js", "TypeScript", "Supabase Realtime"],
-    url: "https://shelltonautomecanica.webpulseservicos.com/",
-    accent: "#2dd4bf",
-  },
-];
+import { projects } from "@/lib/projects";
 
 const ruleClass = "border-none border-t border-white/15";
 
@@ -77,14 +14,14 @@ export function Portfolio() {
     <FlowArt id="portfolio" aria-label="Projetos entregues">
       {projects.map((project, i) => (
         <FlowSection
-          key={project.index}
+          key={project.url}
           aria-label={project.title.join(" ")}
           style={{ background: "#030303", color: "#fff" }}
         >
           <Reveal delay={(i % 2) * 0.06}>
             <div className="flex items-baseline justify-between gap-4">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
-                Projeto {project.index} — {project.kind}
+                Projeto {String(i + 1).padStart(2, "0")} — {project.kind}
               </p>
               <p
                 className="font-display text-[11px] font-bold uppercase tracking-[0.2em]"
@@ -165,7 +102,7 @@ export function Portfolio() {
       >
         <Reveal>
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
-            Projeto 06 — O próximo
+            Projeto {String(projects.length + 1).padStart(2, "0")} — O próximo
           </p>
         </Reveal>
 

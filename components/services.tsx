@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { Section } from "@/components/ui/section";
 import { whatsappLink } from "@/lib/site-config";
 
 interface Service {
@@ -74,99 +75,74 @@ const services: Service[] = [
 
 export function Services() {
   return (
-    <section
-      id="servicos"
-      className="relative w-full bg-background text-white overflow-hidden py-24 md:py-32"
-    >
-      {/* Fundo — grade técnica + brilhos, no mesmo espírito do hero */}
-      <div className="absolute inset-0 grid-pattern mask-radial-fade pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-        <div className="absolute top-[15%] left-[8%] w-72 h-72 bg-sky-400/[0.06] rounded-full blur-[110px] animate-pulse-glow" />
-        <div className="absolute bottom-[15%] right-[8%] w-72 h-72 bg-white/[0.035] rounded-full blur-[110px]" />
-      </div>
+    <Section id="servicos">
+      <SectionHeading
+        index="01"
+        label="Serviços"
+        title="O que eu construo."
+        highlight="Do site simples ao sistema completo."
+        subtitle="Cada projeto é feito do zero, com a tecnologia certa para o que você precisa — sem template, sem construtor de arrastar e soltar."
+      />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <SectionHeading
-          label="Serviços"
-          title="O que eu"
-          highlight="construo"
-          subtitle="Do site simples ao sistema completo. Cada projeto é feito do zero, com a tecnologia certa para o que você precisa."
-        />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-16">
+      <Reveal delay={0.1}>
+        <div className="spec-grid mt-14 sm:grid-cols-2 lg:grid-cols-3 md:mt-20">
           {services.map((service, i) => {
             const Icon = service.icon;
             const index = String(i + 1).padStart(2, "0");
 
             return (
-              <Reveal
+              <SpotlightCard
                 key={service.title}
-                delay={(i % 3) * 0.1}
-                className={cn(service.featured && "sm:col-span-2")}
+                variant="cell"
+                className={cn(
+                  "p-7 md:p-8",
+                  service.featured && "sm:col-span-2",
+                )}
               >
-                <SpotlightCard className="h-full p-7">
-                  {/* Linha de acento que acende no hover */}
-                  <div
-                    aria-hidden
-                    className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  />
-
-                  {/* Índice fantasma no canto, como no portfólio */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute -top-3 right-4 font-display text-[5.5rem] font-bold leading-none text-white/[0.045] transition-colors duration-500 group-hover:text-sky-400/[0.09]"
-                  >
-                    {index}
-                  </span>
-
-                  <div className="relative flex flex-col h-full">
-                    <div className="mb-5 flex items-center gap-3">
-                      <div className="inline-flex w-fit items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/[0.08] p-3 shadow-[0_0_20px_rgba(56,189,248,0)] transition-all duration-500 group-hover:border-sky-400/40 group-hover:bg-sky-400/[0.14] group-hover:shadow-[0_0_20px_rgba(56,189,248,0.15)] group-hover:scale-105">
-                        <Icon className="w-6 h-6 text-sky-300" />
-                      </div>
-                      <span className="font-display text-[11px] font-bold uppercase tracking-[0.2em] text-white/25 transition-colors duration-500 group-hover:text-sky-300/60">
-                        {index}
-                      </span>
-                    </div>
-
-                    <h3 className="font-display text-xl font-semibold text-white mb-2.5">
-                      {service.title}
-                    </h3>
-
-                    <p
-                      className={cn(
-                        "text-sm text-white/50 leading-relaxed mb-6 flex-1",
-                        service.featured && "sm:max-w-md",
-                      )}
-                    >
-                      {service.description}
-                    </p>
-
-                    <ul className="flex flex-wrap gap-2">
-                      {service.points.map((point) => (
-                        <li
-                          key={point}
-                          className="rounded-full border border-white/[0.07] bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-white/45 transition-colors duration-500 group-hover:border-white/[0.12] group-hover:text-white/60"
-                        >
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                <div className="flex h-full flex-col">
+                  <div className="mb-10 flex items-start justify-between">
+                    <span className="icon-tile">
+                      <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                    </span>
+                    <span className="mono text-xs text-3 transition-colors duration-300 group-hover:text-sky-300">
+                      {index}
+                    </span>
                   </div>
-                </SpotlightCard>
-              </Reveal>
+
+                  <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-1">
+                    {service.title}
+                  </h3>
+
+                  <p
+                    className={cn(
+                      "mt-2.5 flex-1 text-[0.9375rem] leading-relaxed text-2",
+                      service.featured ? "max-w-[52ch]" : "max-w-[40ch]",
+                    )}
+                  >
+                    {service.description}
+                  </p>
+
+                  <ul className="mono mt-8 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/[0.07] pt-5 text-[11px] uppercase tracking-[0.06em] text-3">
+                    {service.points.map((point) => (
+                      <li key={point} className="flex items-center gap-2">
+                        <span aria-hidden className="h-px w-2 bg-white/25" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </SpotlightCard>
             );
           })}
-        </div>
 
-        {/* Fecho — para quem não se encaixou em nenhum cartão */}
-        <Reveal delay={0.15}>
-          <div className="mt-12 flex flex-col items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.02] px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left md:px-10">
+          {/* Fecho — ocupa a célula que sobraria vazia na grade */}
+          <div className="spec-cell flex flex-col justify-between gap-8 p-7 sm:col-span-2 md:p-8 lg:col-span-1">
             <div>
-              <p className="font-display text-lg font-semibold text-white">
+              <p className="mono text-xs text-sky-300">+</p>
+              <p className="mt-10 font-display text-xl font-semibold tracking-[-0.02em] text-1">
                 Precisa de algo que não está aqui?
               </p>
-              <p className="mt-1 text-sm text-white/45">
+              <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-2">
                 Me conta a ideia — se eu não fizer, indico quem faz.
               </p>
             </div>
@@ -176,14 +152,14 @@ export function Services() {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-ghost shrink-0"
+              className="btn-ghost w-fit"
             >
               <MessageCircle className="h-4 w-4" />
               Falar no WhatsApp
             </a>
           </div>
-        </Reveal>
-      </div>
-    </section>
+        </div>
+      </Reveal>
+    </Section>
   );
 }

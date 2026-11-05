@@ -98,7 +98,7 @@ const Navbar1 = () => {
         }}
         transition={{ duration: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
       >
-        <div className="flex items-center justify-between px-4 md:px-6 py-3 glass rounded-full w-full max-w-4xl relative z-10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+        <div className="flex items-center justify-between px-4 md:px-6 py-2.5 glass rounded-full w-full max-w-4xl relative z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_1px_2px_rgba(0,0,0,0.5),0_16px_40px_-12px_rgba(0,0,0,0.7)]">
           <motion.a
             href="#top"
             onClick={(e) => handleNavClick(e, "#top")}
@@ -122,14 +122,14 @@ const Navbar1 = () => {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`relative px-3.5 py-2 text-sm font-medium transition-colors duration-300 rounded-full ${
                     isActive
-                      ? "text-sky-300"
-                      : "text-white/60 hover:text-white"
+                      ? "text-white"
+                      : "text-white/55 hover:text-white"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-active-pill"
-                      className="absolute inset-0 rounded-full bg-sky-400/10 border border-sky-400/20"
+                      className="absolute inset-0 rounded-full border border-white/[0.1] bg-white/[0.06]"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -143,9 +143,7 @@ const Navbar1 = () => {
           <motion.a
             href="#contato"
             onClick={(e) => handleNavClick(e, "#contato")}
-            className="hidden md:inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-sm text-black bg-white rounded-full hover:bg-sky-50 transition-all font-semibold shadow-[0_0_20px_rgba(56,189,248,0.15)] hover:shadow-[0_0_30px_rgba(56,189,248,0.3)]"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
+            className="btn-primary hidden h-10 px-5 md:inline-flex"
           >
             Orçamento
           </motion.a>

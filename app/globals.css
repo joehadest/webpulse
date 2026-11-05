@@ -2,22 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   DESIGN TOKENS
+   Tudo que define a "cara" do site mora aqui. Componentes leem estes
+   valores em vez de inventar opacidades soltas (white/45, white/[0.07]...),
+   o que mantém contraste, bordas e profundidade consistentes entre seções.
+   ========================================================================== */
+
 @layer base {
   :root {
-    --background: #030303;
-    --surface: #08080a;
-    --foreground: #fafafa;
+    /* Superfícies — três degraus de elevação em vez de um preto chapado */
+    --background: #050506;
+    --surface: #0a0a0c;
+    --surface-raised: #0f1013;
+    --foreground: #f4f4f5;
+
+    /* Texto — três níveis com contraste AA garantido no fundo escuro */
+    --text-1: #f4f4f5;
+    --text-2: rgba(244, 244, 245, 0.68);
+    --text-3: rgba(244, 244, 245, 0.46);
     --muted: #a1a1aa;
+
+    /* Marca — usada com parcimônia: índice, foco, um detalhe por bloco */
     --accent: #38bdf8;
     --accent-soft: #7dd3fc;
     --accent-deep: #0ea5e9;
     --accent-muted: rgba(56, 189, 248, 0.12);
-    --border: rgba(255, 255, 255, 0.08);
-    --card: rgba(255, 255, 255, 0.03);
+
+    /* Linhas finas: a estrutura da página é desenhada com elas */
+    --line: rgba(255, 255, 255, 0.07);
+    --line-strong: rgba(255, 255, 255, 0.12);
+    --border: var(--line);
+    --card: rgba(255, 255, 255, 0.025);
+
+    /* Luz de borda: um 1px claro no topo dá volume sem precisar de glow */
+    --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+    /* Sombras em camadas (contato + ambiente), como luz real */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.5), 0 24px 64px -24px rgba(0, 0, 0, 0.85);
+
+    /* Raios — menores e consistentes leem como produto, não como template */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 22px;
+
+    /* Grade da página */
+    --shell: 1200px;
+    --gutter: clamp(20px, 4vw, 40px);
+    --rail-x: max(var(--gutter), calc((100% - var(--shell)) / 2));
+
+    /* Movimento */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-fast: 180ms;
+    --dur: 320ms;
+    --dur-slow: 600ms;
   }
 
   * {
-    border-color: var(--border);
+    border-color: var(--line);
   }
 
   html {
@@ -25,13 +71,39 @@
     scroll-padding-top: 6rem;
     background-color: var(--background);
     -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     background-color: var(--background);
     min-height: 100vh;
-    color: var(--foreground);
+    color: var(--text-1);
     text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "cv11";
+    font-synthesis: none;
+  }
+
+  /* Grão fixo sobre a página inteira. É o que tira o aspecto de "tela
+     lisa": o preto ganha textura de material, sem pesar no layout. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
@@ -40,7 +112,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
@@ -48,12 +120,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--background);
+    border-radius: 8px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.18);
   }
 
   :focus-visible {
@@ -63,6 +136,350 @@
   }
 }
 
+/* ==========================================================================
+   PRIMITIVAS DE LAYOUT
+   ========================================================================== */
+
+@layer components {
+  /* Contêiner único do site: mesma largura e mesmo respiro em toda seção */
+  .shell {
+    width: 100%;
+    max-width: calc(var(--shell) + var(--gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section-pad {
+    padding-block: clamp(5rem, 4rem + 6vw, 9rem);
+  }
+
+  /* Trilhos verticais nas bordas do conteúdo + linha no topo com marcas
+     de cruz nos encontros. É a "planta baixa" da página — o recurso que
+     faz o layout parecer projetado e não empilhado. */
+  .rails {
+    position: relative;
+    border-top: 1px solid var(--line);
+  }
+
+  .rails::before,
+  .rails::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      var(--line) 0%,
+      var(--line) 70%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .rails::before {
+    left: var(--rail-x);
+  }
+
+  .rails::after {
+    right: var(--rail-x);
+  }
+
+  .cross {
+    position: absolute;
+    top: -5px;
+    width: 9px;
+    height: 9px;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 100% no-repeat,
+      linear-gradient(var(--line-strong), var(--line-strong)) center / 100% 1px no-repeat;
+  }
+
+  .cross-l {
+    left: calc(var(--rail-x) - 4px);
+  }
+
+  .cross-r {
+    right: calc(var(--rail-x) - 4px);
+  }
+
+  @media (max-width: 767px) {
+    .rails::before,
+    .rails::after,
+    .cross {
+      display: none;
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     TIPOGRAFIA
+     ------------------------------------------------------------------ */
+
+  /* Sobrelinha técnica: índice em mono + nome da seção */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .eyebrow-index {
+    color: var(--accent);
+  }
+
+  .eyebrow-rule {
+    width: 1.5rem;
+    height: 1px;
+    background: var(--line-strong);
+  }
+
+  .display-xl {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2.25rem, 1.35rem + 3.4vw, 4rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .display-lg {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .lead {
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+    line-height: 1.65;
+    color: var(--text-2);
+  }
+
+  .mono {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-feature-settings: "zero" 0;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ------------------------------------------------------------------
+     SUPERFÍCIES
+     ------------------------------------------------------------------ */
+
+  /* Card com volume: degradê vertical quase imperceptível, luz de borda
+     no topo e sombra em camadas. Substitui o "vidro" genérico. */
+  .surface {
+    position: relative;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+      var(--surface);
+    box-shadow: var(--edge-light), var(--shadow-md);
+  }
+
+  /* Grade de especificação: células coladas, separadas por 1px de linha.
+     Lê como tabela técnica — o oposto de "cards flutuando". */
+  .spec-grid {
+    display: grid;
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--line);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .spec-cell {
+    position: relative;
+    background: var(--background);
+    transition: background-color var(--dur) var(--ease-out);
+  }
+
+  .spec-cell:hover {
+    background: #08080a;
+  }
+
+  /* Brilho que segue o cursor — posição via CSS vars, sem re-render */
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-slow) var(--ease-out);
+    background: radial-gradient(
+      420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(56, 189, 248, 0.07),
+      transparent 60%
+    );
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* Detalhe de acento: um traço curto no topo que cresce no hover */
+  .accent-tick {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    height: 1px;
+    width: 2rem;
+    background: var(--accent);
+    transition: width var(--dur-slow) var(--ease-out);
+  }
+
+  .group:hover .accent-tick {
+    width: 100%;
+  }
+
+  /* Ícone em "ladrilho" com relevo, não em bolha brilhante */
+  .icon-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+    box-shadow: var(--edge-light), var(--shadow-sm);
+    color: var(--text-1);
+  }
+
+  /* ------------------------------------------------------------------
+     BOTÕES
+     ------------------------------------------------------------------ */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.875rem;
+    padding-inline: 1.375rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Primário: branco sólido com bisel (luz em cima, sombra embaixo) */
+  .btn-primary {
+    @apply btn;
+    color: #09090b;
+    background: linear-gradient(180deg, #ffffff 0%, #e9e9ec 100%);
+    box-shadow:
+      inset 0 1px 0 #fff,
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.12),
+      0 1px 2px rgba(0, 0, 0, 0.5),
+      0 8px 24px -8px rgba(255, 255, 255, 0.18);
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow:
+      inset 0 1px 0 #fff,
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.5),
+      0 12px 32px -8px rgba(255, 255, 255, 0.26);
+  }
+
+  .btn-ghost {
+    @apply btn;
+    color: var(--text-1);
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: var(--edge-light);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ------------------------------------------------------------------
+     FORMULÁRIO
+     ------------------------------------------------------------------ */
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45);
+    color: var(--text-1);
+    font-size: 0.9375rem;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .field::placeholder {
+    color: rgba(244, 244, 245, 0.3);
+  }
+
+  .field:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: rgba(56, 189, 248, 0.55);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow:
+      inset 0 1px 2px rgba(0, 0, 0, 0.45),
+      0 0 0 4px rgba(56, 189, 248, 0.12);
+  }
+
+  select.field {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a1a1aa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-2);
+  }
+}
+
+/* ==========================================================================
+   UTILITÁRIOS (legado + máscaras)
+   ========================================================================== */
+
 @layer utilities {
   /* bg-clip-text pinta o gradiente so dentro da caixa do elemento. Com
      tracking negativo a caixa fica mais estreita que a tinta do ultimo
@@ -71,7 +488,7 @@
      no acento, que e inline e vem depois de um espaco — padding a
      esquerda abriria um vao antes da palavra. */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/60;
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70;
     padding-inline: 0.06em;
   }
 
@@ -80,12 +497,28 @@
     padding-right: 0.06em;
   }
 
+  .text-1 {
+    color: var(--text-1);
+  }
+
+  .text-2 {
+    color: var(--text-2);
+  }
+
+  .text-3 {
+    color: var(--text-3);
+  }
+
   .glass {
-    @apply bg-white/[0.04] backdrop-blur-xl border border-white/[0.08];
+    background: rgba(12, 12, 14, 0.72);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--edge-light);
   }
 
   .section-label {
-    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium tracking-wider uppercase text-sky-400/90 bg-sky-400/10 border border-sky-400/20;
+    @apply eyebrow;
   }
 
   .noise-overlay {
@@ -94,11 +527,10 @@
     pointer-events: none;
   }
 
-  /* Subtle technical grid — reads as "engineering" without shouting */
   .grid-pattern {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
@@ -107,35 +539,30 @@
     mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 75%);
   }
 
+  .mask-fade-top {
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent 70%);
+    mask-image: linear-gradient(to bottom, black, transparent 70%);
+  }
+
   .mask-edges-x {
     -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
     mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
   }
 
-  /* Card surface used across services / process / faq / contact */
+  /* Mantido para os poucos lugares que ainda usam card solto */
   .card-surface {
-    @apply relative rounded-2xl border border-white/[0.07] bg-white/[0.02] backdrop-blur-sm transition-all duration-500;
+    @apply surface;
+    transition:
+      border-color var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out);
   }
 
   .card-surface:hover {
-    @apply border-sky-400/25 bg-white/[0.035];
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black transition-all duration-300 hover:bg-sky-50 shadow-[0_0_30px_rgba(56,189,248,0.2)] hover:shadow-[0_0_45px_rgba(56,189,248,0.4)] hover:-translate-y-0.5;
-  }
-
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full glass px-7 py-3.5 text-sm font-medium text-white/80 transition-all duration-300 hover:bg-white/[0.08] hover:text-white hover:border-white/20 hover:-translate-y-0.5;
+    border-color: rgba(255, 255, 255, 0.14);
   }
 
   .divider-glow {
-    background: linear-gradient(
-      to right,
-      transparent,
-      rgba(56, 189, 248, 0.25),
-      transparent
-    );
+    background: linear-gradient(to right, transparent, rgba(56, 189, 248, 0.25), transparent);
   }
 }
 

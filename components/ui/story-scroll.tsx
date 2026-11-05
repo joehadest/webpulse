@@ -21,12 +21,12 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
     data-flow-section
     aria-label={ariaLabel}
     className={cn(
-      "relative w-full overflow-hidden border-b border-white/10 last:border-b-0",
+      "relative w-full overflow-hidden border-b border-white/[0.07] last:border-b-0",
       className,
     )}
     style={style}
   >
-    <div className="relative mx-auto flex w-full max-w-7xl flex-col justify-between gap-8 px-5 py-14 md:gap-10 md:px-8 md:py-20 lg:px-10 lg:py-24">
+    <div className="shell relative flex flex-col justify-between gap-8 py-14 md:gap-10 md:py-20 lg:py-24">
       {children}
     </div>
   </section>

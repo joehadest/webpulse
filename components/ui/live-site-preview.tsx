@@ -84,26 +84,30 @@ export function LiveSitePreview({
     <div
       ref={shellRef}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-xl border border-white/12 bg-[#0c0e12] shadow-[0_24px_60px_-18px_rgba(0,0,0,0.85)]",
+        "flex w-full flex-col overflow-hidden rounded-[var(--radius-lg)] border border-white/[0.12] bg-surface shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_1px_2px_rgba(0,0,0,0.5),0_40px_80px_-32px_rgba(0,0,0,0.9)] ring-1 ring-black/60",
         // No mobile o iframe não deve “roubar” o gesto de rolagem da página
         !interactive && "touch-pan-y",
         className,
       )}
     >
       {/* Chrome da janela */}
-      <div className="flex shrink-0 items-center gap-3 border-b border-white/10 bg-white/[0.04] px-3 py-2.5">
+      <div className="flex shrink-0 items-center gap-3 border-b border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.02] px-3.5 py-2.5">
         <div className="flex gap-1.5" aria-hidden>
-          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/[0.14]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/[0.14]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/[0.14]" />
         </div>
-        <div className="min-w-0 flex-1 truncate rounded-md border border-white/10 bg-black/35 px-3 py-1 text-center text-[11px] text-white/55">
+        <div className="mono min-w-0 flex-1 truncate rounded-md border border-white/[0.08] bg-black/40 px-3 py-1 text-center text-[11px] text-white/55 shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]">
           {host}
         </div>
         <span
-          className="hidden shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] sm:inline"
-          style={{ color: accent }}
+          className="mono hidden shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] text-white/55 sm:inline-flex"
         >
+          <span
+            aria-hidden
+            className="h-1.5 w-1.5 animate-pulse rounded-full"
+            style={{ background: accent }}
+          />
           Ao vivo
         </span>
       </div>

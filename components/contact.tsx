@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Section } from "@/components/ui/section";
 import {
   siteConfig,
   whatsappLink,
@@ -84,159 +85,167 @@ export function Contact() {
     window.open(whatsappLink(text), "_blank", "noopener,noreferrer");
   };
 
-  const fieldClass =
-    "w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/25 transition-colors duration-300 focus:border-sky-400/40 focus:bg-white/[0.05] focus:outline-none";
-
-  const labelClass = "mb-2 block text-xs font-medium text-white/50";
+  const fieldClass = "field";
+  const labelClass = "field-label";
 
   return (
-    <section
-      id="contato"
-      className="relative w-full bg-background py-24 md:py-32 border-t border-white/[0.06] overflow-hidden scroll-mt-24"
-    >
-      <div className="absolute inset-0 grid-pattern opacity-40 mask-radial-fade pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-sky-400/[0.06] rounded-full blur-[140px] pointer-events-none" />
+    <Section id="contato" className="overflow-hidden">
+      {/* Uma única luz de palco atrás do formulário — o ponto focal da página */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[420px] w-[900px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgba(56,189,248,0.10),transparent_65%)]"
+      />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <SectionHeading
-          label="Contato"
-          title="Vamos tirar seu projeto"
-          highlight="do papel"
-          subtitle="Conte o que você precisa. Eu respondo com uma proposta clara de escopo, prazo e valor — sem compromisso."
-        />
+      <SectionHeading
+        index="05"
+        label="Contato"
+        title="Vamos tirar seu projeto"
+        highlight="do papel."
+        subtitle="Conte o que você precisa. Eu respondo com uma proposta clara de escopo, prazo e valor — sem compromisso."
+      />
 
-        <div className="mx-auto mt-16 grid max-w-5xl gap-6 lg:grid-cols-5">
-          {/* Formulário */}
-          <Reveal className="lg:col-span-3">
-            <form
-              onSubmit={handleSubmit}
-              className="h-full rounded-2xl border border-white/[0.07] bg-white/[0.02] p-7 md:p-8 backdrop-blur-sm"
-            >
-              <div className="space-y-5">
+      <div className="mt-14 grid gap-10 md:mt-20 lg:grid-cols-12 lg:gap-12">
+        {/* Formulário */}
+        <Reveal className="lg:col-span-7">
+          <form
+            onSubmit={handleSubmit}
+            className="surface h-full p-6 md:p-9"
+          >
+            <div className="space-y-5">
+              <div>
+                <label htmlFor="contact-name" className={labelClass}>
+                  Seu nome
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Como posso te chamar?"
+                  className={fieldClass}
+                />
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="contact-name" className={labelClass}>
-                    Seu nome
+                  <label htmlFor="contact-type" className={labelClass}>
+                    Tipo de projeto
                   </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Como posso te chamar?"
+                  <select
+                    id="contact-type"
+                    value={projectType}
+                    onChange={(e) => setProjectType(e.target.value)}
                     className={fieldClass}
-                  />
-                </div>
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="contact-type" className={labelClass}>
-                      Tipo de projeto
-                    </label>
-                    <select
-                      id="contact-type"
-                      value={projectType}
-                      onChange={(e) => setProjectType(e.target.value)}
-                      className={`${fieldClass} cursor-pointer`}
-                    >
-                      {projectTypes.map((type) => (
-                        <option key={type} value={type} className="bg-surface">
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="contact-budget" className={labelClass}>
-                      Orçamento estimado
-                    </label>
-                    <select
-                      id="contact-budget"
-                      value={budget}
-                      onChange={(e) => setBudget(e.target.value)}
-                      className={`${fieldClass} cursor-pointer`}
-                    >
-                      {budgets.map((item) => (
-                        <option key={item} value={item} className="bg-surface">
-                          {item}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  >
+                    {projectTypes.map((type) => (
+                      <option key={type} value={type} className="bg-surface">
+                        {type}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className={labelClass}>
-                    Sobre o projeto{" "}
-                    <span className="text-white/25">(opcional)</span>
+                  <label htmlFor="contact-budget" className={labelClass}>
+                    Orçamento estimado
                   </label>
-                  <textarea
-                    id="contact-message"
-                    rows={4}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Me conte um pouco do seu negócio e do que você precisa."
-                    className={`${fieldClass} resize-none`}
-                  />
+                  <select
+                    id="contact-budget"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                    className={fieldClass}
+                  >
+                    {budgets.map((item) => (
+                      <option key={item} value={item} className="bg-surface">
+                        {item}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
-              <button type="submit" className="btn-primary group mt-7 w-full">
-                <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                Enviar pelo WhatsApp
-              </button>
+              <div>
+                <label htmlFor="contact-message" className={labelClass}>
+                  Sobre o projeto{" "}
+                  <span className="text-3">(opcional)</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Me conte um pouco do seu negócio e do que você precisa."
+                  className={`${fieldClass} min-h-[8rem] resize-none`}
+                />
+              </div>
+            </div>
 
-              <p className="mt-4 text-center text-xs text-white/30">
-                Abre o WhatsApp com a mensagem pronta. Você revisa antes de enviar.
-              </p>
-            </form>
+            <button type="submit" className="btn-primary group mt-8 h-12 w-full">
+              <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              Enviar pelo WhatsApp
+            </button>
+
+            <p className="mt-4 text-center text-xs text-3">
+              Abre o WhatsApp com a mensagem pronta. Você revisa antes de enviar.
+            </p>
+          </form>
+        </Reveal>
+
+        {/* Canais diretos */}
+        <div className="flex flex-col lg:col-span-5">
+          <Reveal delay={0.1}>
+            <p className="eyebrow mb-4">
+              <span aria-hidden className="eyebrow-rule" />
+              Ou fale direto
+            </p>
           </Reveal>
 
-          {/* Canais diretos */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
+          <ul className="border-t border-white/[0.1]">
             {channels.map((channel, i) => {
               const Icon = channel.icon;
               return (
-                <Reveal key={channel.label} delay={0.1 + i * 0.08}>
-                  <a
-                    href={channel.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="card-surface group flex items-center gap-4 p-5"
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/[0.08] transition-all duration-500 group-hover:border-sky-400/40 group-hover:bg-sky-400/[0.14]">
-                      <Icon className="h-5 w-5 text-sky-300" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-display text-sm font-semibold text-white">
-                        {channel.label}
-                      </p>
-                      <p className="truncate text-xs text-white/40">
-                        {channel.value}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-white/25 transition-all duration-300 group-hover:text-sky-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
-                </Reveal>
+                <li key={channel.label} className="border-b border-white/[0.1]">
+                  <Reveal delay={0.14 + i * 0.06}>
+                    <a
+                      href={channel.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-4 py-5 transition-colors"
+                    >
+                      <span className="icon-tile shrink-0 transition-colors duration-300 group-hover:border-sky-400/40 group-hover:text-sky-300">
+                        <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-display text-base font-semibold tracking-[-0.01em] text-1">
+                          {channel.label}
+                        </span>
+                        <span className="mono block truncate text-xs text-3">
+                          {channel.value}
+                        </span>
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-white/30 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-1" />
+                    </a>
+                  </Reveal>
+                </li>
               );
             })}
+          </ul>
 
-            <Reveal delay={0.34}>
-              <div className="card-surface p-5 space-y-3.5">
-                <div className="flex items-center gap-3 text-xs text-white/40">
-                  <Clock className="h-4 w-4 shrink-0 text-sky-400/60" />
-                  Seg. a sáb., das 8h às 20h
-                </div>
-                <div className="flex items-center gap-3 text-xs text-white/40">
-                  <MapPin className="h-4 w-4 shrink-0 text-sky-400/60" />
-                  Atendimento remoto para todo o Brasil
-                </div>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal delay={0.34}>
+            <dl className="mono mt-8 grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 text-xs">
+              <dt className="flex items-center gap-2 text-3">
+                <Clock className="h-3.5 w-3.5" aria-hidden /> Horário
+              </dt>
+              <dd className="text-2">Seg. a sáb., 8h–20h</dd>
+              <dt className="flex items-center gap-2 text-3">
+                <MapPin className="h-3.5 w-3.5" aria-hidden /> Atendimento
+              </dt>
+              <dd className="text-2">Remoto, todo o Brasil</dd>
+            </dl>
+          </Reveal>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

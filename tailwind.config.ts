@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       // O Tailwind embute line-height: 1 nesses tamanhos por padrão — sem
       // folga nenhuma pra glifos arredondados (ex: "e"). Isso corta letras
@@ -28,8 +29,8 @@ const config: Config = {
         "9xl": ["8rem", { lineHeight: "normal" }],
       },
       colors: {
-        background: "#030303",
-        surface: "#08080a",
+        background: "#050506",
+        surface: "#0a0a0c",
         accent: {
           DEFAULT: "#38bdf8",
           soft: "#7dd3fc",

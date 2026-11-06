@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Plus_Jakarta_Sans, Syne } from "next/font/google";
+import { Plus_Jakarta_Sans, Syne } from "next/font/google";
+import localFont from "next/font/local";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -15,12 +16,29 @@ const syne = Syne({
   display: "swap",
 });
 
-/** Mono só para índices, rótulos e números — o "sotaque" técnico da marca. */
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+/**
+ * Mono só para índices, rótulos e números — o "sotaque" técnico da marca.
+ *
+ * Vem do pacote @fontsource (arquivo versionado no npm), não do Google Fonts:
+ * no build da Vercel o Google devolveu uma URL sem extensão para a JetBrains
+ * Mono e o next/font 14.2 quebrou ao processá-la. Local = build determinístico.
+ */
+const mono = localFont({
+  src: [
+    {
+      path: "../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
   variable: "--font-mono",
   display: "swap",
+  fallback: ["ui-monospace", "Consolas", "monospace"],
 });
 
 const title = "WebPulse — Sites e sistemas sob medida";

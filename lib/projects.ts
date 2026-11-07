@@ -12,6 +12,11 @@ export interface Project {
    * prévia carrega um site inteiro, então só uma deixa a página leve.
    */
   featured?: boolean;
+  /**
+   * Captura estática do site (WebP leve, em /public/projects). No celular
+   * ela substitui a prévia ao vivo; no desktop aparece enquanto carrega.
+   */
+  poster?: string;
 }
 
 /** Projetos publicados, conferidos no GitHub e nos domínios de produção. */
@@ -34,6 +39,7 @@ export const projects: Project[] = [
     url: "https://barachosolucoes.com/",
     accent: "#94a3b8",
     featured: true,
+    poster: "/projects/baracho.webp",
   },
   {
     kind: "App de delivery",

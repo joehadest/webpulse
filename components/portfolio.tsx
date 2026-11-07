@@ -32,7 +32,8 @@ function FeaturedProject({ project }: { project: Project }) {
             <span aria-hidden className="eyebrow-rule" />
             Em destaque · {project.kind}
           </p>
-          <p className="mono hidden items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-3 sm:inline-flex">
+          {/* Só no desktop a prévia é navegável (no celular é imagem) */}
+          <p className="mono hidden items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-3 lg:inline-flex">
             <span aria-hidden className="live-dot" />
             Ao vivo — navegue pela prévia
           </p>
@@ -82,6 +83,7 @@ function FeaturedProject({ project }: { project: Project }) {
           <LiveSitePreview
             url={project.url}
             title={project.title.join(" ")}
+            poster={project.poster}
             accent={project.accent}
           />
         </div>
@@ -198,7 +200,7 @@ export function Portfolio() {
           label="Projetos"
           title="Trabalho no ar."
           highlight="Abra, navegue, confira."
-          subtitle="Nada de mockup: a prévia abaixo é o site real rodando agora. Clique e interaja como um visitante faria."
+          subtitle="Nada de mockup: projetos reais, no ar agora. No computador, dá para navegar no site em destaque aqui mesmo."
         />
       </Section>
 

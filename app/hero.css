@@ -894,6 +894,14 @@
   translate: 105% 0;
 }
 
+/* Fundo já é 96% opaco: no toque, o desfoque só custaria GPU */
+@media (hover: none), (pointer: coarse) {
+  .code-panel {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
 .code-tab {
   display: flex;
   gap: 1.6cqw;

@@ -913,6 +913,18 @@
     box-shadow: var(--edge-light);
   }
 
+  /* Telas de toque: fundo sólido no lugar do desfoque. Em elementos fixos
+     (navbar, botão de topo) o Android refaz o blur a cada quadro de
+     rolagem, um quadro atrasado — sobre imagens de alto contraste isso
+     aparece como a tela "trepidando". */
+  @media (hover: none), (pointer: coarse) {
+    .glass {
+      background: rgba(12, 12, 14, 0.94);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
   .section-label {
     @apply eyebrow;
   }

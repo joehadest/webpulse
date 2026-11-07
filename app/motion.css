@@ -886,15 +886,19 @@
       }
     }
 
-    /* Títulos de projeto deslizam em direções alternadas */
-    .drift > span {
-      animation: drift-r linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 50%;
-    }
+    /* Títulos de projeto deslizam em direções alternadas. Só desktop:
+       no celular, texto gigante em posição fracionária a cada quadro de
+       rolagem é redesenhado e parece trepidar. */
+    @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+      .drift > span {
+        animation: drift-r linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 50%;
+      }
 
-    .drift > span:nth-child(even) {
-      animation-name: drift-l;
+      .drift > span:nth-child(even) {
+        animation-name: drift-l;
+      }
     }
 
     /* Marca do rodapé: sobe e se preenche de azul ao chegar no fim */

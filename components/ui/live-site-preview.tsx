@@ -183,7 +183,7 @@ export function LiveSitePreview({
             rel="noopener noreferrer"
             className="group absolute inset-0 z-10 flex items-end justify-center bg-gradient-to-t from-black/70 via-black/10 to-transparent pb-5"
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/60 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition-colors group-hover:bg-white group-hover:text-black">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/80 px-4 py-2.5 text-xs font-semibold text-white transition-colors group-hover:bg-white group-hover:text-black">
               Abrir site ao vivo
               <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
             </span>

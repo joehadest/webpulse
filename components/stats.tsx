@@ -1,7 +1,28 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { siteConfig } from "@/lib/site-config";
+
+/**
+ * "30 dias" → contador de 0 a 30 + " dias". O número animado é decorativo
+ * (aria-hidden); leitores de tela recebem o valor real, inteiro.
+ */
+function StatValue({ value }: { value: string }) {
+  const match = /^(\d+)(.*)$/.exec(value);
+  if (!match) return <>{value}</>;
+
+  const [, digits, suffix] = match;
+  return (
+    <>
+      <span className="sr-only">{value}</span>
+      <span aria-hidden>
+        <span className="count" style={{ "--to": Number(digits) } as CSSProperties} />
+        {suffix}
+      </span>
+    </>
+  );
+}
 
 /**
  * Faixa de credibilidade como "ficha técnica": células coladas por linhas
@@ -28,7 +49,7 @@ export function Stats() {
                 {stat.label}
               </dt>
               <dd className="font-display tabular text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-bold leading-none tracking-[-0.04em] text-1">
-                {stat.value}
+                <StatValue value={stat.value} />
               </dd>
             </Reveal>
           ))}

@@ -38,7 +38,7 @@ export function TechStack() {
       </div>
 
       <Reveal delay={0.1}>
-        <div className="relative flex overflow-hidden mask-edges-x">
+        <div className="marquee relative flex overflow-hidden mask-edges-x">
           {/* Duas cópias idênticas: a animação translada -50%, então o loop é invisível */}
           {[0, 1].map((copy) => (
             <ul

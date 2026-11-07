@@ -1,5 +1,5 @@
 import { Navbar1 } from "@/components/navbar";
-import { CinematicHeroDemo } from "@/components/cinematic-hero-demo";
+import { Hero } from "@/components/hero";
 import { Stats } from "@/components/stats";
 import { Services } from "@/components/services";
 import { Process } from "@/components/process";
@@ -18,7 +18,7 @@ export default function Home() {
       <ScrollToTop />
 
       {/* Promessa e chamada principal */}
-      <CinematicHeroDemo />
+      <Hero />
 
       {/* Prova rápida antes de pedir atenção */}
       <Stats />

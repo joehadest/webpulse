@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { WebPulseLogo } from "@/components/ui/webpulse-logo";
 import { usePastSection } from "@/lib/use-past-section";
@@ -22,13 +22,6 @@ const Navbar1 = () => {
   // da viewport, o que funciona independente da altura de scroll dela.
   const isVisible = usePastSection("hero");
   const [activeSection, setActiveSection] = useState<string>("");
-
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -81,11 +74,11 @@ const Navbar1 = () => {
 
   return (
     <>
-      {/* Barra de progresso de leitura */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-400 z-[60]"
-        style={{ scaleX: progress, opacity: isVisible ? 1 : 0 }}
-        transition={{ opacity: { duration: 0.3 } }}
+      {/* Barra de leitura: scroll-driven animation nativa (app/motion.css) */}
+      <div
+        aria-hidden
+        className="scroll-progress fixed left-0 right-0 top-0 z-[60] h-[2px] bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-400 transition-opacity duration-300"
+        style={{ opacity: isVisible ? 1 : 0 }}
       />
 
       <motion.div

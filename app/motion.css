@@ -1,0 +1,1019 @@
+/* ==========================================================================
+   MOTION — todo o movimento do site (fora do hero, que é GSAP) mora aqui.
+
+   Regras da casa:
+   1. Só se anima transform / translate / scale / opacity (ou custom
+      properties baratas em elementos pequenos). Nada de animar layout.
+   2. Animações ligadas ao scroll usam Scroll-Driven Animations nativas
+      (animation-timeline) — rodam fora da thread principal, sem listener.
+   3. Tudo é melhoria progressiva: sem suporte, o conteúdo aparece pronto.
+   4. prefers-reduced-motion desliga o movimento decorativo.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   TOKENS DE MOVIMENTO
+   ------------------------------------------------------------------------ */
+
+:root {
+  /* Mola suave gerada com linear() — overshoot de ~3%, sem "quicar" */
+  --ease-spring: linear(
+    0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%,
+    0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50.1%, 1.015 55%, 1.017 63.9%,
+    1.001 85.9%, 1
+  );
+  --reveal-dur: 900ms;
+}
+
+/* Custom properties tipadas: o navegador sabe interpolá-las */
+@property --count {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --beam-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --page-progress {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+/* ---------------------------------------------------------------------------
+   REVEAL — entrada ao rolar (disparada por um único IntersectionObserver)
+   O estado "escondido" só existe com JS ativo e movimento permitido.
+   ------------------------------------------------------------------------ */
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition:
+      opacity var(--reveal-dur) var(--ease-out) var(--reveal-delay, 0s),
+      translate var(--reveal-dur) var(--ease-out) var(--reveal-delay, 0s),
+      scale var(--reveal-dur) var(--ease-out) var(--reveal-delay, 0s);
+  }
+
+  [data-reveal="up"]:not([data-revealed]) {
+    opacity: 0;
+    translate: 0 var(--reveal-y, 24px);
+  }
+
+  [data-reveal="fade"]:not([data-revealed]) {
+    opacity: 0;
+  }
+
+  [data-reveal="scale"]:not([data-revealed]) {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 calc(var(--reveal-y, 24px) / 2);
+  }
+
+  /* Título palavra por palavra: cada palavra sobe de dentro de uma máscara */
+  [data-reveal="split"] .split-word > span {
+    translate: 0 105%;
+    transition: translate 1.1s var(--ease-out)
+      calc(var(--reveal-delay, 0s) + var(--i, 0) * 55ms);
+  }
+
+  [data-reveal="split"][data-revealed] .split-word > span {
+    translate: 0 0;
+  }
+}
+
+.split-word {
+  display: inline-block;
+  overflow: clip;
+  /* folga para descendentes (g, p, q) e acentos não serem cortados */
+  padding-block: 0.1em 0.14em;
+  margin-block: -0.1em -0.14em;
+  vertical-align: top;
+}
+
+.split-word > span {
+  display: inline-block;
+}
+
+/* ---------------------------------------------------------------------------
+   CONTADORES — número sobe de 0 até o valor, em CSS puro (@property)
+   ------------------------------------------------------------------------ */
+
+.count {
+  --count: var(--to, 0);
+}
+
+.count::before {
+  counter-reset: n var(--count);
+  content: counter(n);
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-revealed] .count {
+    animation: count-up 1.8s var(--ease-out) calc(var(--reveal-delay, 0s) + 150ms) both;
+  }
+}
+
+@keyframes count-up {
+  from {
+    --count: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   BOTÕES — brilho que atravessa o primário no hover
+   ------------------------------------------------------------------------ */
+
+.btn,
+.btn-primary,
+.btn-ghost {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(56, 189, 248, 0.22) 45%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(56, 189, 248, 0.22) 55%,
+    transparent 70%
+  );
+  translate: -110% 0;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-primary:hover::after {
+    translate: 110% 0;
+    transition: translate 900ms var(--ease-out);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   BORDA COM FEIXE — conic-gradient girando via @property, recortado por
+   máscara para virar só a linha da borda. Só gira quando está em uso.
+   ------------------------------------------------------------------------ */
+
+.beam-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    transparent 250deg,
+    rgba(56, 189, 248, 0.15) 290deg,
+    var(--accent) 340deg,
+    #fff 352deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+  animation: beam-spin 5s linear infinite paused;
+}
+
+.beam-border:hover::after,
+.beam-border:has(:focus-visible, .field:focus)::after {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes beam-spin {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   :has() — foco contextual
+   ------------------------------------------------------------------------ */
+
+@media (hover: hover) {
+  /* Na grade de serviços, o card sob o mouse ganha protagonismo */
+  .spec-grid > .spec-cell > * {
+    transition: opacity 450ms var(--ease-out);
+  }
+
+  .spec-grid:has(> .spec-cell:hover) > .spec-cell:not(:hover) > * {
+    opacity: 0.5;
+  }
+}
+
+/* FAQ: com uma pergunta aberta, as outras recuam */
+.faq-list > [data-state] {
+  transition: opacity 400ms var(--ease-out);
+}
+
+.faq-list:has(> [data-state="open"]) > [data-state="closed"]:not(:hover) {
+  opacity: 0.5;
+}
+
+/* Formulário: o cartão "acende" quando alguém está digitando */
+.surface:has(.field:focus) {
+  border-color: rgba(56, 189, 248, 0.22);
+}
+
+/* ---------------------------------------------------------------------------
+   BOTÃO "VOLTAR AO TOPO" — entra/sai com @starting-style e mostra o
+   progresso de leitura num anel (scroll-timeline + @property)
+   ------------------------------------------------------------------------ */
+
+.to-top {
+  display: none;
+  opacity: 0;
+  translate: 0 12px;
+  scale: 0.9;
+  transition:
+    opacity 250ms var(--ease-out),
+    translate 250ms var(--ease-out),
+    scale 250ms var(--ease-out),
+    color 200ms,
+    background-color 200ms,
+    display 250ms allow-discrete;
+}
+
+.to-top[data-visible="true"] {
+  display: inline-flex;
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+@starting-style {
+  .to-top[data-visible="true"] {
+    opacity: 0;
+    translate: 0 12px;
+    scale: 0.9;
+  }
+}
+
+.to-top::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(var(--accent) var(--page-progress), transparent 0);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   CHAT — "digitando…", ponto online, balão que entra
+   ------------------------------------------------------------------------ */
+
+.typing > span {
+  animation: typing 1.3s var(--ease-in-out) infinite;
+}
+
+.typing > span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.typing > span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+    opacity: 0.35;
+  }
+  30% {
+    translate: 0 -3px;
+    opacity: 1;
+  }
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: ping 2.2s var(--ease-out) infinite;
+}
+
+/* Balões entram com mola (o React remonta via key quando muda o texto) */
+.bubble-enter {
+  transition:
+    opacity 400ms var(--ease-out),
+    translate 600ms var(--ease-spring),
+    scale 600ms var(--ease-spring);
+  transform-origin: bottom right;
+}
+
+.bubble-in.bubble-enter {
+  transform-origin: bottom left;
+}
+
+@starting-style {
+  .bubble-enter {
+    opacity: 0;
+    translate: 0 8px;
+    scale: 0.92;
+  }
+}
+
+/* Cursor de texto piscando no fim do rascunho */
+.caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   FAQ — barra de acento na pergunta aberta + resposta que sobe
+   ------------------------------------------------------------------------ */
+
+.faq-item {
+  position: relative;
+  transition:
+    background-color 400ms var(--ease-out),
+    opacity 400ms var(--ease-out);
+}
+
+.faq-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, var(--accent), rgba(56, 189, 248, 0.2));
+  scale: 1 0;
+  transform-origin: top;
+  transition: scale 600ms var(--ease-out);
+}
+
+.faq-item[data-state="open"] {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.06), transparent 70%);
+}
+
+.faq-item[data-state="open"]::before {
+  scale: 1 1;
+}
+
+@media (hover: hover) {
+  .faq-item[data-state="closed"]:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq-item[data-state="open"] .faq-answer {
+    animation: answer-in 600ms var(--ease-out) 80ms both;
+  }
+}
+
+@keyframes answer-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   PORTFÓLIO — linhas entram em cascata quando a lista abre
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .projects-panel[data-open="true"] .projects-list > li {
+    animation: row-in 600ms var(--ease-out) calc(120ms + var(--i, 0) * 45ms) both;
+  }
+
+  /* Na grade com mouse, a linha em foco ganha protagonismo */
+  @media (hover: hover) {
+    .projects-list > li {
+      transition: opacity 350ms var(--ease-out);
+    }
+
+    .projects-list:has(> li:hover) > li:not(:hover) {
+      opacity: 0.45;
+    }
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   MARQUEE — pausa quando o visitante quer ler
+   ------------------------------------------------------------------------ */
+
+.marquee:hover > * {
+  animation-play-state: paused;
+}
+
+/* ---------------------------------------------------------------------------
+   ILUSTRAÇÕES SVG
+   Traços "se desenham" na entrada; loops só rodam com a arte na tela.
+   ------------------------------------------------------------------------ */
+
+.art {
+  --art-line: rgba(255, 255, 255, 0.16);
+  --art-fill: rgba(255, 255, 255, 0.035);
+  --art-soft: rgba(255, 255, 255, 0.09);
+  overflow: visible;
+}
+
+.art .ln {
+  fill: none;
+  stroke: var(--art-line);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art .ac {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art .fl {
+  fill: var(--art-fill);
+}
+
+.art .sf {
+  fill: var(--art-soft);
+}
+
+.art .af {
+  fill: var(--accent);
+}
+
+/* Elementos SVG transformam a partir do próprio desenho */
+.art * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Cometa: um trecho curto do traço percorre o caminho */
+.art .comet {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  /* traço curto + vão maior que o caminho = um único cometa visível */
+  stroke-dasharray: 0.12 2;
+  stroke-dashoffset: 0.12;
+}
+
+/* Loops pausam quando a ilustração sai da tela */
+.art:not([data-inview="true"]) *,
+.art:not([data-inview="true"])::before {
+  animation-play-state: paused !important;
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  /* Desenho do traço na entrada */
+  .art .draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.6s var(--ease-in-out) var(--d, 0s);
+  }
+
+  [data-revealed] .art .draw,
+  .art[data-revealed] .draw {
+    stroke-dashoffset: 0;
+  }
+
+  .art .pop {
+    opacity: 0;
+    scale: 0.6;
+    transition:
+      opacity 600ms var(--ease-out) var(--d, 0s),
+      scale 900ms var(--ease-spring) var(--d, 0s);
+  }
+
+  [data-revealed] .art .pop,
+  .art[data-revealed] .pop {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .art .comet {
+    animation: comet var(--dur, 3s) var(--ease-in-out) var(--d, 0s) infinite;
+  }
+
+  .art .bar {
+    transform-origin: bottom;
+    animation: bar 3.2s var(--ease-in-out) var(--d, 0s) infinite alternate;
+  }
+
+  .art .blink {
+    animation: blink 1.1s steps(1) infinite;
+  }
+
+  .art .ping {
+    animation: ping 2.6s var(--ease-out) var(--d, 0s) infinite;
+  }
+
+  .art .bump {
+    animation: bump 3s var(--ease-spring) var(--d, 0s) infinite;
+  }
+
+  .art .ants {
+    stroke-dasharray: 3 3;
+    animation: ants 900ms linear infinite;
+  }
+
+  .art .float {
+    animation: float-y 5s var(--ease-in-out) var(--d, 0s) infinite alternate;
+  }
+
+  .art .cursor-site {
+    animation: cursor-site 6s var(--ease-in-out) infinite;
+  }
+
+  .art .cursor-design {
+    animation: cursor-design 7s var(--ease-in-out) infinite;
+  }
+
+  .art .swap-out {
+    animation: swap-out 6s var(--ease-in-out) infinite;
+  }
+
+  .art .swap-in {
+    animation: swap-in 6s var(--ease-in-out) infinite;
+  }
+
+  .art .press {
+    animation: press 6s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes comet {
+  0% {
+    stroke-dashoffset: 0.12;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -1;
+    opacity: 0;
+  }
+}
+
+@keyframes bar {
+  0% {
+    scale: 1 0.35;
+  }
+  100% {
+    scale: 1 1;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes ping {
+  0% {
+    scale: 1;
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    scale: 2.4;
+    opacity: 0;
+  }
+}
+
+@keyframes bump {
+  0%,
+  62% {
+    scale: 1;
+  }
+  70% {
+    scale: 1.35;
+  }
+  80% {
+    scale: 1;
+  }
+}
+
+@keyframes ants {
+  to {
+    stroke-dashoffset: -6;
+  }
+}
+
+@keyframes float-y {
+  to {
+    translate: 0 -5px;
+  }
+}
+
+/* Cursor percorre a página e "clica" no botão principal */
+@keyframes cursor-site {
+  0%,
+  8% {
+    translate: 0 0;
+  }
+  40%,
+  62% {
+    translate: -150px -34px;
+  }
+  46% {
+    scale: 0.85;
+  }
+  50% {
+    scale: 1;
+  }
+  92%,
+  100% {
+    translate: 0 0;
+  }
+}
+
+@keyframes press {
+  0%,
+  42% {
+    opacity: 0.85;
+  }
+  46% {
+    opacity: 1;
+    scale: 0.94;
+  }
+  52%,
+  100% {
+    opacity: 0.85;
+    scale: 1;
+  }
+}
+
+/* Cursor arrasta a seleção pelo artboard */
+@keyframes cursor-design {
+  0%,
+  10% {
+    translate: 0 0;
+  }
+  45%,
+  60% {
+    translate: -46px 22px;
+  }
+  90%,
+  100% {
+    translate: 0 0;
+  }
+}
+
+/* Diff: a linha com bug sai, a corrigida entra */
+@keyframes swap-out {
+  0%,
+  35% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  45%,
+  85% {
+    opacity: 0;
+    translate: -8px 0;
+  }
+  95%,
+  100% {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes swap-in {
+  0%,
+  38% {
+    opacity: 0;
+    translate: 8px 0;
+  }
+  48%,
+  82% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  92%,
+  100% {
+    opacity: 0;
+    translate: 8px 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   LINHA DE PULSO (marca) — um batimento percorre a linha continuamente
+   ------------------------------------------------------------------------ */
+
+.pulse-line .base {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+.pulse-line .beat,
+.pulse-line .glow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 0.16 2;
+  stroke-dashoffset: 0.16;
+}
+
+.pulse-line .beat {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.pulse-line .glow {
+  stroke: rgba(56, 189, 248, 0.25);
+  stroke-width: 6;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pulse-line .beat,
+  .pulse-line .glow {
+    animation: pulse-travel 4.5s var(--ease-in-out) infinite;
+  }
+}
+
+.pulse-line:not([data-inview="true"]) * {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-travel {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* ==========================================================================
+   SCROLL-DRIVEN ANIMATIONS
+   Ligadas à posição de rolagem pelo próprio navegador. Fallback: estático.
+   ========================================================================== */
+
+/* Barra de leitura no topo */
+.scroll-progress {
+  transform-origin: left;
+  scale: 0 1;
+}
+
+/* Anel do botão "topo" sem suporte: anel cheio discreto */
+.to-top::before {
+  --page-progress: 100%;
+  opacity: 0.25;
+}
+
+@supports not (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .scroll-progress {
+    animation: grow-x linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  .to-top::before {
+    opacity: 1;
+    animation: page-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Feixe de luz que desce pelos trilhos enquanto a seção passa */
+    .rail-beam {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      pointer-events: none;
+      background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(56, 189, 248, 0.9),
+          transparent
+        )
+        no-repeat;
+      background-size: 1px 180px;
+      background-position: 0 var(--beam-y);
+      animation: rail-beam linear both;
+      animation-timeline: view();
+    }
+
+    .rail-beam-l {
+      left: var(--rail-x);
+    }
+
+    .rail-beam-r {
+      right: var(--rail-x);
+      animation-direction: reverse;
+    }
+
+    /* Linha do processo se preenche conforme a seção atravessa a tela */
+    .process-track::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), #fff 60%, var(--accent));
+      transform-origin: left;
+      animation: grow-x linear both;
+      animation-timeline: view();
+      animation-range: entry 90% cover 55%;
+    }
+
+    /* Molduras do portfólio "assentam" ao entrar */
+    .frame-rise {
+      transform-origin: 50% 100%;
+      animation: frame-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 38%;
+    }
+
+    /* Títulos de projeto deslizam em direções alternadas */
+    .drift > span {
+      animation: drift-r linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+
+    .drift > span:nth-child(even) {
+      animation-name: drift-l;
+    }
+
+    /* Marca do rodapé: sobe e se preenche de azul ao chegar no fim */
+    .footer-mark-inner {
+      animation: mark-rise linear both;
+      animation-timeline: --mark;
+      animation-range: entry 0% entry 100%;
+    }
+
+    .footer-mark-fill {
+      animation: mark-fill linear both;
+      animation-timeline: --mark;
+      animation-range: entry 20% entry 100%;
+    }
+
+    /* O traço da sobrelinha se estende quando o título entra na tela */
+    .eyebrow-rule {
+      transform-origin: left;
+      animation: grow-x linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 40%;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .rail-beam {
+    display: none;
+  }
+}
+
+@keyframes grow-x {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes page-progress {
+  from {
+    --page-progress: 0%;
+  }
+  to {
+    --page-progress: 100%;
+  }
+}
+
+@keyframes rail-beam {
+  0% {
+    --beam-y: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    --beam-y: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes frame-rise {
+  from {
+    opacity: 0.35;
+    transform: perspective(1400px) rotateX(16deg) translateY(56px) scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drift-r {
+  from {
+    translate: 6% 0;
+    opacity: 0.2;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+@keyframes drift-l {
+  from {
+    translate: -6% 0;
+    opacity: 0.2;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+@keyframes mark-rise {
+  from {
+    translate: 0 45%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes mark-fill {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Status fora do horário: ponto cinza, sem pulso */
+.live-dot.is-off {
+  background: #71717a;
+  box-shadow: none;
+}
+
+.live-dot.is-off::after {
+  display: none;
+}

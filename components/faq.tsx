@@ -10,7 +10,9 @@ import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { whatsappLink } from "@/lib/site-config";
 import { Section } from "@/components/ui/section";
-import { MessageCircle } from "lucide-react";
+import { CheckCheck, MessageCircle } from "lucide-react";
+import { ChatPresence, ChromeBar, TypingDots } from "@/components/ui/chrome";
+import { WebPulseLogo } from "@/components/ui/webpulse-logo";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -56,24 +58,47 @@ const faqs = [
   },
 ];
 
-function ContactCard({ className }: { className?: string }) {
+/**
+ * Atalho para quem não achou a resposta: uma mini conversa com a pergunta
+ * do visitante e a WebPulse "digitando" — o convite já parece uma resposta.
+ */
+function AskCard({ className }: { className?: string }) {
   return (
-    <div className={cn("surface p-6", className)}>
-      <p className="font-display text-lg font-semibold tracking-[-0.02em] text-1">
-        Ficou com outra dúvida?
-      </p>
-      <p className="mt-1.5 text-sm leading-relaxed text-2">
-        Me chama no WhatsApp. Respondo pessoalmente e sem compromisso.
-      </p>
-      <a
-        href={whatsappLink("Olá! Estou no site da WebPulse e fiquei com uma dúvida.")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn-ghost mt-5"
-      >
-        <MessageCircle className="h-4 w-4" />
-        Tirar dúvida no WhatsApp
-      </a>
+    <div className={cn("surface beam-border overflow-hidden", className)}>
+      <ChromeBar title="whatsapp · webpulse" right={<ChatPresence />} />
+
+      <div className="chat-stage space-y-3 px-5 py-6">
+        <div className="bubble bubble-out">
+          E se a minha dúvida não estiver aqui?
+          <span className="bubble-meta mono">
+            agora <CheckCheck className="h-3 w-3 text-sky-300" aria-hidden />
+          </span>
+        </div>
+
+        <div className="flex items-end gap-2.5">
+          <span className="icon-tile h-8 w-8 shrink-0 rounded-full p-1.5">
+            <WebPulseLogo size={20} className="h-full w-full" />
+          </span>
+          <div className="bubble bubble-in py-3">
+            <TypingDots />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-white/[0.07] p-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm leading-relaxed text-2">
+          Respondo pessoalmente, <span className="text-1">sem robô</span> e sem compromisso.
+        </p>
+        <a
+          href={whatsappLink("Olá! Estou no site da WebPulse e fiquei com uma dúvida.")}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary h-10 shrink-0 px-5"
+        >
+          <MessageCircle className="h-4 w-4" />
+          Perguntar
+        </a>
+      </div>
     </div>
   );
 }
@@ -94,48 +119,55 @@ export function Faq() {
               subtitle="As dúvidas que mais aparecem antes de fechar um projeto."
             />
 
-            <Reveal delay={0.15}>
-              <ContactCard className="mt-10 hidden lg:block" />
+            <Reveal delay={0.15} variant="scale">
+              <AskCard className="mt-10 hidden lg:block" />
             </Reveal>
           </div>
         </div>
 
         <div className="lg:col-span-7">
-          <Reveal>
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full border-t border-white/[0.1]"
-            >
-              {faqs.map((faq, i) => (
-                <AccordionItem
-                  key={faq.question}
-                  value={`faq-${i}`}
-                  className="border-b border-white/[0.1]"
-                >
-                  <AccordionTrigger className="group gap-4 py-6 text-left md:gap-6">
-                    <span className="flex items-baseline gap-3 md:gap-5">
-                      <span className="mono w-6 shrink-0 text-xs text-3 transition-colors group-hover:text-sky-300 group-data-[state=open]:text-sky-300">
-                        {String(i + 1).padStart(2, "0")}
+          <Reveal variant="scale">
+            <div className="surface overflow-hidden">
+              <ChromeBar
+                title="perguntas-frequentes.md"
+                right={
+                  <span className="mono text-[11px] text-3">
+                    {String(faqs.length).padStart(2, "0")} itens
+                  </span>
+                }
+              />
+
+              <Accordion type="single" collapsible className="faq-list w-full">
+                {faqs.map((faq, i) => (
+                  <AccordionItem
+                    key={faq.question}
+                    value={`faq-${i}`}
+                    className="faq-item border-b border-white/[0.07] px-5 last:border-b-0 md:px-7"
+                  >
+                    <AccordionTrigger className="group gap-4 py-5 text-left md:gap-6 md:py-6">
+                      <span className="flex items-baseline gap-3 md:gap-5">
+                        <span className="mono w-6 shrink-0 text-xs text-3 transition-colors group-hover:text-sky-300 group-data-[state=open]:text-sky-300">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="font-display text-base font-medium tracking-[-0.01em] text-white/85 transition-colors group-hover:text-white group-data-[state=open]:text-white md:text-lg">
+                          {faq.question}
+                        </span>
                       </span>
-                      <span className="font-display text-base font-medium tracking-[-0.01em] text-white/85 transition-colors group-hover:text-white group-data-[state=open]:text-white md:text-lg">
-                        {faq.question}
-                      </span>
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-7 pt-0">
-                    <p className="max-w-[60ch] pl-9 pr-2 text-[0.9375rem] leading-relaxed text-2 md:pl-11 md:pr-8">
-                      {faq.answer}
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-6 pt-0 md:pb-7">
+                      <p className="faq-answer max-w-[60ch] pl-9 pr-2 text-[0.9375rem] leading-relaxed text-2 md:pl-11 md:pr-8">
+                        {faq.answer}
+                      </p>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </Reveal>
 
           {/* No mobile o atalho de contato vem depois das perguntas */}
-          <Reveal delay={0.1}>
-            <ContactCard className="mt-10 lg:hidden" />
+          <Reveal delay={0.1} variant="scale">
+            <AskCard className="mt-8 lg:hidden" />
           </Reveal>
         </div>
       </div>

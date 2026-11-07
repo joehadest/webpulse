@@ -15,6 +15,17 @@ export const siteConfig = {
   github: "joehadest",
 
   /**
+   * Horário de atendimento — usado para o status "online" do site.
+   * days: 0 = domingo … 6 = sábado. Horas no fuso de Brasília.
+   */
+  hours: {
+    timeZone: "America/Sao_Paulo",
+    days: [1, 2, 3, 4, 5, 6],
+    open: 8,
+    close: 20,
+  },
+
+  /**
    * Números mostrados na faixa de credibilidade.
    * Mantenha honesto: cliente confere.
    */

@@ -358,6 +358,402 @@
   }
 
   /* ------------------------------------------------------------------
+     CARD DE SERVIÇO — layout por container query: o card decide o
+     arranjo pela própria largura (destacado = lado a lado), não pela tela.
+     ------------------------------------------------------------------ */
+
+  .svc {
+    container: svc / inline-size;
+  }
+
+  .svc-body {
+    display: grid;
+    gap: 1.5rem;
+    height: 100%;
+    grid-template-rows: auto 1fr;
+  }
+
+  .svc-stage {
+    position: relative;
+    aspect-ratio: 240 / 140;
+    padding: 0.875rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(56, 189, 248, 0.06), transparent 60%),
+      radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 14px 14px,
+      rgba(255, 255, 255, 0.012);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    transition: border-color var(--dur) var(--ease-out);
+  }
+
+  .group:hover .svc-stage {
+    border-color: rgba(56, 189, 248, 0.2);
+  }
+
+  @container svc (min-width: 34rem) {
+    .svc-body {
+      grid-template-columns: 1fr 1.05fr;
+      grid-template-rows: 1fr;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .svc-stage {
+      order: 2;
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     JANELA & CHAT — painéis "de produto" (FAQ, prévia do contato)
+     ------------------------------------------------------------------ */
+
+  .chrome-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 1.125rem;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  }
+
+  .chrome-dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .chrome-dots > span {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Fundo de conversa: pontilhado técnico + luz suave no topo */
+  .chat-stage {
+    background:
+      radial-gradient(90% 60% at 50% 0%, rgba(56, 189, 248, 0.07), transparent 70%),
+      radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 16px 16px;
+  }
+
+  .bubble {
+    position: relative;
+    max-width: 88%;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .bubble-out {
+    margin-left: auto;
+    color: var(--text-1);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: 16px 16px 4px 16px;
+    background: linear-gradient(180deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.1));
+  }
+
+  .bubble-in {
+    color: var(--text-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 16px 16px 16px 4px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
+  }
+
+  .bubble-meta {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+    font-size: 10px;
+    color: var(--text-3);
+  }
+
+  .typing {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 1rem;
+  }
+
+  .typing > span {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--text-2);
+  }
+
+  .live-dot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #34d399;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.6);
+  }
+
+  /* ------------------------------------------------------------------
+     RODAPÉ — marca gigante vazada no fim da página
+     ------------------------------------------------------------------ */
+
+  .footer-mark {
+    position: relative;
+    overflow: hidden;
+    /* Syne 800 em caixa-alta: "WEBPULSE" mede ~9,4× o tamanho da fonte.
+       10vw ocupa ~94% da largura; a altura menor que a linha corta a
+       base das letras — a marca "afunda" na borda da página. */
+    --mark-size: 10vw;
+    height: calc(var(--mark-size) * 0.72);
+    view-timeline: --mark block;
+    user-select: none;
+  }
+
+  .footer-mark-inner {
+    position: relative;
+    width: 100%;
+  }
+
+  .footer-mark-inner > span {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: var(--mark-size);
+    line-height: 0.82;
+    letter-spacing: -0.045em;
+  }
+
+  .footer-mark-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.13);
+  }
+
+  .footer-mark-fill,
+  .footer-mark-glow {
+    position: absolute;
+    inset: 0;
+  }
+
+  .footer-mark-fill {
+    color: transparent;
+    background: linear-gradient(
+      180deg,
+      rgba(125, 211, 252, 0.55) 0%,
+      rgba(56, 189, 248, 0.18) 45%,
+      transparent 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* Contorno aceso só ao redor do cursor */
+  .footer-mark-glow {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(186, 230, 253, 0.95);
+    -webkit-mask-image: radial-gradient(
+      240px circle at var(--mx, 50%) var(--my, 50%),
+      #000,
+      transparent 70%
+    );
+    mask-image: radial-gradient(
+      240px circle at var(--mx, 50%) var(--my, 50%),
+      #000,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity var(--dur-slow) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .footer-mark:hover .footer-mark-glow {
+      opacity: 1;
+    }
+  }
+
+  /* Sublinhado que cresce da esquerda (background-size, sem pseudo) */
+  .link-u {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    padding-bottom: 2px;
+    transition:
+      background-size var(--dur) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .link-u:hover,
+  .link-u:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* ------------------------------------------------------------------
+     PORTFÓLIO — lista "Ver todos os projetos"
+     ------------------------------------------------------------------ */
+
+  .projects-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  /* Uma faixa de cor por projeto: dá noção de volume sem carregar nada */
+  .projects-swatches {
+    display: flex;
+    margin-top: 1rem;
+  }
+
+  .projects-swatches > li {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 2px solid var(--background);
+    background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--c) 60%, #fff), var(--c));
+  }
+
+  .projects-swatches > li + li {
+    margin-left: -6px;
+  }
+
+  /* Altura animada sem JS: 0fr → 1fr */
+  .projects-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 700ms var(--ease-out);
+  }
+
+  .projects-panel[data-open="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  .projects-list {
+    margin-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .projects-list > li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0.75rem;
+    transition: background-color var(--dur) var(--ease-out);
+  }
+
+  /* Barra na cor do projeto, cresce no hover */
+  .project-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 18%;
+    bottom: 18%;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--c);
+    scale: 1 0;
+    transition: scale 500ms var(--ease-out);
+  }
+
+  .project-row:hover,
+  .project-row:focus-visible {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c) 8%, transparent), transparent 70%);
+  }
+
+  .project-row:hover::before,
+  .project-row:focus-visible::before {
+    scale: 1 1;
+  }
+
+  .project-row-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.375rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-1);
+  }
+
+  .project-row-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--c);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--c) 70%, transparent);
+  }
+
+  .project-row-kind {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.8125rem;
+    color: var(--text-3);
+  }
+
+  .project-row-desc,
+  .project-row-tags {
+    display: none;
+  }
+
+  .project-row-go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    color: var(--text-2);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      translate var(--dur) var(--ease-out);
+  }
+
+  .project-row:hover .project-row-go {
+    color: #09090b;
+    background: #fff;
+    border-color: #fff;
+    translate: 2px -2px;
+  }
+
+  @media (min-width: 1024px) {
+    .project-row {
+      grid-template-columns: 2.5rem minmax(0, 0.9fr) minmax(0, 1.4fr) minmax(0, 0.7fr) auto;
+      gap: 2rem;
+      padding-block: 1.5rem;
+    }
+
+    .project-row-desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--text-2);
+    }
+
+    .project-row-tags {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-3);
+    }
+  }
+
+  /* ------------------------------------------------------------------
      BOTÕES
      ------------------------------------------------------------------ */
 

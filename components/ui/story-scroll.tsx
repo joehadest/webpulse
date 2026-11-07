@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 
 export interface FlowSectionProps {
   className?: string;
+  /** Classes do contêiner interno (respiro, espaçamento). */
+  innerClassName?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
   "aria-label"?: string;
@@ -13,6 +15,7 @@ export interface FlowSectionProps {
 /** Bloco de projeto em fluxo normal — sem sticky/rotação (eles se sobrepunham). */
 export const FlowSection: React.FC<FlowSectionProps> = ({
   className,
+  innerClassName,
   style = {},
   children,
   "aria-label": ariaLabel,
@@ -26,7 +29,12 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
     )}
     style={style}
   >
-    <div className="shell relative flex flex-col justify-between gap-8 py-14 md:gap-10 md:py-20 lg:py-24">
+    <div
+      className={cn(
+        "shell relative flex flex-col justify-between gap-8 py-14 md:gap-10 md:py-20 lg:py-24",
+        innerClassName,
+      )}
+    >
       {children}
     </div>
   </section>

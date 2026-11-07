@@ -54,7 +54,7 @@ export function Process() {
         subtitle="Um processo simples e transparente. Você sabe exatamente em que etapa estamos e o que vem depois."
       />
 
-      <ol className="relative mt-14 grid sm:grid-cols-2 lg:grid-cols-4 md:mt-20">
+      <ol className="process-track relative mt-14 grid sm:grid-cols-2 lg:grid-cols-4 md:mt-20">
         {steps.map((step, i) => {
           const Icon = step.icon;
           return (

@@ -42,6 +42,8 @@ export function Section({
         <>
           <span aria-hidden className="cross cross-l" />
           <span aria-hidden className="cross cross-r" />
+          <span aria-hidden className="rail-beam rail-beam-l" />
+          <span aria-hidden className="rail-beam rail-beam-r" />
         </>
       )}
       <div className={cn("shell relative z-10", innerClassName)}>{children}</div>

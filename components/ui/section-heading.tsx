@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal, SplitWords, wordCount } from "@/components/ui/reveal";
 
 interface SectionHeadingProps {
   label: string;
@@ -47,13 +47,17 @@ export function SectionHeading({
   );
 
   const heading = (
-    <Reveal delay={0.06}>
+    <Reveal variant="split" delay={0.05}>
       <h2 className="display-xl mt-5 text-1">
-        {title}
+        <SplitWords text={title} />
         {highlight && (
           <>
             {" "}
-            <span className="text-3">{highlight}</span>
+            <SplitWords
+              text={highlight}
+              start={wordCount(title)}
+              className="text-3"
+            />
           </>
         )}
       </h2>
@@ -61,7 +65,7 @@ export function SectionHeading({
   );
 
   const sub = subtitle ? (
-    <Reveal delay={0.12}>
+    <Reveal delay={0.25}>
       <p className={cn("lead max-w-[46ch]", centered && "mx-auto")}>{subtitle}</p>
     </Reveal>
   ) : null;

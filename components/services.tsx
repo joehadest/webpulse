@@ -1,26 +1,27 @@
 "use client";
 
-import {
-  Globe,
-  ShoppingCart,
-  Database,
-  Workflow,
-  Palette,
-  LifeBuoy,
-  MessageCircle,
-  type LucideIcon,
-} from "lucide-react";
+import type { ComponentType } from "react";
+import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Section } from "@/components/ui/section";
 import { whatsappLink } from "@/lib/site-config";
+import {
+  SiteArt,
+  StoreArt,
+  DashboardArt,
+  IntegrationArt,
+  DesignArt,
+  MaintenanceArt,
+} from "@/components/ui/service-art";
 
 interface Service {
   title: string;
   description: string;
-  icon: LucideIcon;
+  /** Ilustração animada do serviço (components/ui/service-art.tsx). */
+  art: ComponentType;
   points: string[];
   /** Cartões destacados ocupam duas colunas na grade bento. */
   featured?: boolean;
@@ -31,7 +32,7 @@ const services: Service[] = [
     title: "Sites institucionais",
     description:
       "A cara da sua empresa na internet: rápido, responsivo e pronto para aparecer no Google.",
-    icon: Globe,
+    art: SiteArt,
     points: ["Design exclusivo", "SEO técnico", "Domínio configurado"],
     featured: true,
   },
@@ -39,35 +40,35 @@ const services: Service[] = [
     title: "Lojas e e-commerce",
     description:
       "Catálogo, carrinho e checkout com pagamento online. Do produto à confirmação do pedido.",
-    icon: ShoppingCart,
+    art: StoreArt,
     points: ["Mercado Pago", "Painel de pedidos", "Controle de estoque"],
   },
   {
     title: "Sistemas de gestão",
     description:
       "Painéis sob medida para organizar o que hoje vive em planilha ou no papel.",
-    icon: Database,
+    art: DashboardArt,
     points: ["Dashboard admin", "Multiusuário", "Dados em tempo real"],
   },
   {
     title: "Integrações e automação",
     description:
       "Conecto seus sistemas e elimino trabalho manual repetitivo do dia a dia.",
-    icon: Workflow,
+    art: IntegrationArt,
     points: ["APIs externas", "WhatsApp", "Relatórios automáticos"],
   },
   {
     title: "Design de interface",
     description:
       "Layout limpo e navegação óbvia. Bonito importa, mas fácil de usar importa mais.",
-    icon: Palette,
+    art: DesignArt,
     points: ["Mobile first", "Identidade visual", "Acessibilidade"],
   },
   {
     title: "Manutenção e evolução",
     description:
       "Já tem site ou sistema? Corrijo, atualizo e adiciono o que faltou.",
-    icon: LifeBuoy,
+    art: MaintenanceArt,
     points: ["Correção de bugs", "Novas features", "Melhoria de performance"],
     featured: true,
   },
@@ -87,7 +88,7 @@ export function Services() {
       <Reveal delay={0.1}>
         <div className="spec-grid mt-14 sm:grid-cols-2 lg:grid-cols-3 md:mt-20">
           {services.map((service, i) => {
-            const Icon = service.icon;
+            const Art = service.art;
             const index = String(i + 1).padStart(2, "0");
 
             return (
@@ -95,48 +96,50 @@ export function Services() {
                 key={service.title}
                 variant="cell"
                 className={cn(
-                  "p-7 md:p-8",
+                  "svc p-5 md:p-6",
                   service.featured && "sm:col-span-2",
                 )}
               >
-                <div className="flex h-full flex-col">
-                  <div className="mb-10 flex items-start justify-between">
-                    <span className="icon-tile">
-                      <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
-                    </span>
-                    <span className="mono text-xs text-3 transition-colors duration-300 group-hover:text-sky-300">
-                      {index}
-                    </span>
+                <div className="svc-body">
+                  <figure className="svc-stage">
+                    <Art />
+                  </figure>
+
+                  <div className="flex flex-col px-1 pb-1 md:px-2">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-1">
+                        {service.title}
+                      </h3>
+                      <span className="mono text-xs text-3 transition-colors duration-300 group-hover:text-sky-300">
+                        {index}
+                      </span>
+                    </div>
+
+                    <p
+                      className={cn(
+                        "mt-2.5 flex-1 text-[0.9375rem] leading-relaxed text-2",
+                        service.featured ? "max-w-[46ch]" : "max-w-[40ch]",
+                      )}
+                    >
+                      {service.description}
+                    </p>
+
+                    <ul className="mono mt-6 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/[0.07] pt-4 text-[11px] uppercase tracking-[0.06em] text-3">
+                      {service.points.map((point) => (
+                        <li key={point} className="flex items-center gap-2">
+                          <span aria-hidden className="h-px w-2 bg-white/25" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-
-                  <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-1">
-                    {service.title}
-                  </h3>
-
-                  <p
-                    className={cn(
-                      "mt-2.5 flex-1 text-[0.9375rem] leading-relaxed text-2",
-                      service.featured ? "max-w-[52ch]" : "max-w-[40ch]",
-                    )}
-                  >
-                    {service.description}
-                  </p>
-
-                  <ul className="mono mt-8 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/[0.07] pt-5 text-[11px] uppercase tracking-[0.06em] text-3">
-                    {service.points.map((point) => (
-                      <li key={point} className="flex items-center gap-2">
-                        <span aria-hidden className="h-px w-2 bg-white/25" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </SpotlightCard>
             );
           })}
 
           {/* Fecho — ocupa a célula que sobraria vazia na grade */}
-          <div className="spec-cell flex flex-col justify-between gap-8 p-7 sm:col-span-2 md:p-8 lg:col-span-1">
+          <div className="spec-cell beam-border flex flex-col justify-between gap-8 p-7 sm:col-span-2 md:p-8 lg:col-span-1">
             <div>
               <p className="mono text-xs text-sky-300">+</p>
               <p className="mt-10 font-display text-xl font-semibold tracking-[-0.02em] text-1">

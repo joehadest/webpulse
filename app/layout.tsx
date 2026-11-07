@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, Syne } from "next/font/google";
 import localFont from "next/font/local";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
+import "./motion.css";
+import "./hero.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],

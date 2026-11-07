@@ -6,6 +6,12 @@ export interface Project {
   tags: string[];
   url: string;
   accent: string;
+  /**
+   * Projeto em destaque: o único que aparece com prévia AO VIVO no
+   * portfólio. Os demais ficam na lista "Ver todos", sem iframe — cada
+   * prévia carrega um site inteiro, então só uma deixa a página leve.
+   */
+  featured?: boolean;
 }
 
 /** Projetos publicados, conferidos no GitHub e nos domínios de produção. */
@@ -27,6 +33,7 @@ export const projects: Project[] = [
     tags: ["React", "Tailwind CSS", "SEO"],
     url: "https://barachosolucoes.com/",
     accent: "#94a3b8",
+    featured: true,
   },
   {
     kind: "App de delivery",

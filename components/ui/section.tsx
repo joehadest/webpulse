@@ -46,7 +46,7 @@ export function Section({
           <span aria-hidden className="rail-beam rail-beam-r" />
         </>
       )}
-      <div className={cn("shell relative z-10", innerClassName)}>{children}</div>
+      <div className={cn("shell cv-auto relative z-10", innerClassName)}>{children}</div>
     </section>
   );
 }

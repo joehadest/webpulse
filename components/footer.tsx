@@ -110,7 +110,7 @@ export function Footer() {
       {/* O batimento da marca corre sobre a linha que abre o rodapé */}
       <PulseLine className="pointer-events-none absolute inset-x-0 top-0 -translate-y-1/2 opacity-90" />
 
-      <div className="shell relative">
+      <div className="shell cv-auto relative">
         {/* Fecho — última chamada antes de sair da página */}
         <div className="grid gap-10 border-b border-white/[0.07] py-20 md:grid-cols-12 md:items-end md:py-28">
           <div className="md:col-span-8">

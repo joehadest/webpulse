@@ -10,12 +10,14 @@ import { Faq } from "@/components/faq";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { CvAnchorFix } from "@/components/cv-anchor-fix";
 
 export default function Home() {
   return (
     <main id="top" className="bg-background min-h-screen">
       <Navbar1 />
       <ScrollToTop />
+      <CvAnchorFix />
 
       {/* Promessa e chamada principal */}
       <Hero />

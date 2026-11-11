@@ -31,7 +31,7 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
   >
     <div
       className={cn(
-        "shell relative flex flex-col justify-between gap-8 py-14 md:gap-10 md:py-20 lg:py-24",
+        "shell cv-auto relative flex flex-col justify-between gap-8 py-14 md:gap-10 md:py-20 lg:py-24",
         innerClassName,
       )}
     >

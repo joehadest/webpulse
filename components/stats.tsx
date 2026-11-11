@@ -34,7 +34,7 @@ export function Stats() {
       <span aria-hidden className="cross cross-l" />
       <span aria-hidden className="cross cross-r" />
 
-      <div className="shell">
+      <div className="shell cv-auto" style={{ containIntrinsicSize: "auto 300px" }}>
         <dl className="grid grid-cols-2 lg:grid-cols-4">
           {siteConfig.stats.map((stat, i) => (
             <Reveal

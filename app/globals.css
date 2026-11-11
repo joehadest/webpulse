@@ -149,6 +149,24 @@
     padding-inline: var(--gutter);
   }
 
+  /* Renderização sob demanda: enquanto o bloco está longe da tela, o
+     navegador pula layout, desenho do texto, pintura e animações dele.
+     A primeira carga monta só o que está visível; o resto é montado
+     um pouco antes de chegar na tela. "auto" no tamanho faz o navegador
+     lembrar a altura real depois da primeira vez (rolagem estável). */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+    /* contain: paint cortaria sombras e entradas animadas na borda */
+    overflow-clip-margin: 6rem;
+  }
+
+  /* Durante um salto por âncora (#contato...), tudo é montado para o
+     destino ser calculado com as alturas reais. */
+  .cv-off .cv-auto {
+    content-visibility: visible;
+  }
+
   .section-pad {
     padding-block: clamp(5rem, 4rem + 6vw, 9rem);
   }

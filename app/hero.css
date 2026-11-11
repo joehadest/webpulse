@@ -132,12 +132,17 @@
   transform-origin: left;
 }
 
+/* Feixe de luz: um bloco de 24% da linha que desliza com translate
+   (composto pela GPU) — antes era background-position, que repintava
+   a linha inteira a cada quadro. -127% → 444% = de fora a fora. */
 .ecg-streak {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, #7dd3fc 40%, #fff 50%, #7dd3fc 60%, transparent) no-repeat;
-  background-size: 24% 100%;
-  background-position: -40% 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 24%;
+  background: linear-gradient(90deg, transparent, #7dd3fc 40%, #fff 50%, #7dd3fc 60%, transparent);
+  translate: -127% 0;
   opacity: 0;
 }
 
@@ -184,14 +189,26 @@
   stroke-dasharray: 0.14 2;
   stroke-dashoffset: 0.14;
   opacity: 0;
-  filter: drop-shadow(0 0 4px #38bdf8);
 }
 
-.ecg-ripple {
-  fill: none;
-  stroke: rgba(56, 189, 248, 0.5);
-  stroke-width: 1;
+.ecg-w-comet-glow {
+  stroke: rgba(56, 189, 248, 0.45);
+  stroke-width: 8;
+}
+
+/* Batida + onda em camada HTML: compostas pela GPU */
+.ecg-w-beat {
+  position: relative;
+}
+
+.ecg-w-beat::after {
+  content: "";
+  position: absolute;
+  inset: -22% -10%;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.5);
   opacity: 0;
+  pointer-events: none;
 }
 
 /* Texto do ato 1 */
@@ -301,9 +318,11 @@
   }
 
   .ecg-w-fill {
-    animation:
-      ecg-fill-in 0.9s var(--ease-out) 1.4s both,
-      w-beat 3.2s var(--ease-out) 2.4s infinite;
+    animation: ecg-fill-in 0.9s var(--ease-out) 1.4s both;
+  }
+
+  .ecg-w-beat {
+    animation: w-beat 3.2s var(--ease-out) 2.4s infinite;
   }
 
   .ecg-w::before {
@@ -322,7 +341,7 @@
     animation: w-comet 3.2s linear 2.4s infinite;
   }
 
-  .ecg-ripple {
+  .ecg-w-beat::after {
     animation: w-ripple 3.2s var(--ease-out) 2.4s infinite;
   }
 
@@ -370,12 +389,12 @@
    (30–60%), o W bate (58–72%) e a luz sai pela direita (60–92%). */
 @keyframes streak-l {
   0% {
-    background-position: -40% 0;
+    translate: -127% 0;
     opacity: 1;
   }
   32%,
   100% {
-    background-position: 140% 0;
+    translate: 444% 0;
     opacity: 1;
   }
 }
@@ -402,7 +421,7 @@
 @keyframes streak-r {
   0%,
   59% {
-    background-position: -40% 0;
+    translate: -127% 0;
     opacity: 0;
   }
   60% {
@@ -410,7 +429,7 @@
   }
   92%,
   100% {
-    background-position: 140% 0;
+    translate: 444% 0;
     opacity: 1;
   }
 }
@@ -1269,6 +1288,10 @@
 
     .hero-build {
       display: block;
+      /* invisível (não pintada) até o ato 2 começar */
+      animation: sd-build-on linear both;
+      animation-timeline: --hero;
+      animation-range: contain 9% contain 10%;
     }
 
     .hero-hint {
@@ -1524,5 +1547,14 @@
   12%,
   to {
     opacity: 1;
+  }
+}
+
+@keyframes sd-build-on {
+  from {
+    visibility: hidden;
+  }
+  to {
+    visibility: visible;
   }
 }

@@ -34,40 +34,42 @@ function PulseMark() {
       </span>
 
       <div className="ecg-w">
-        <svg viewBox="-6 -6 219 142" className="ecg-w-svg" overflow="visible">
-          <defs>
-            <linearGradient id="hw-pulse" x1="0" y1="42" x2="207" y2="130" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#7dd3fc" />
-              <stop offset=".52" stopColor="#38bdf8" />
-              <stop offset="1" stopColor="#0ea5e9" />
-            </linearGradient>
-            <linearGradient id="hw-fold" x1="92" y1="42" x2="50" y2="130" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#a5edff" />
-              <stop offset="1" stopColor="#38bdf8" />
-            </linearGradient>
-            <linearGradient id="hw-rise" x1="193" y1="10" x2="124" y2="130" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#0ea5e9" />
-              <stop offset="1" stopColor="#22d3ee" />
-            </linearGradient>
-          </defs>
+        {/* Camada HTML da batida: escala e onda rodam na GPU, sem redesenhar o SVG */}
+        <div className="ecg-w-beat">
+          <svg viewBox="-6 -6 219 142" className="ecg-w-svg" overflow="visible">
+            <defs>
+              <linearGradient id="hw-pulse" x1="0" y1="42" x2="207" y2="130" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#7dd3fc" />
+                <stop offset=".52" stopColor="#38bdf8" />
+                <stop offset="1" stopColor="#0ea5e9" />
+              </linearGradient>
+              <linearGradient id="hw-fold" x1="92" y1="42" x2="50" y2="130" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#a5edff" />
+                <stop offset="1" stopColor="#38bdf8" />
+              </linearGradient>
+              <linearGradient id="hw-rise" x1="193" y1="10" x2="124" y2="130" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#0ea5e9" />
+                <stop offset="1" stopColor="#22d3ee" />
+              </linearGradient>
+            </defs>
 
-          {/* Onda que se espalha a cada batida */}
-          <ellipse cx="103" cy="66" rx="118" ry="70" className="ecg-ripple" />
+            {/* Símbolo oficial preenchido */}
+            <g className="ecg-w-fill">
+              <path
+                fill="url(#hw-pulse)"
+                d="M0 42H30L54 93L79 42H109L133 93L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121L94 82L75 121Q70 130 61 130H48Q39 130 34 121Z"
+              />
+              <path fill="url(#hw-fold)" d="M34 121L79 42H109L75 121Q70 130 61 130H48Q39 130 34 121Z" />
+              <path fill="url(#hw-rise)" d="M113 121L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121Z" />
+            </g>
 
-          {/* Símbolo oficial preenchido */}
-          <g className="ecg-w-fill">
-            <path
-              fill="url(#hw-pulse)"
-              d="M0 42H30L54 93L79 42H109L133 93L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121L94 82L75 121Q70 130 61 130H48Q39 130 34 121Z"
-            />
-            <path fill="url(#hw-fold)" d="M34 121L79 42H109L75 121Q70 130 61 130H48Q39 130 34 121Z" />
-            <path fill="url(#hw-rise)" d="M113 121L174 10H207L154 121Q149 130 140 130H127Q118 130 113 121Z" />
-          </g>
-
-          {/* Traço que desenha o W e o cometa que percorre cada batida */}
-          <path d={W_PATH} pathLength={1} className="ecg-w-stroke" />
-          <path d={W_PATH} pathLength={1} className="ecg-w-comet" />
-        </svg>
+            {/* Traço que desenha o W e o cometa que percorre cada batida */}
+            <path d={W_PATH} pathLength={1} className="ecg-w-stroke" />
+            {/* Brilho do cometa: traço largo translúcido (mais barato que filtro) */}
+            <path d={W_PATH} pathLength={1} className="ecg-w-comet ecg-w-comet-glow" />
+            <path d={W_PATH} pathLength={1} className="ecg-w-comet" />
+          </svg>
+        </div>
       </div>
 
       <span className="ecg-line ecg-line-r">
